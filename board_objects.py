@@ -8,3 +8,6 @@ class Board_objects:
         for piece in self.coords.keys():
             board[self.coords[piece][1]][self.coords[piece][0]] = piece
         return board
+
+    def move(self, piece_to_move, x, y):
+        self.coords[piece_to_move] = [x, y]
