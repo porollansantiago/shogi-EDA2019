@@ -4,3 +4,4 @@ import coordinates as coords
 class Board:
     def __init__(self):
         self.black = Board_objects(coords.black)
+        self.white = Board_objects(coords.white)
