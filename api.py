@@ -11,3 +11,8 @@ class Api:
         for line in board:
             new_board += "".join(line) + "\n"
         return new_board
+
+    def play(self, coords_i):
+        coords = [int(coords_i[0]), int(coords_i[1])]
+        self.board.play(coords)
+        return self.get_board()
