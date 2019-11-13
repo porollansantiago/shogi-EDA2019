@@ -47,8 +47,23 @@ class test_moves(unittest.TestCase):
         ("black", "P4 ", [3, 4]),
         ("black", "P5 ", [4, 3])
     ])
-    def test_validate_P_move(self, turn, piece, new_coords):
+    def test_validate_Peon_move(self, turn, piece, new_coords):
         self.assertFalse(self.moves.validate(turn, piece, new_coords, self.black, self.white))
+
+    @parameterized.expand([
+        ("black", "L1 ", [0, 7], {"L1 ": [0, 8]}, {}),
+        ("black", "L1 ", [0, 6], {"L1 ": [0, 8]}, {}),
+        ("black", "L1 ", [0, 5], {"L1 ": [0, 8]}, {}),
+        ("black", "L1 ", [0, 4], {"L1 ": [0, 8]}, {}),
+        ("black", "L1 ", [0, 3], {"L1 ": [0, 8]}, {}),
+        ("black", "L1 ", [0, 2], {"L1 ": [0, 8]}, {}),
+        ("black", "L1 ", [0, 1], {"L1 ": [0, 8]}, {}),
+        ("black", "L1 ", [0, 0], {"L1 ": [0, 8]}, {}),
+    ])
+    def test_validate_Lance_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
 
 
