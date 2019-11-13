@@ -35,10 +35,13 @@ class Board:
                 self.__make_move(self.piece, new_coords, self.black)
             elif self.turn == "white":
                 self.__make_move(self.piece, new_coords, self.white)
+        else:
+            self.piece = None
         return self.make_board()
 
     def __make_move(self, piece, new_coords, player):
         player.move(piece, new_coords[0], new_coords[1])
         self.turn = "white" if self.turn == "black" else "black"
+        self.piece = None
     
 
