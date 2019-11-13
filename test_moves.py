@@ -35,6 +35,21 @@ class test_moves(unittest.TestCase):
     def test_validate_overlapping(self, turn, piece, new_coords):
         self.assertFalse(self.moves.validate(turn, piece, new_coords, self.black, self.white))
 
+    @parameterized.expand([
+        ("white", "P1 ", [0, 4]),
+        ("white", "P2 ", [1, 4]),
+        ("white", "P3 ", [2, 5]),
+        ("white", "P4 ", [3, 4]),
+        ("white", "P5 ", [4, 4]),
+        ("black", "P1 ", [0, 4]),
+        ("black", "P2 ", [1, 4]),
+        ("black", "P3 ", [2, 3]),
+        ("black", "P4 ", [3, 4]),
+        ("black", "P5 ", [4, 3])
+    ])
+    def test_validate_P_move(self, turn, piece, new_coords):
+        self.assertFalse(self.moves.validate(turn, piece, new_coords, self.black, self.white))
+
 
 
 if __name__ == "__main__":
