@@ -13,7 +13,7 @@ class Board_objects:
         for piece in self.coords.keys():
             if self.coords[piece] == coords:
                 return piece
-        return "   "
+        return None
 
     def move(self, piece_to_move, x, y):
         self.coords[piece_to_move] = [x, y]
