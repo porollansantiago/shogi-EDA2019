@@ -3,7 +3,8 @@ import unittest
 modules_to_test = (
     "test_board",
     "test_api",
-    "test_board_objects"
+    "test_board_objects",
+    "test_moves"
 )
 
 
