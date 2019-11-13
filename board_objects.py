@@ -9,5 +9,11 @@ class Board_objects:
             board[self.coords[piece][1]][self.coords[piece][0]] = piece
         return board
 
+    def get_piece(self, coords):
+        for piece in self.coords.keys():
+            if self.coords[piece] == coords:
+                return piece
+        return "   "
+
     def move(self, piece_to_move, x, y):
         self.coords[piece_to_move] = [x, y]
