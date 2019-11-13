@@ -29,15 +29,8 @@ class Moves():
     def get_move_array(self, turn, piece_to_move, new_coords, player):
         move_array = []
         if turn == "black" and "P" in piece_to_move:
-            end, step = -1, -1
-            move_array = self.__get_P_move_array(move_array, new_coords, end, step)
+            move_array.append([player.coords[piece_to_move][0], player.coords[piece_to_move][1] - 1])
         elif turn == "white" and "P" in piece_to_move:
-            end, step = 9, 1
-            move_array = self.__get_P_move_array(move_array, new_coords, end, step)
+            move_array.append([player.coords[piece_to_move][0], player.coords[piece_to_move][1] + 1])
 
-        return move_array
-
-    def __get_P_move_array(self, move_array, new_coords, end, step):
-        for val in range(new_coords[1], end, step):
-                move_array.append([new_coords[0], new_coords[1] + val])
         return move_array
