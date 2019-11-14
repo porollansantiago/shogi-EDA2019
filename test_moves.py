@@ -10,6 +10,52 @@ class test_moves(unittest.TestCase):
         self.black = Board_objects(c.black)
         self.white = Board_objects(c.white)
 
+    @parameterized.expand([
+        ("white", "P2 ", [4, 5], {}, {"P2 ": [4, 4], "P1": [4, 5]}),
+        ("white", " R ", [4, 5], {}, {" R ": [4, 4], "P1": [4, 5]}),
+        ("white", "L1 ", [4, 5], {}, {"L1 ": [4, 4], "P1": [4, 5]}),
+        ("white", "KN1", [3, 6], {}, {"KN1": [4, 4], "P1": [3, 6]}),
+        ("white", "SG1", [4, 5], {}, {"SG1": [4, 4], "P1": [4, 5]}),
+        ("white", "GG1", [4, 5], {}, {"GG1": [4, 4], "P1": [4, 5]}),
+        ("white", " B ", [3, 3], {}, {" B ": [4, 4], "P1": [3, 3]}),
+        ("white", " K ", [4, 5], {}, {" K ": [4, 4], "P1": [4, 5]}),
+        ("black", "P2 ", [4, 3], {"P2 ": [4, 4], "P1": [4, 3]}, {}),
+        ("black", " R ", [4, 3], {" R ": [4, 4], "P1": [4, 3]}, {}),
+        ("black", "L1 ", [4, 3], {"L1 ": [4, 4], "P1": [4, 3]}, {}),
+        ("black", "KN1", [5, 2], {"KN1": [4, 4], "P1": [5, 2]}, {}),
+        ("black", "SG1", [4, 3], {"SG1": [4, 4], "P1": [4, 3]}, {}),
+        ("black", "GG1", [4, 3], {"GG1": [4, 4], "P1": [4, 3]}, {}),
+        ("black", " B ", [3, 3], {" B ": [4, 4], "P1": [3, 3]}, {}),
+        ("black", " K ", [4, 3], {" K ": [4, 4], "P1": [4, 3]}, {}),
+    ])
+    def test_validate_overlapping(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
+
+    @parameterized.expand([
+        ("white", "P2 ", [4, 5], {}, {"P2 ": [4, 4]}),
+        ("white", " R ", [4, 5], {}, {" R ": [4, 4]}),
+        ("white", "L1 ", [4, 5], {}, {"L1 ": [4, 4]}),
+        ("white", "KN1", [3, 6], {}, {"KN1": [4, 4]}),
+        ("white", "SG1", [4, 5], {}, {"SG1": [4, 4]}),
+        ("white", "GG1", [4, 5], {}, {"GG1": [4, 4]}),
+        ("white", " B ", [3, 3], {}, {" B ": [4, 4]}),
+        ("white", " K ", [4, 5], {}, {" K ": [4, 4]}),
+        ("black", "P2 ", [4, 3], {"P2 ": [4, 4]}, {}),
+        ("black", " R ", [4, 3], {" R ": [4, 4]}, {}),
+        ("black", "L1 ", [4, 3], {"L1 ": [4, 4]}, {}),
+        ("black", "KN1", [5, 2], {"KN1": [4, 4]}, {}),
+        ("black", "SG1", [4, 3], {"SG1": [4, 4]}, {}),
+        ("black", "GG1", [4, 3], {"GG1": [4, 4]}, {}),
+        ("black", " B ", [3, 3], {" B ": [4, 4]}, {}),
+        ("black", " K ", [4, 3], {" K ": [4, 4]}, {}),
+    ])
+    def test_validate_overlapping1(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
+
 # PAWN
 
     @parameterized.expand([
