@@ -44,6 +44,8 @@ class Moves():
                 move_array = self.get_GG_moves(player, piece_to_move, move_array, -1, 1)
             elif "R" in piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, move_array)
+            elif "B" in piece_to_move:
+                move_array = self.get_bishop_moves(player, other_player, piece_to_move, move_array)
             elif " K " in piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, move_array)
             
@@ -61,6 +63,8 @@ class Moves():
                 move_array = self.get_GG_moves(player, piece_to_move, move_array, 1, -1)
             elif "R" in piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, move_array)
+            elif "B" in piece_to_move:
+                move_array = self.get_bishop_moves(player, other_player, piece_to_move, move_array)
             elif " K " in piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, move_array)
         print(move_array)
@@ -107,6 +111,35 @@ class Moves():
         move_array.append(self.__get_rook_col(coords, player, piece, move_array, other_player))
         move_array.append(self.__get_rook_row(coords, player, piece, move_array, other_player))
         return move_array
+
+    def get_bishop_moves(self, player, other_player, piece, move_array):
+        coords = player.get_coords(piece)
+        start1 = coords[0] if coords[0] > coords[1] else coords[1]
+        for val in range(start1 + 1, 9):
+            new_coords = player.get_coords(piece, val - coords[0], val - coords[1])
+            move_array.append(new_coords)
+            if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
+                break
+        start2 = coords[0] if coords[0] < coords[1] else coords[1]
+        for val in range(start2 - 1, -1, -1):
+            new_coords = player.get_coords(piece, val - coords[0], val - coords[1])
+            move_array.append(new_coords)
+            if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
+                break
+        start3 = 8 - coords[0] if 8 - coords[0] < coords[1] else coords[1]
+        for val in range(1, start3 + 1):
+            new_coords = player.get_coords(piece, val, -val)
+            move_array.append(new_coords)
+            if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
+                break
+        start4 = 8 - coords[1] if 8 - coords[1] < coords[0] else coords[0]
+        for val in range(1, start4 + 1):
+            new_coords = player.get_coords(piece, -val, val)
+            move_array.append(new_coords)
+            if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
+                break
+        return move_array
+
 
     def __get_rook_col(self, coords, player, piece, move_array, other_player):
         for val in range(coords[1] + 1, 9):
