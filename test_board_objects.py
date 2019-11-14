@@ -92,6 +92,26 @@ class Test_board_objects(unittest.TestCase):
         board_objects = Board_objects(board)
         self.assertEqual(board_objects.get_coords(piece, x, y, replace_x, replace_y), expected)
 
+    @parameterized.expand([
+        ({"P1 ": [5, 2]}, [5, 2]),
+        ({"P1 ": [2, 1]}, [2, 1]),
+        ({"P1 ": [0, 0]}, [0, 0]),
+        ({"P1 ": [8, 8]}, [8, 8])
+    ])
+    def test_compare_coords(self, board, new_coords):
+        board_objects = Board_objects(board)
+        self.assertTrue(board_objects.compare_coords(new_coords))
+
+    @parameterized.expand([
+        ({"P1 ": [5, 2]}, [4, 2]),
+        ({"P1 ": [2, 1]}, [1, 1]),
+        ({"P1 ": [0, 0]}, [2, 0]),
+        ({"P1 ": [8, 8]}, [8, 1])
+    ])
+    def test_compare_coords2(self, board, new_coords):
+        board_objects = Board_objects(board)
+        self.assertFalse(board_objects.compare_coords(new_coords))
+
 
 if __name__ == "__main__":
     unittest.main()
