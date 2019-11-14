@@ -138,6 +138,41 @@ class test_moves(unittest.TestCase):
         example_white = Board_objects(example_white_coords)
         self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
+# SILVER GENERAL
+
+    @parameterized.expand([
+        ("black", "SG1", [3, 3], {"SG1": [4, 4]}, {}),
+        ("black", "SG1", [4, 3], {"SG1": [4, 4]}, {}),
+        ("black", "SG1", [5, 3], {"SG1": [4, 4]}, {}),
+        ("black", "SG1", [3, 5], {"SG1": [4, 4]}, {}),
+        ("black", "SG1", [5, 5], {"SG1": [4, 4]}, {}),
+        ("white", "SG1", [3, 5], {}, {"SG1": [4, 4]}),
+        ("white", "SG1", [4, 5], {}, {"SG1": [4, 4]}),
+        ("white", "SG1", [5, 5], {}, {"SG1": [4, 4]}),
+        ("white", "SG1", [3, 3], {}, {"SG1": [4, 4]}),
+        ("white", "SG1", [5, 3], {}, {"SG1": [4, 4]}),
+    ])
+    def test_silverGeneral_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
+
+    @parameterized.expand([
+        ("black", "SG1", [0, 0], {"SG1": [4, 4]}, {}),
+        ("black", "SG1", [8, 8], {"SG1": [4, 4]}, {}),
+        ("black", "SG1", [4, 5], {"SG1": [4, 4]}, {}),
+        ("black", "SG1", [3, 4], {"SG1": [4, 4]}, {}),
+        ("black", "SG1", [5, 4], {"SG1": [4, 4]}, {}),
+        ("white", "SG1", [0, 0], {}, {"SG1": [4, 4]}),
+        ("white", "SG1", [8, 8], {}, {"SG1": [4, 4]}),
+        ("white", "SG1", [4, 3], {}, {"SG1": [4, 4]}),
+        ("white", "SG1", [3, 4], {}, {"SG1": [4, 4]}),
+        ("white", "SG1", [5, 4], {}, {"SG1": [4, 4]}),
+    ])
+    def test_silverGeneral_move2(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
 
 
