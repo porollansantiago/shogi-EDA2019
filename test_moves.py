@@ -262,6 +262,85 @@ class test_moves(unittest.TestCase):
         example_white = Board_objects(example_white_coords)
         self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
+# ROOK
+
+    @parameterized.expand([
+        ("black", "R1 ", [4, 0], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [4, 1], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [4, 2], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [4, 3], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [4, 5], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [4, 6], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [4, 7], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [4, 8], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [0, 4], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [1, 4], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [2, 4], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [3, 4], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [5, 4], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [6, 4], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [7, 4], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [8, 4], {"R1 ": [4, 4]}, {}),
+        ("white", "R1 ", [4, 0], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [4, 1], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [4, 2], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [4, 3], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [4, 5], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [4, 6], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [4, 7], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [4, 8], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [0, 4], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [1, 4], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [2, 4], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [3, 4], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [5, 4], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [6, 4], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [7, 4], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [8, 4], {}, {"R1 ": [4, 4]}),
+    ])
+    def test_rook_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
+
+    @parameterized.expand([
+        ("black", "R1 ", [0, 0], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [8, 8], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [1, 1], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [2, 2], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [3, 3], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [6, 6], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [5, 6], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [8, 0], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [0, 2], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [1, 3], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [2, 3], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [4, 5], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [6, 7], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [8, 7], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [0, 3], {"R1 ": [4, 4]}, {}),
+        ("black", "R1 ", [2, 7], {"R1 ": [4, 4]}, {}),
+        ("white", "R1 ", [0, 0], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [8, 8], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [1, 1], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [2, 2], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [3, 3], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [6, 6], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [5, 6], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [8, 0], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [0, 2], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [1, 3], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [2, 3], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [4, 5], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [6, 7], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [8, 7], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [0, 3], {}, {"R1 ": [4, 4]}),
+        ("white", "R1 ", [2, 7], {}, {"R1 ": [4, 4]}),
+    ])
+    def test_rook_move2(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
 
 if __name__ == "__main__":
