@@ -42,8 +42,11 @@ class Moves():
                 move_array = self.get_SG_moves(player, piece_to_move, move_array, -1)
             elif "GG" in piece_to_move:
                 move_array = self.get_GG_moves(player, piece_to_move, move_array, -1, 1)
+            elif "R" in piece_to_move:
+                move_array = self.get_rook_moves(player, other_player, piece_to_move, move_array)
             elif " K " in piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, move_array)
+            
         elif turn == "white":
             if "P" in piece_to_move:
                 move_array.append(player.get_coords(piece_to_move, 0, 1))
@@ -56,6 +59,8 @@ class Moves():
                 move_array = self.get_SG_moves(player, piece_to_move, move_array, 1)
             elif "GG" in piece_to_move:
                 move_array = self.get_GG_moves(player, piece_to_move, move_array, 1, -1)
+            elif "R" in piece_to_move:
+                move_array = self.get_rook_moves(player, other_player, piece_to_move, move_array)
             elif " K " in piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, move_array)
         print(move_array)
@@ -94,6 +99,30 @@ class Moves():
         move_array.append(self.__get_front_moves(move_array, player, piece, 1))
         move_array.append(self.__get_front_moves(move_array, player, piece, -1))
         move_array.append(self.__get_side_moves(move_array, player, piece, 0))
+        return move_array
+
+    def get_rook_moves(self, player, other_player, piece, move_array):
+        coords = player.get_coords(piece)
+        for val in range(coords[1] + 1, 9):
+            new_coords = player.get_coords(piece, 0, val, False, True)
+            move_array.append(new_coords)
+            if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
+                break
+        for val in range(coords[1] - 1, -1, -1):
+            new_coords = player.get_coords(piece, 0, val, False, True)
+            move_array.append(new_coords)
+            if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
+                break
+        for val in range(coords[0] + 1, 9):
+            new_coords = player.get_coords(piece, val, 0, True)
+            move_array.append(new_coords)
+            if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
+                break
+        for val in range(coords[0] - 1, -1, -1):
+            new_coords = player.get_coords(piece, val, 0, True)
+            move_array.append(new_coords)
+            if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
+                break
         return move_array
 
     def __get_side_moves(self, move_array, player, piece, val):
