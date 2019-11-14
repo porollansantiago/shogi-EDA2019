@@ -115,14 +115,14 @@ class Moves():
     def get_bishop_moves(self, player, other_player, piece, move_array):
         coords = player.get_coords(piece)
         start1 = coords[0] if coords[0] > coords[1] else coords[1]
-        for val in range(start1 + 1, 9):
-            new_coords = player.get_coords(piece, val - coords[0], val - coords[1])
+        for val in range(1, 9 - start1):
+            new_coords = player.get_coords(piece, val, val)
             move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
         start2 = coords[0] if coords[0] < coords[1] else coords[1]
-        for val in range(start2 - 1, -1, -1):
-            new_coords = player.get_coords(piece, val - coords[0], val - coords[1])
+        for val in range(start2, -1, -1):
+            new_coords = player.get_coords(piece, -val, -val)
             move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
