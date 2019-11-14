@@ -174,6 +174,45 @@ class test_moves(unittest.TestCase):
         example_white = Board_objects(example_white_coords)
         self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
+# GOLD GENERAL
+
+    @parameterized.expand([
+        ("black", "GG1", [3, 3], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [4, 3], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [5, 3], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [3, 4], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [5, 4], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [4, 5], {"GG1": [4, 4]}, {}),
+        ("white", "GG1", [3, 5], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [4, 5], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [5, 5], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [3, 4], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [5, 4], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [4, 3], {}, {"GG1": [4, 4]}),
+    ])
+    def test_goldGeneral_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
+
+    @parameterized.expand([
+        ("black", "GG1", [0, 0], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [8, 8], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [3, 5], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [5, 5], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [4, 2], {"GG1": [4, 4]}, {}),
+        ("black", "GG1", [4, 6], {"GG1": [4, 4]}, {}),
+        ("white", "GG1", [3, 3], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [5, 3], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [0, 0], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [8, 8], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [4, 2], {}, {"GG1": [4, 4]}),
+        ("white", "GG1", [4, 6], {}, {"GG1": [4, 4]}),
+    ])
+    def test_goldGeneral_move2(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
 
 if __name__ == "__main__":
