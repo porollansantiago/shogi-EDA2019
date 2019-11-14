@@ -97,6 +97,10 @@ class test_moves(unittest.TestCase):
         ("white", "L1 ", [4, 4], {}, {"L1 ": [5, 5]}),
         ("white", "L1 ", [0, 0], {}, {"L1 ": [5, 5]}),
         ("white", "L1 ", [1, 5], {}, {"L1 ": [5, 5]}),
+        ("black", "L1 ", [4, 1], {"L1 ": [4, 4]}, {"P1 ": [4, 2]}),
+        ("black", "L1 ", [4, 0], {"L1 ": [4, 4]}, {"P1 ": [4, 2]}),
+        ("white", "L1 ", [4, 7], {"P1 ": [4, 6]}, {"L1 ": [4, 4]}),
+        ("white", "L1 ", [4, 8], {"P1 ": [4, 6]}, {"L1 ": [4, 4]}),
     ])
     def test_validate_Lance_move2(self, turn, piece, new_coords, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
