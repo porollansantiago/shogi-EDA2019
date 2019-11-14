@@ -30,29 +30,28 @@ class Moves():
         move_array = []
         if turn == "black":
             if "P" in piece_to_move:
-                move_array.append([player.coords[piece_to_move][0], player.coords[piece_to_move][1] - 1])
+                move_array.append(player.get_coords(piece_to_move, 0, -1))
             elif "L" in piece_to_move:
                 end, step = -1, -1
                 move_array = self.get_lance_moves(piece_to_move, move_array, end, step, player, other_player)
             elif "KN" in piece_to_move:
-                move_array.append([player.coords[piece_to_move][0] - 1, player.coords[piece_to_move][1] - 2])
-                move_array.append([player.coords[piece_to_move][0] + 1, player.coords[piece_to_move][1] - 2])
+                move_array.append(player.get_coords(piece_to_move, -1, -2))
+                move_array.append(player.get_coords(piece_to_move, +1, -2))
         elif turn == "white":
             if "P" in piece_to_move:
-                move_array.append([player.coords[piece_to_move][0], player.coords[piece_to_move][1] + 1])
+                move_array.append(player.get_coords(piece_to_move, 0, 1))
             elif "L" in piece_to_move:
                 end, step = 9, 1
                 move_array = self.get_lance_moves(piece_to_move, move_array, end, step, player, other_player)
             elif "KN" in piece_to_move:
-                move_array.append([player.coords[piece_to_move][0] - 1, player.coords[piece_to_move][1] + 2])
-                move_array.append([player.coords[piece_to_move][0] + 1, player.coords[piece_to_move][1] + 2])
-
+                move_array.append(player.get_coords(piece_to_move, -1, 2))
+                move_array.append(player.get_coords(piece_to_move, +1, 2))
+        print(move_array)
         return move_array
 
 
     def get_lance_moves(self, piece, move_array, end, step, player, other_player):
         for val in range(player.coords[piece][1], end, step):
             if [player.coords[piece][0], player.coords[piece][1] + val] not in other_player.coords.items():
-                move_array.append([player.coords[piece][0], val])
-        print(move_array)
+                move_array.append(player.get_coords(piece, 0, val, False, True))
         return move_array
