@@ -68,11 +68,12 @@ class Moves():
 
 
     def get_lance_moves(self, piece, move_array, end, step, player, other_player):
-        for val in range(player.coords[piece][1], end, step):
+        for val in range(player.coords[piece][1] + step, end, step):
             new_coords = player.get_coords(piece, 0, val, False, True)
-            if new_coords not in other_player.coords.items():
-                if self.__inside_the_board(new_coords):
-                    move_array.append(player.get_coords(piece, 0, val, False, True))
+            if self.__inside_the_board(new_coords):
+                move_array.append(player.get_coords(piece, 0, val, False, True))
+            if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
+                break
         return move_array
 
     def get_knight_moves(self, player, piece, move_array, y):
