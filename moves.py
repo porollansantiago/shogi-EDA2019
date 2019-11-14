@@ -103,6 +103,11 @@ class Moves():
 
     def get_rook_moves(self, player, other_player, piece, move_array):
         coords = player.get_coords(piece)
+        move_array.append(self.__get_rook_col(coords, player, piece, move_array, other_player))
+        move_array.append(self.__get_rook_row(coords, player, piece, move_array, other_player))
+        return move_array
+
+    def __get_rook_col(self, coords, player, piece, move_array, other_player):
         for val in range(coords[1] + 1, 9):
             new_coords = player.get_coords(piece, 0, val, False, True)
             move_array.append(new_coords)
@@ -113,6 +118,9 @@ class Moves():
             move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
+        return move_array
+
+    def __get_rook_row(self, coords, player, piece, move_array, other_player):
         for val in range(coords[0] + 1, 9):
             new_coords = player.get_coords(piece, val, 0, True)
             move_array.append(new_coords)
