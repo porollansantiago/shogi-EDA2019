@@ -234,7 +234,7 @@ class test_moves(unittest.TestCase):
         ("white", " K ", [4, 5], {}, {"GG1": [4, 4]}),
         ("white", " K ", [5, 5], {}, {"GG1": [4, 4]}),
     ])
-    def test_goldGeneral_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+    def test_king_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
         self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
@@ -257,7 +257,7 @@ class test_moves(unittest.TestCase):
         ("white", " K ", [2, 4], {}, {"GG1": [4, 4]}),
         ("white", " K ", [6, 6], {}, {"GG1": [4, 4]}),
     ])
-    def test_goldGeneral_move2(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+    def test_king_move2(self, turn, piece, new_coords, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
         self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
