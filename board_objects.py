@@ -20,6 +20,9 @@ class Board_objects:
         new_coords[0] = x if replace_x else self.coords[piece][0] + x
         new_coords[1] = y if replace_y else self.coords[piece][1] + y
         return new_coords
+    
+    def compare_coords(self, new_coords):
+        return new_coords in self.coords.values()
 
     def move(self, piece_to_move, x, y):
         self.coords[piece_to_move] = [x, y]
