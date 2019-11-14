@@ -214,6 +214,55 @@ class test_moves(unittest.TestCase):
         example_white = Board_objects(example_white_coords)
         self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
+# KING
+
+    @parameterized.expand([
+        ("black", " K ", [3, 3], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [4, 3], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [5, 3], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [3, 4], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [5, 4], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [3, 5], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [4, 5], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [5, 5], {"GG1": [4, 4]}, {}),
+        ("white", " K ", [3, 3], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [4, 3], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [5, 3], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [3, 4], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [5, 4], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [3, 5], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [4, 5], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [5, 5], {}, {"GG1": [4, 4]}),
+    ])
+    def test_goldGeneral_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
+
+    @parameterized.expand([
+        ("black", " K ", [0, 0], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [8, 8], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [2, 2], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [4, 2], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [4, 6], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [6, 4], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [2, 4], {"GG1": [4, 4]}, {}),
+        ("black", " K ", [6, 6], {"GG1": [4, 4]}, {}),
+        ("white", " K ", [0, 0], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [8, 8], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [2, 2], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [4, 2], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [4, 6], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [6, 4], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [2, 4], {}, {"GG1": [4, 4]}),
+        ("white", " K ", [6, 6], {}, {"GG1": [4, 4]}),
+    ])
+    def test_goldGeneral_move2(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
+
+
 
 if __name__ == "__main__":
     unittest.main()
