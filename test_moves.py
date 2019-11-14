@@ -441,6 +441,30 @@ class test_moves(unittest.TestCase):
         ("white", " B ", [6, 2], {}, {" B ": [4, 4]}),
         ("white", " B ", [7, 1], {}, {" B ": [4, 4]}),
         ("white", " B ", [8, 0], {}, {" B ": [4, 4]}),
+        ("black", " B ", [1, 0], {" B ": [2, 1]}, {}),
+        ("black", " B ", [5, 4], {" B ": [2, 1]}, {}),
+        ("black", " B ", [0, 3], {" B ": [2, 1]}, {}),
+        ("black", " B ", [3, 0], {" B ": [2, 1]}, {}),
+        ("black", " B ", [4, 0], {" B ": [1, 3]}, {}),
+        ("black", " B ", [0, 4], {" B ": [1, 3]}, {}),
+        ("black", " B ", [3, 5], {" B ": [1, 3]}, {}),
+        ("black", " B ", [0, 2], {" B ": [1, 3]}, {}),
+        ("black", " B ", [4, 1], {" B ": [6, 3]}, {}),
+        ("black", " B ", [8, 1], {" B ": [6, 3]}, {}),
+        ("black", " B ", [8, 5], {" B ": [6, 3]}, {}),
+        ("black", " B ", [3, 6], {" B ": [6, 3]}, {}),
+        ("black", " B ", [8, 3], {" B ": [6, 5]}, {}),
+        ("black", " B ", [8, 7], {" B ": [6, 5]}, {}),
+        ("black", " B ", [3, 2], {" B ": [6, 5]}, {}),
+        ("black", " B ", [4, 7], {" B ": [6, 5]}, {}),
+        ("black", " B ", [8, 5], {" B ": [6, 7]}, {}),
+        ("black", " B ", [7, 8], {" B ": [6, 7]}, {}),
+        ("black", " B ", [3, 4], {" B ": [6, 7]}, {}),
+        ("black", " B ", [5, 8], {" B ": [6, 7]}, {}),
+        ("black", " B ", [5, 4], {" B ": [3, 6]}, {}),
+        ("black", " B ", [5, 8], {" B ": [3, 6]}, {}),
+        ("black", " B ", [1, 4], {" B ": [3, 6]}, {}),
+        ("black", " B ", [1, 8], {" B ": [3, 6]}, {}),
     ])
     def test_bishop_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -461,7 +485,7 @@ class test_moves(unittest.TestCase):
         ("white", " B ", [5, 4], {}, {" B ": [4, 4]}),
         ("white", " B ", [8, 2], {}, {" B ": [4, 4]}),
     ])
-    def test_bishop_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+    def test_bishop_move2(self, turn, piece, new_coords, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
         self.assertFalse(self.moves.validate(turn, piece, new_coords, example_black, example_white))
