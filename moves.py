@@ -34,12 +34,19 @@ class Moves():
             elif "L" in piece_to_move:
                 end, step = -1, -1
                 move_array = self.get_lance_moves(piece_to_move, move_array, end, step, player, other_player)
+            elif "KN" in piece_to_move:
+                move_array.append([player.coords[piece_to_move][0] - 1, player.coords[piece_to_move][1] - 2])
+                move_array.append([player.coords[piece_to_move][0] + 1, player.coords[piece_to_move][1] - 2])
         elif turn == "white":
             if "P" in piece_to_move:
                 move_array.append([player.coords[piece_to_move][0], player.coords[piece_to_move][1] + 1])
             elif "L" in piece_to_move:
                 end, step = 9, 1
                 move_array = self.get_lance_moves(piece_to_move, move_array, end, step, player, other_player)
+            elif "KN" in piece_to_move:
+                move_array.append([player.coords[piece_to_move][0] - 1, player.coords[piece_to_move][1] + 2])
+                move_array.append([player.coords[piece_to_move][0] + 1, player.coords[piece_to_move][1] + 2])
+
         return move_array
 
 
