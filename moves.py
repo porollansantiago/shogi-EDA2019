@@ -39,7 +39,7 @@ class Moves():
             elif "KN" in piece_to_move:
                 move_array = self.get_knight_moves(player, piece_to_move, move_array, -2)
             elif "SG" in piece_to_move:
-                move_array = self.get_SG_moves(move_array, 1)
+                move_array = self.get_SG_moves(player, piece_to_move, move_array, -1)
         elif turn == "white":
             if "P" in piece_to_move:
                 move_array.append(player.get_coords(piece_to_move, 0, 1))
@@ -48,6 +48,8 @@ class Moves():
                 move_array = self.get_lance_moves(piece_to_move, move_array, end, step, player, other_player)
             elif "KN" in piece_to_move:
                 move_array = self.get_knight_moves(player, piece_to_move, move_array, 2)
+            elif "SG" in piece_to_move:
+                move_array = self.get_SG_moves(player, piece_to_move, move_array, 1)
         print(move_array)
         return move_array
 
@@ -67,7 +69,15 @@ class Moves():
                 move_array.append(new_coords)
         return move_array
 
-    def get_SG_moves(self, move_array, val):
+    def get_SG_moves(self, player, piece, move_array, val):
+        for x in range(-1, 2):
+            new_coords = player.get_coords(piece, x, val)
+            if self.__inside_the_board(new_coords):
+                move_array.append(new_coords)
+        for x in range(-1, 2, 2):
+            new_coords = player.get_coords(piece, x, -val)
+            if self.__inside_the_board(new_coords):
+                move_array.append(new_coords)
         return move_array
 
     def __inside_the_board(self, new_coords):
