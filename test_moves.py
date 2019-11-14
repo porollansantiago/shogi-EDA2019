@@ -56,6 +56,29 @@ class test_moves(unittest.TestCase):
         example_white = Board_objects(example_white_coords)
         self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
+    @parameterized.expand([
+        ("white", "P2 ", [4, 5], {"P1 ": [4, 5]}, {"P2 ": [4, 4]}),
+        ("white", " R ", [4, 5], {"P1 ": [4, 5]}, {" R ": [4, 4]}),
+        ("white", "L1 ", [4, 5], {"P1 ": [4, 5]}, {"L1 ": [4, 4]}),
+        ("white", "KN1", [3, 6], {"P1 ": [3, 6]}, {"KN1": [4, 4]}),
+        ("white", "SG1", [4, 5], {"P1 ": [4, 5]}, {"SG1": [4, 4]}),
+        ("white", "GG1", [4, 5], {"P1 ": [4, 5]}, {"GG1": [4, 4]}),
+        ("white", " B ", [3, 3], {"P1 ": [3, 3]}, {" B ": [4, 4]}),
+        ("white", " K ", [4, 5], {"P1 ": [4, 5]}, {" K ": [4, 4]}),
+        ("black", "P2 ", [4, 3], {"P2 ": [4, 4]}, {"P1 ": [4, 3]}),
+        ("black", " R ", [4, 3], {" R ": [4, 4]}, {"P1 ": [4, 3]}),
+        ("black", "L1 ", [4, 3], {"L1 ": [4, 4]}, {"P1 ": [4, 3]}),
+        ("black", "KN1", [5, 2], {"KN1": [4, 4]}, {"P1 ": [5, 2]}),
+        ("black", "SG1", [4, 3], {"SG1": [4, 4]}, {"P1 ": [4, 3]}),
+        ("black", "GG1", [4, 3], {"GG1": [4, 4]}, {"P1 ": [4, 3]}),
+        ("black", " B ", [3, 3], {" B ": [4, 4]}, {"P1 ": [3, 3]}),
+        ("black", " K ", [4, 3], {" K ": [4, 4]}, {"P1 ": [4, 3]}),
+    ])
+    def test_validate_overlapping2(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
+
 # PAWN
 
     @parameterized.expand([
@@ -386,7 +409,38 @@ class test_moves(unittest.TestCase):
 # BISHOP
 
     @parameterized.expand([
-        ("black", "R1 ", [0, 0], {"R1 ": [4, 4]}, {}),    
+        ("black", " B ", [0, 0], {" B ": [4, 4]}, {}),
+        ("black", " B ", [1, 1], {" B ": [4, 4]}, {}),
+        ("black", " B ", [2, 2], {" B ": [4, 4]}, {}),
+        ("black", " B ", [3, 3], {" B ": [4, 4]}, {}),
+        ("black", " B ", [5, 5], {" B ": [4, 4]}, {}),
+        ("black", " B ", [6, 6], {" B ": [4, 4]}, {}),
+        ("black", " B ", [7, 7], {" B ": [4, 4]}, {}),
+        ("black", " B ", [8, 8], {" B ": [4, 4]}, {}),
+        ("black", " B ", [0, 8], {" B ": [4, 4]}, {}),
+        ("black", " B ", [1, 7], {" B ": [4, 4]}, {}),
+        ("black", " B ", [2, 6], {" B ": [4, 4]}, {}),
+        ("black", " B ", [3, 5], {" B ": [4, 4]}, {}),
+        ("black", " B ", [5, 3], {" B ": [4, 4]}, {}),
+        ("black", " B ", [6, 2], {" B ": [4, 4]}, {}),
+        ("black", " B ", [7, 1], {" B ": [4, 4]}, {}),
+        ("black", " B ", [8, 0], {" B ": [4, 4]}, {}),
+        ("white", " B ", [0, 0], {}, {" B ": [4, 4]}),
+        ("white", " B ", [1, 1], {}, {" B ": [4, 4]}),
+        ("white", " B ", [2, 2], {}, {" B ": [4, 4]}),
+        ("white", " B ", [3, 3], {}, {" B ": [4, 4]}),
+        ("white", " B ", [5, 5], {}, {" B ": [4, 4]}),
+        ("white", " B ", [6, 6], {}, {" B ": [4, 4]}),
+        ("white", " B ", [7, 7], {}, {" B ": [4, 4]}),
+        ("white", " B ", [8, 8], {}, {" B ": [4, 4]}),
+        ("white", " B ", [0, 8], {}, {" B ": [4, 4]}),
+        ("white", " B ", [1, 7], {}, {" B ": [4, 4]}),
+        ("white", " B ", [2, 6], {}, {" B ": [4, 4]}),
+        ("white", " B ", [3, 5], {}, {" B ": [4, 4]}),
+        ("white", " B ", [5, 3], {}, {" B ": [4, 4]}),
+        ("white", " B ", [6, 2], {}, {" B ": [4, 4]}),
+        ("white", " B ", [7, 1], {}, {" B ": [4, 4]}),
+        ("white", " B ", [8, 0], {}, {" B ": [4, 4]}),
     ])
     def test_bishop_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -394,8 +448,19 @@ class test_moves(unittest.TestCase):
         self.assertTrue(self.moves.validate(turn, piece, new_coords, example_black, example_white))
 
     @parameterized.expand([
-        ("black", "R1 ", [0, 0], {"R1 ": [4, 4]}, {}),
-    ])   
+        ("black", " B ", [0, 4], {" B ": [4, 4]}, {}),
+        ("black", " B ", [4, 5], {" B ": [4, 4]}, {}),
+        ("black", " B ", [4, 3], {" B ": [4, 4]}, {}),
+        ("black", " B ", [3, 4], {" B ": [4, 4]}, {}),
+        ("black", " B ", [5, 4], {" B ": [4, 4]}, {}),
+        ("black", " B ", [8, 2], {" B ": [4, 4]}, {}),
+        ("white", " B ", [0, 4], {}, {" B ": [4, 4]}),
+        ("white", " B ", [4, 5], {}, {" B ": [4, 4]}),
+        ("white", " B ", [4, 3], {}, {" B ": [4, 4]}),
+        ("white", " B ", [3, 4], {}, {" B ": [4, 4]}),
+        ("white", " B ", [5, 4], {}, {" B ": [4, 4]}),
+        ("white", " B ", [8, 2], {}, {" B ": [4, 4]}),
+    ])
     def test_bishop_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
