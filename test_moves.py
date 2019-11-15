@@ -80,18 +80,40 @@ class test_moves(unittest.TestCase):
         self.assertTrue(self.moves.validate(turn, piece, 0, new_coords, example_black, example_white))
 
 # PAWN
-
     @parameterized.expand([
-        ("white", "P1 ", [0, 4]),
-        ("white", "P2 ", [1, 4]),
-        ("white", "P3 ", [2, 5]),
-        ("white", "P4 ", [3, 4]),
-        ("white", "P5 ", [4, 4]),
-        ("black", "P1 ", [0, 4]),
-        ("black", "P2 ", [1, 4]),
-        ("black", "P3 ", [2, 3]),
-        ("black", "P4 ", [3, 4]),
-        ("black", "P5 ", [4, 3])
+        ("black", " P ", [0, 5], {" P ": [[0, 6]]}, {}),
+        ("black", " P ", [2, 5], {" P ": [[2, 6]]}, {}),
+        ("black", " P ", [3, 5], {" P ": [[3, 6]]}, {}),
+        ("black", " P ", [4, 5], {" P ": [[4, 6]]}, {}),
+        ("black", " P ", [5, 5], {" P ": [[5, 6]]}, {}),
+        ("black", " P ", [6, 5], {" P ": [[6, 6]]}, {}),
+        ("black", " P ", [7, 5], {" P ": [[7, 6]]}, {}),
+        ("black", " P ", [8, 5], {" P ": [[8, 6]]}, {}),
+        ("white", " P ", [1, 3], {}, {" P ": [[1, 2]]}),
+        ("white", " P ", [2, 3], {}, {" P ": [[2, 2]]}),
+        ("white", " P ", [3, 3], {}, {" P ": [[3, 2]]}),
+        ("white", " P ", [4, 3], {}, {" P ": [[4, 2]]}),
+        ("white", " P ", [5, 3], {}, {" P ": [[5, 2]]}),
+        ("white", " P ", [6, 3], {}, {" P ": [[6, 2]]}),
+        ("white", " P ", [7, 3], {}, {" P ": [[7, 2]]}),
+        ("white", " P ", [8, 3], {}, {" P ": [[8, 2]]}),
+
+    ])
+    def test_validate_pawn_move(self, turn, piece, new_coords, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, 0, new_coords, example_black, example_white))
+    @parameterized.expand([
+        ("white", " P ", [0, 4]),
+        ("white", " P ", [1, 4]),
+        ("white", " P ", [2, 5]),
+        ("white", " P ", [3, 4]),
+        ("white", " P ", [4, 4]),
+        ("black", " P ", [0, 4]),
+        ("black", " P ", [1, 4]),
+        ("black", " P ", [2, 3]),
+        ("black", " P ", [3, 4]),
+        ("black", " P ", [4, 3])
     ])
     def test_validate_Pawn_move(self, turn, piece, new_coords):
         self.assertFalse(self.moves.validate(turn, piece, 0, new_coords, self.black, self.white))
