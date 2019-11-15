@@ -11,7 +11,9 @@ class Board_objects:
             self.y = side
 
     def add_to_board(self, board):
-        board[self.y] = ["   " for _ in range(self.captured_x_top)]
+        L = len(board[self.y])
+        for _ in range(L, self.captured_x_top):
+            board[self.y].append("   ")
         for piece in self.coords.keys():
             for coor in self.coords[piece]:
                 try:
