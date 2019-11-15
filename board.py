@@ -26,11 +26,21 @@ class Board:
         if self.turn == "black":
             if not self.piece:
                 self.piece, self.piece_index = self.black.get_piece(x, y)
-                return
+                try:
+                    move_array = self.moves.get_move_array(self.turn, self.piece, self.piece_index, x, y, self.black, self.white)
+                except TypeError:
+                    return
+                else:
+                    return move_array
         if self.turn == "white":
             if not self.piece:
                 self.piece, self.piece_index = self.white.get_piece(x, y)
-                return
+                try:
+                    move_array = self.moves.get_move_array(self.turn, self.piece, self.piece_index, x, y, self.white, self.black)
+                except TypeError:
+                    return
+                else:
+                    return move_array
 
         if self.moves.validate(self.turn, self.piece, self.piece_index, x, y, self.black, self.white):
             if self.turn == "black":
@@ -40,7 +50,6 @@ class Board:
         else:
             self.piece = None
             self.piece_index = 0
-        return self.make_board()
 
     def make_move(self, piece, piece_index, x, y, player, opponent):
         player.move(piece, piece_index, x, y)
