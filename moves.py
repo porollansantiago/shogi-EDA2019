@@ -1,22 +1,21 @@
 
 
 class Moves():
-    def __init__(self):
-        pass
-
-    def validate(self, turn, piece_to_move, piece_index, x, y, black, white):
+    def validate(self, turn, piece_to_move, piece_index, x, y, black, white, move_array=None):
         if turn == "black":
-            if self.validate_player(turn, piece_to_move, piece_index, x, y, black, white):
+            if self.validate_player(turn, piece_to_move, piece_index, x, y, black, white, move_array):
                 return False
         elif turn == "white":
-            if self.validate_player(turn, piece_to_move, piece_index, x, y, white, black):
+            if self.validate_player(turn, piece_to_move, piece_index, x, y, white, black, move_array):
                 return False
         return True
 
-    def validate_player(self, turn, piece_to_move, piece_index, x, y, player, other_player):
+    def validate_player(self, turn, piece_to_move, piece_index, x, y, player, other_player, move_array):
+        if not move_array:
+            move_array = self.get_move_array(turn ,piece_to_move, piece_index, x, y,player, other_player)
         if self.__overlapping(x, y, player):
             return True
-        if [x, y] not in self.get_move_array(turn, piece_to_move, piece_index, x, y, player, other_player):
+        if [x, y] not in move_array:
             return True
         return False
 
