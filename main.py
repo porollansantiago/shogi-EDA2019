@@ -6,4 +6,6 @@ if __name__ == "__main__":
     print(api_shogi.get_board())
     while True:
         coord = input("coord: ")
-        print(api_shogi.play(coord))
+        board, move_array = api_shogi.play(coord)
+        print(board)
+        print(move_array)
