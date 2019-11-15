@@ -110,5 +110,22 @@ class Test_board(unittest.TestCase):
         self.board.play(piece_coords[0], piece_coords[1])
         self.assertEqual(self.board.play(new_coords[0], new_coords[1]), new_board)
 
+    @parameterized.expand([
+        ([3, 5], [3, 4], {" P ": [[0, 5],[1, 5],[2, 5], [3, 5]]}, {" P ": [[0, 4], [1, 4], [2, 4], [3, 4]]},
+                        [['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         [' P ', ' P ', ' P ', ' P ', '   ', '   ', '   ', '   ', '   '], 
+                         [' P ', ' P ', ' P ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P ']])
+    ])
+    def test_capture(self, coords, new_coords, black, white, new_board):
+        board = Board(white, black)
+        board.play(coords[0], coords[1])
+        self.assertEqual(board.play(new_coords[0], new_coords[1]), new_board)
+
 if __name__ == "__main__":
     unittest.main()
