@@ -37,7 +37,10 @@ class Board_objects:
         return new_coords
     
     def compare_coords(self, new_coords):
-        return [new_coords] in self.coords.values()
+        for piece in self.coords.keys():
+            for coord in self.coords[piece]:
+                if new_coords == coord:
+                    return True
 
     def move(self, piece_to_move, piece_index, x, y):
         compact = self.coords[piece_to_move][piece_index][0] >= 10
