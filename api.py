@@ -13,6 +13,10 @@ class Api:
         return new_board
 
     def play(self, coords_i):
-        coords = [int(coords_i[0]), int(coords_i[1])]
+        if " " in coords_i:
+            coords = coords_i.split()
+        else:
+            coords = coords_i
+        coords = [int(coords[0]), int(coords[1])]
         move_array = self.board.play(coords[0], coords[1])
         return (self.get_board(), move_array)
