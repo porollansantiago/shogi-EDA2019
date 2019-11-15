@@ -121,11 +121,11 @@ class Test_board_objects(unittest.TestCase):
         self.assertEqual(board_objects.get_all_coords(), all_coords)
 
     @parameterized.expand([
-        ([4, 4], "P1 ", {"Ṕ1 ": [4, 4]}, {}),
+        ([4, 4], "P1 ", {"P1 ": [4, 4]}, {}),
         ([2, 2], "P1 ", {"P1 ": [2, 2], "P2 ": [3, 3]}, {"P2 ": [3, 3]})
     ])
     def test_pop(self, coord, piece, board, new_board):
-        board_objects(Board_objects(board))
+        board_objects = Board_objects(board)
         self.assertEqual(board_objects.pop(coord), piece)
         self.assertEqual(board_objects.coords, new_board)
 

@@ -26,3 +26,12 @@ class Board_objects:
 
     def move(self, piece_to_move, x, y):
         self.coords[piece_to_move] = [x, y]
+
+    def get_all_coords(self):
+        return list(self.coords.values())
+
+    def pop(self, coord):
+        for piece in self.coords.keys():
+            if self.coords[piece] == coord:
+                self.coords.pop(piece)
+                return piece
