@@ -22,11 +22,11 @@ class Board_objects:
                     pass
         return board
 
-    def get_piece(self, coords):
+    def get_piece(self, x, y):
         for piece in self.coords.keys():
-            if coords in self.coords[piece]:
+            if [x, y] in self.coords[piece]:
                 for idx, val in enumerate(self.coords[piece]):
-                    if coords == val:
+                    if [x, y] == val:
                         return piece, idx
         return None, 0
 

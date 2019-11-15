@@ -107,8 +107,8 @@ class Test_board(unittest.TestCase):
                          [' L ', 'KN ', 'SG ', 'GG ', ' K ', 'GG ', 'SG ', 'KN ', ' L ', '   ']])
     ])
     def test_play(self, piece_coords, new_coords, new_board):
-        self.board.play(piece_coords)
-        self.assertEqual(self.board.play(new_coords), new_board)
+        self.board.play(piece_coords[0], piece_coords[1])
+        self.assertEqual(self.board.play(new_coords[0], new_coords[1]), new_board)
 
 if __name__ == "__main__":
     unittest.main()

@@ -22,28 +22,28 @@ class Board:
         board = self.white.add_to_board(board)
         return board
 
-    def play(self, new_coords):
+    def play(self, x, y):
         if self.turn == "black":
             if not self.piece:
-                self.piece, self.piece_index = self.black.get_piece(new_coords)
+                self.piece, self.piece_index = self.black.get_piece(x, y)
                 return
         if self.turn == "white":
             if not self.piece:
-                self.piece, self.piece_index = self.white.get_piece(new_coords)
+                self.piece, self.piece_index = self.white.get_piece(x, y)
                 return
 
-        if self.moves.validate(self.turn, self.piece, self.piece_index, new_coords, self.black, self.white):
+        if self.moves.validate(self.turn, self.piece, self.piece_index, x, y, self.black, self.white):
             if self.turn == "black":
-                self.make_move(self.piece, self.piece_index, new_coords, self.black, self.white)
+                self.make_move(self.piece, self.piece_index, x, y, self.black, self.white)
             elif self.turn == "white":
-                self.make_move(self.piece, self.piece_index, new_coords, self.white, self.black)
+                self.make_move(self.piece, self.piece_index, x, y, self.white, self.black)
         else:
             self.piece = None
             self.piece_index = 0
         return self.make_board()
 
-    def make_move(self, piece, piece_index, new_coords, player, opponent):
-        player.move(piece, piece_index, new_coords[0], new_coords[1])
+    def make_move(self, piece, piece_index, x, y, player, opponent):
+        player.move(piece, piece_index, x, y)
         self.__capture(player, opponent, self.turn)
         self.turn = "white" if self.turn == "black" else "black"
         self.piece = None

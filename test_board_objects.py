@@ -69,20 +69,20 @@ class Test_board_objects(unittest.TestCase):
         self.assertEqual(board_objects.captured_x_top, expected_x_top)
 
     @parameterized.expand([
-        (coords.black, [0, 6], " P "),
-        (coords.black, [4, 8], " K "),
-        (coords.black, [1, 7], " B "),
-        (coords.black, [5, 5], None),
-        (coords.black, [0, 8], " L "),
-        (coords.white, [0, 2], " P "),
-        (coords.white, [5, 5], None),
-        (coords.white, [4, 0], " K "),
-        (coords.white, [1, 1], " R "),
-        (coords.white, [7, 1], " B "),
+        (coords.black, 0, 6, " P "),
+        (coords.black, 4, 8, " K "),
+        (coords.black, 1, 7, " B "),
+        (coords.black, 5, 5, None),
+        (coords.black, 0, 8, " L "),
+        (coords.white, 0, 2, " P "),
+        (coords.white, 5, 5, None),
+        (coords.white, 4, 0, " K "),
+        (coords.white, 1, 1, " R "),
+        (coords.white, 7, 1, " B "),
     ])
-    def test_get_piece(self, board, coord, piece):
+    def test_get_piece(self, board, x, y, piece):
         self.board_objects = Board_objects(board)
-        self.assertEqual(self.board_objects.get_piece(coord), (piece, 0))
+        self.assertEqual(self.board_objects.get_piece(x, y), (piece, 0))
 
     @parameterized.expand([
         (coords.black, " P ", 0, 0, 0, False, False, [0, 6]),
