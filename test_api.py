@@ -39,7 +39,7 @@ class test_Api(unittest.TestCase):
     ])
     def test_play(self, coords, new_coords, new_board):
         self.api.play(coords)
-        self.assertEqual(self.api.play(new_coords), new_board)
+        self.assertEqual(self.api.play(new_coords)[0], new_board)
 
     @parameterized.expand([
         ([5, 5], [0, 6], [0, 5], [0, 0], (" L KN SG GG  K GG SG KN  L    \n"
@@ -74,7 +74,7 @@ class test_Api(unittest.TestCase):
         self.api.play(coords1)
         self.api.play(coords2)
         self.api.play(coords3)
-        self.assertEqual(self.api.play(coords4), new_board)
+        self.assertEqual(self.api.play(coords4)[0], new_board)
 
 if __name__ == "__main__":
     unittest.main()
