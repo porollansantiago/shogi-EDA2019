@@ -9,6 +9,7 @@ class Board:
         self.white = Board_objects(coords.white)
         self.turn = "black"
         self.piece = ""
+        self.piece_index = 0
         self.moves = Moves()
 
     def make_board(self):
@@ -24,24 +25,34 @@ class Board:
     def play(self, new_coords):
         if self.turn == "black":
             if not self.piece:
-                self.piece = self.black.get_piece(new_coords)
+                self.piece, self.piece_index = self.black.get_piece(new_coords)
                 return
         if self.turn == "white":
             if not self.piece:
-                self.piece = self.white.get_piece(new_coords)
+                self.piece, self.piece_index = self.white.get_piece(new_coords)
                 return
-        if self.moves.validate(self.turn, self.piece, new_coords, self.black, self.white):
+
+        if self.moves.validate(self.turn, self.piece, self.piece_index, new_coords, self.black, self.white):
             if self.turn == "black":
-                self.__make_move(self.piece, new_coords, self.black)
+                self.make_move(self.piece, self.piece_index, new_coords, self.black, self.white)
             elif self.turn == "white":
-                self.__make_move(self.piece, new_coords, self.white)
+                self.make_move(self.piece, self.piece_index, new_coords, self.white, self.black)
         else:
             self.piece = None
+            self.piece_index = 0
         return self.make_board()
 
-    def __make_move(self, piece, new_coords, player):
-        player.move(piece, new_coords[0], new_coords[1])
+    def make_move(self, piece, piece_index, new_coords, player, opponent):
+        player.move(piece, piece_index, new_coords[0], new_coords[1])
+        self.__capture(player, opponent, self.turn)
         self.turn = "white" if self.turn == "black" else "black"
         self.piece = None
+        self.piece_index = 0
     
+    def __capture(self, player, opponent, side):
+        player_coords = player.get_all_coords()
+        for coord in opponent.get_all_coords():
+            if coord in player_coords:
+                player.add_piece(opponent.pop(coord), side)
+
 
