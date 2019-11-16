@@ -130,6 +130,29 @@ class Test_board(unittest.TestCase):
         self.assertEqual(board.make_board(), new_board)
 
     @parameterized.expand([
+        ("black", {" P ": [[10, 8], [11, 8], [12, 8]]}, {},
+            [11, 8], [0, 5], " P ",
+            ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P ', ' P ']),
+        ("black", {" P ": [[10, 8], [11, 8], [13, 8]], " B ": [[12, 8]]}, {},
+            [11, 8], [0, 5], " P ",
+            ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P ', ' B ', ' P ']),
+        ("white", {}, {" P ": [[10, 0], [11, 0], [12, 0]]},
+            [11, 0], [0, 5], " P ",
+            ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P ', ' P ']),
+        ("white", {" P ": [[10, 0], [11, 0], [13, 0]], " B ": [[12, 0]]}, {},
+            [11, 0], [0, 5], " P ",
+            ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P ', ' B ', ' P ']),
+    ])
+    def test_play_reintroduce(self, turn, black, white, coords, new_coords, expected_piece, expected_row):
+        board = Board(white, black)
+        board.turn = turn
+        board.play(coords[0], coords[1])
+        board.play(new_coords[0], new_coords[1])
+        b = board.make_board()
+        self.assertEqual(b[new_coords[1]][new_coords[0]], expected_piece)
+        self.assertEqual(b[coords[1]], expected_row)
+
+    @parameterized.expand([
         ({" P ": [[1, 3]]}, {}, [1, 3], [1, 2], [10, 4], 'PP ', "black"),
         ({" P ": [[1, 2]]}, {}, [1, 2], [1, 1], [10, 4], 'PP ', "black"),
         ({" P ": [[1, 3]]}, {}, [1, 3], [1, 2], [12, 4], ' P ', "black"),
