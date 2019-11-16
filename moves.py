@@ -47,7 +47,7 @@ class Moves():
                 move_array = self.get_GG_moves(player, piece_to_move, piece_index, move_array, -1, 1)
             elif " R " == piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, piece_index, move_array)
-            elif " B " == piece_to_move:
+            elif "B" in piece_to_move:
                 move_array = self.get_bishop_moves(player, other_player, piece_to_move, piece_index, move_array)
             elif " K " == piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, piece_index, move_array)
@@ -66,7 +66,7 @@ class Moves():
                 move_array = self.get_GG_moves(player, piece_to_move, piece_index, move_array, 1, -1)
             elif " R " == piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, piece_index, move_array)
-            elif " B " in piece_to_move:
+            elif "B" in piece_to_move:
                 move_array = self.get_bishop_moves(player, other_player, piece_to_move, piece_index, move_array)
             elif " K " == piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, piece_index, move_array)
@@ -141,6 +141,14 @@ class Moves():
             move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
+        if "PB " == piece:
+            for val in [-1, 1]:
+                new_coords1 = player.get_coords(piece, piece_index, val)
+                new_coords2 = player.get_coords(piece, piece_index, 0, val)
+                if self.__inside_the_board(new_coords1):
+                    move_array.append(new_coords1)
+                if self.__inside_the_board(new_coords2):
+                    move_array.append(new_coords2)
         return move_array
 
 
