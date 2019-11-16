@@ -86,8 +86,6 @@ class Board_objects:
     #                popped = captured_pieces.pop(idx + 1)
     #                captured_pieces.insert(idx, popped)
     #        stop += 1
-            
-
 
     def get_all_coords(self):
         all_coords = []
@@ -110,6 +108,7 @@ class Board_objects:
         self.y = 0 if side == "white" else self.y
         if not piece:
             return
+        piece = self.__demote(piece)
         try:
             self.coords[piece].append([self.captured_x_top, self.y])
         except KeyError:
@@ -120,13 +119,13 @@ class Board_objects:
 
     def promote(self, coords):
         piece, val = self.pop(coords)
-        promoted_piece = self.__promoted(piece)
+        promoted_piece = self.__promote(piece)
         try:
             self.coords[promoted_piece].append([val])
         except KeyError:
             self.coords[promoted_piece] = [val]
 
-    def __promoted(self, piece):
+    def __promote(self, piece):
         if piece == " P ":
             return "PP "
         elif piece == " L ":
@@ -139,3 +138,21 @@ class Board_objects:
             return "PB "
         elif piece == " R ":
             return "PR "
+        return piece
+    
+    def __demote(self, piece):
+        if piece == "PP ":
+            return " P "
+        elif piece == "PL ":
+            return " L "
+        elif piece == "PKN ":
+            return "KN "
+        elif piece == "PSG":
+            return "SG "
+        elif piece == "PB ":
+            return " B "
+        elif piece == "PR ":
+            return " R "
+        return piece 
+            
+    
