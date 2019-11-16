@@ -675,6 +675,98 @@ class test_moves(unittest.TestCase):
         self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
 
     # PROMOTED BISHOP
+
+    @parameterized.expand([
+        ("black", "PB ", 0, 0, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 1, 1, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 2, 2, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 3, 3, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 5, 5, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 6, 6, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 7, 7, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 8, 8, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 0, 8, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 1, 7, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 2, 6, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 3, 5, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 5, 3, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 6, 2, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 7, 1, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 8, 0, {"PB ": [[4, 4]]}, {}),
+        ("white", "PB ", 0, 0, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 1, 1, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 2, 2, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 3, 3, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 5, 5, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 6, 6, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 7, 7, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 8, 8, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 0, 8, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 1, 7, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 2, 6, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 3, 5, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 5, 3, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 6, 2, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 8, 0, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 7, 1, {}, {"PB ": [[4, 4]]}),
+        ("black", "PB ", 1, 0, {"PB ": [[2, 1]]}, {}),
+        ("black", "PB ", 5, 4, {"PB ": [[2, 1]]}, {}),
+        ("black", "PB ", 0, 3, {"PB ": [[2, 1]]}, {}),
+        ("black", "PB ", 3, 0, {"PB ": [[2, 1]]}, {}),
+        ("black", "PB ", 4, 0, {"PB ": [[1, 3]]}, {}),
+        ("black", "PB ", 0, 4, {"PB ": [[1, 3]]}, {}),
+        ("black", "PB ", 3, 5, {"PB ": [[1, 3]]}, {}),
+        ("black", "PB ", 0, 2, {"PB ": [[1, 3]]}, {}),
+        ("black", "PB ", 4, 1, {"PB ": [[6, 3]]}, {}),
+        ("black", "PB ", 8, 1, {"PB ": [[6, 3]]}, {}),
+        ("black", "PB ", 8, 5, {"PB ": [[6, 3]]}, {}),
+        ("black", "PB ", 3, 6, {"PB ": [[6, 3]]}, {}),
+        ("black", "PB ", 8, 3, {"PB ": [[6, 5]]}, {}),
+        ("black", "PB ", 8, 7, {"PB ": [[6, 5]]}, {}),
+        ("black", "PB ", 3, 2, {"PB ": [[6, 5]]}, {}),
+        ("black", "PB ", 4, 7, {"PB ": [[6, 5]]}, {}),
+        ("black", "PB ", 8, 5, {"PB ": [[6, 7]]}, {}),
+        ("black", "PB ", 7, 8, {"PB ": [[6, 7]]}, {}),
+        ("black", "PB ", 3, 4, {"PB ": [[6, 7]]}, {}),
+        ("black", "PB ", 5, 8, {"PB ": [[6, 7]]}, {}),
+        ("black", "PB ", 5, 4, {"PB ": [[3, 6]]}, {}),
+        ("black", "PB ", 5, 8, {"PB ": [[3, 6]]}, {}),
+        ("black", "PB ", 1, 4, {"PB ": [[3, 6]]}, {}),
+        ("black", "PB ", 1, 8, {"PB ": [[3, 6]]}, {}),
+
+        ("white", "PB ", 4, 3, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 5, 4, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 4, 5, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 3, 4, {}, {"PB ": [[4, 4]]}),
+        ("black", "PB ", 3, 5, {"PB ": [[3, 6]]}, {}),
+        ("black", "PB ", 4, 6, {"PB ": [[3, 6]]}, {}),
+        ("black", "PB ", 3, 7, {"PB ": [[3, 6]]}, {}),
+        ("black", "PB ", 2, 6, {"PB ": [[3, 6]]}, {}),
+    ])
+    def test_promoted_bishop_move(self, turn, piece, x, y, example_black_coords, example_white_coords, piece_index=0):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, piece_index, x, y, example_black, example_white))
+
+    @parameterized.expand([
+        ("black", "PB ", 0, 4, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 8, 4, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 4, 0, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 4, 8, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 6, 0, {"PB ": [[4, 4]]}, {}),
+        ("black", "PB ", 8, 2, {"PB ": [[4, 4]]}, {}),
+        ("white", "PB ", 0, 4, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 8, 4, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 4, 0, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 4, 8, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 6, 0, {}, {"PB ": [[4, 4]]}),
+        ("white", "PB ", 8, 2, {}, {"PB ": [[4, 4]]}),
+    ])
+    def test_promoted_bishop(self, turn, piece, x, y, example_black_coords, example_white_coords, piece_index=0):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertFalse(self.moves.validate(turn, piece, piece_index, x, y, example_black, example_white))
+
     # PROMOTED ROOK
 
 
