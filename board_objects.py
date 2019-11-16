@@ -109,3 +109,25 @@ class Board_objects:
         self.captured_pieces.append([piece, [self.captured_x_top, self.y]])
         self.captured_x_top += 1
         return self.coords
+
+    def promote(self, coords):
+        piece, val = self.pop(coords)
+        promoted_piece = self.__promoted(piece)
+        try:
+            self.coords[promoted_piece].append([val])
+        except KeyError:
+            self.coords[promoted_piece] = [val]
+
+    def __promoted(self, piece):
+        if piece == " P ":
+            return "PP "
+        elif piece == " L ":
+            return "PL "
+        elif piece == "KN ":
+            return "PKN"
+        elif piece == "SG ":
+            return "PSG"
+        elif piece == " B ":
+            return "PB "
+        elif piece == " R ":
+            return "PR "
