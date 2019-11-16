@@ -38,11 +38,12 @@ class Board_objects:
 
     def get_pawn_cols(self):
         p_cols = []
-        for coords in self.coords[" P "]:
-            for coord in coords:
-                if coord[0] not in p_cols:
-                    p_cols.append(coord[0])
-    
+        
+        for coord in self.coords[" P "]:
+            if coord[0] not in p_cols:
+                p_cols.append(coord[0])
+        return p_cols
+
     def compare_coords(self, new_coords):
         for piece in self.coords.keys():
             for coord in self.coords[piece]:

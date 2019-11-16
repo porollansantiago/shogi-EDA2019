@@ -30,7 +30,7 @@ class Moves():
     def get_move_array(self, turn, piece_to_move, piece_index, x, y, player, other_player):
         move_array = []
         if x > 9:
-            return self.get_empty_spaces(player, other_player)
+            return self.get_empty_spaces(player, other_player, piece_to_move)
         if turn == "black":
             if " P " == piece_to_move:
                 new_coords = player.get_coords(piece_to_move, piece_index, 0, -1)
@@ -186,9 +186,15 @@ class Moves():
     def __inside_the_board(self, new_coords):
         return new_coords[0] >= 0 and new_coords[0] <= 8 and new_coords[1] <= 8 and new_coords[1] >= 0
 
-    def get_empty_spaces(self, player, other_player):
+    def get_empty_spaces(self, player, other_player, piece):
         move_array = []
         p = []
+        pawn_columns = []
+        
+        if piece == " P ":
+            for x in player.get_pawn_cols():
+                pawn_columns.append(x)
+        
         for coord in player.get_all_coords():
             p.append(coord)
         for coord in other_player.get_all_coords():
@@ -196,5 +202,6 @@ class Moves():
         for x in range(9):
             for y in range(9):
                 if [x, y] not in p:
-                    move_array.append([x, y])
+                    if x not in pawn_columns:
+                        move_array.append([x, y])
         return move_array
