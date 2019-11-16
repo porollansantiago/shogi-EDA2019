@@ -13,13 +13,13 @@ class Board:
         self.moves = Moves()
         self.promotion = None
     def make_board(self):
-        board = [["   " for _ in range(10)], ["   " for _ in range(9)],
+        board = [["   " for _ in range(self.white.captured_x_top)], ["   " for _ in range(9)],
                 ["   " for _ in range(9)], ["   " for _ in range(9)],
                 ["   " for _ in range(9)], ["   " for _ in range(9)],
                 ["   " for _ in range(9)], ["   " for _ in range(9)],
-                ["   " for _ in range(10)]]
-        board = self.black.add_to_board(board)
-        board = self.white.add_to_board(board)
+                ["   " for _ in range(self.black.captured_x_top)]]
+        self.black.add_to_board(board)
+        self.white.add_to_board(board)
         return board
 
     def play(self, x, y):
