@@ -43,7 +43,7 @@ class Moves():
                 move_array = self.get_knight_moves(player, piece_to_move, piece_index, move_array, -2)
             elif "SG " == piece_to_move:
                 move_array = self.get_SG_moves(player, piece_to_move, piece_index, move_array, -1)
-            elif "GG " == piece_to_move:
+            elif piece_to_move in ["GG ", "PP ", "PKN", "PSG", "PL "]:
                 move_array = self.get_GG_moves(player, piece_to_move, piece_index, move_array, -1, 1)
             elif " R " == piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, piece_index, move_array)
@@ -62,7 +62,7 @@ class Moves():
                 move_array = self.get_knight_moves(player, piece_to_move, piece_index, move_array, 2)
             elif "SG " == piece_to_move:
                 move_array = self.get_SG_moves(player, piece_to_move, piece_index, move_array, 1)
-            elif "GG " == piece_to_move:
+            elif piece_to_move in ["GG ", "PP ", "PKN", "PSG", "PL "]:
                 move_array = self.get_GG_moves(player, piece_to_move, piece_index, move_array, 1, -1)
             elif " R " == piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, piece_index, move_array)
