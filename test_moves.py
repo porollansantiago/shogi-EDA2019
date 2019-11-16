@@ -557,12 +557,12 @@ class test_moves(unittest.TestCase):
     # PROMOTED SILVER
 
     @parameterized.expand([
-        ("black", "PSG", 3, 3, {"PSG ": [[4, 4]]}, {}),
-        ("black", "PSG", 4, 3, {"PSG ": [[4, 4]]}, {}),
-        ("black", "PSG", 5, 3, {"PSG ": [[4, 4]]}, {}),
-        ("black", "PSG", 3, 4, {"PSG ": [[4, 4]]}, {}),
-        ("black", "PSG", 5, 4, {"PSG ": [[4, 4]]}, {}),
-        ("black", "PSG", 4, 5, {"PSG ": [[4, 4]]}, {}),
+        ("black", "PSG", 3, 3, {"PSG": [[4, 4]]}, {}),
+        ("black", "PSG", 4, 3, {"PSG": [[4, 4]]}, {}),
+        ("black", "PSG", 5, 3, {"PSG": [[4, 4]]}, {}),
+        ("black", "PSG", 3, 4, {"PSG": [[4, 4]]}, {}),
+        ("black", "PSG", 5, 4, {"PSG": [[4, 4]]}, {}),
+        ("black", "PSG", 4, 5, {"PSG": [[4, 4]]}, {}),
         ("white", "PSG", 3, 5, {}, {"PSG": [[4, 4]]}),
         ("white", "PSG", 4, 5, {}, {"PSG": [[4, 4]]}),
         ("white", "PSG", 5, 5, {}, {"PSG": [[4, 4]]}),
@@ -597,18 +597,18 @@ class test_moves(unittest.TestCase):
     # PROMOTED KNIGHT
 
     @parameterized.expand([
-        ("black", "PKN ", 3, 3, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 4, 3, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 5, 3, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 3, 4, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 5, 4, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 4, 5, {"PKN": [[4, 4]]}, {}),
-        ("white", "PKN ", 3, 5, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 4, 5, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 5, 5, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 3, 4, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 5, 4, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 4, 3, {}, {"PKN": [[4, 4]]}),
+        ("black", "PKN", 3, 3, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 4, 3, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 5, 3, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 3, 4, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 5, 4, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 4, 5, {"PKN": [[4, 4]]}, {}),
+        ("white", "PKN", 3, 5, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 4, 5, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 5, 5, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 3, 4, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 5, 4, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 4, 3, {}, {"PKN": [[4, 4]]}),
     ]) 
     def test_promoted_knight(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -616,18 +616,18 @@ class test_moves(unittest.TestCase):
         self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
 
     @parameterized.expand([
-        ("black", "PKN ", 0, 0, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 8, 8, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 3, 5, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 5, 5, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 4, 2, {"PKN": [[4, 4]]}, {}),
-        ("black", "PKN ", 4, 6, {"PKN": [[4, 4]]}, {}),
-        ("white", "PKN ", 3, 3, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 5, 3, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 0, 0, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 8, 8, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 4, 2, {}, {"PKN": [[4, 4]]}),
-        ("white", "PKN ", 4, 6, {}, {"PKN": [[4, 4]]}),
+        ("black", "PKN", 0, 0, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 8, 8, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 3, 5, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 5, 5, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 4, 2, {"PKN": [[4, 4]]}, {}),
+        ("black", "PKN", 4, 6, {"PKN": [[4, 4]]}, {}),
+        ("white", "PKN", 3, 3, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 5, 3, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 0, 0, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 8, 8, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 4, 2, {}, {"PKN": [[4, 4]]}),
+        ("white", "PKN", 4, 6, {}, {"PKN": [[4, 4]]}),
     ])
     def test_promoted_knight2(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -679,4 +679,4 @@ class test_moves(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
