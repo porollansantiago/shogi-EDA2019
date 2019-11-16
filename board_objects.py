@@ -35,6 +35,13 @@ class Board_objects:
         new_coords[0] = x if replace_x else self.coords[piece][piece_index][0] + x
         new_coords[1] = y if replace_y else self.coords[piece][piece_index][1] + y
         return new_coords
+
+    def get_pawn_cols(self):
+        p_cols = []
+        for coords in self.coords[" P "]:
+            for coord in coords:
+                if coord[0] not in p_cols:
+                    p_cols.append(coord[0])
     
     def compare_coords(self, new_coords):
         for piece in self.coords.keys():
