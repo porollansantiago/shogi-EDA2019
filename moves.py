@@ -45,7 +45,7 @@ class Moves():
                 move_array = self.get_SG_moves(player, piece_to_move, piece_index, move_array, -1)
             elif piece_to_move in ["GG ", "PP ", "PKN", "PSG", "PL "]:
                 move_array = self.get_GG_moves(player, piece_to_move, piece_index, move_array, -1, 1)
-            elif " R " == piece_to_move:
+            elif "R" in piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, piece_index, move_array)
             elif "B" in piece_to_move:
                 move_array = self.get_bishop_moves(player, other_player, piece_to_move, piece_index, move_array)
@@ -64,13 +64,12 @@ class Moves():
                 move_array = self.get_SG_moves(player, piece_to_move, piece_index, move_array, 1)
             elif piece_to_move in ["GG ", "PP ", "PKN", "PSG", "PL "]:
                 move_array = self.get_GG_moves(player, piece_to_move, piece_index, move_array, 1, -1)
-            elif " R " == piece_to_move:
+            elif "R" in piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, piece_index, move_array)
             elif "B" in piece_to_move:
                 move_array = self.get_bishop_moves(player, other_player, piece_to_move, piece_index, move_array)
             elif " K " == piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, piece_index, move_array)
-        print(move_array)
         return move_array
 
 
@@ -113,6 +112,14 @@ class Moves():
         coords = player.get_coords(piece, piece_index)
         move_array.append(self.__get_rook_col(coords, player, piece, piece_index, move_array, other_player))
         move_array.append(self.__get_rook_row(coords, player, piece, piece_index, move_array, other_player))
+        if "PR " == piece:
+            for val in [-1, 1]:
+                new_coords1 = player.get_coords(piece, piece_index, val, val)
+                new_coords2 = player.get_coords(piece, piece_index, -val, val)
+                if self.__inside_the_board(new_coords1):
+                    move_array.append(new_coords1)
+                if self.__inside_the_board(new_coords2):
+                    move_array.append(new_coords2)
         return move_array
 
     def get_bishop_moves(self, player, other_player, piece, piece_index, move_array):

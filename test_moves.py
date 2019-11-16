@@ -769,6 +769,108 @@ class test_moves(unittest.TestCase):
 
     # PROMOTED ROOK
 
+    @parameterized.expand([
+        ("black", "PR ", 4, 1, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 4, 2, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 4, 3, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 4, 0, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 4, 5, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 4, 6, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 4, 7, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 4, 8, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 0, 4, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 1, 4, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 2, 4, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 3, 4, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 5, 4, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 6, 4, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 7, 4, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 8, 4, {"PR ": [[4, 4]]}, {}),
+        ("white", "PR ", 4, 0, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 4, 1, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 4, 2, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 4, 3, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 4, 5, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 4, 6, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 4, 7, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 4, 8, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 0, 4, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 1, 4, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 2, 4, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 3, 4, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 5, 4, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 6, 4, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 7, 4, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 8, 4, {}, {"PR ": [[4, 4]]}),
+        ("black", "PR ", 0, 4, {"PR ": [[4, 4]]}, {" P ": [[0, 4]]}),
+        ("white", "PR ", 0, 4, {" P ": [[0, 4]]}, {"PR ": [[4, 4]]}),
+        ("black", "PR ", 5, 5, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 5, 3, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 3, 3, {"PR ": [[4, 4]]}, {}),
+        ("black", "PR ", 3, 5, {"PR ": [[4, 4]]}, {}),
+        ("white", "PR ", 5, 5, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 5, 3, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 3, 3, {}, {"PR ": [[4, 4]]}),
+        ("white", "PR ", 3, 5, {}, {"PR ": [[4, 4]]}),
+    ])
+    def test_promoted_rook_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+
+    @parameterized.expand([
+        ("black", " R ", 0, 0, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 8, 8, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 1, 1, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 2, 2, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 0, 8, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 6, 6, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 5, 6, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 8, 0, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 0, 2, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 1, 3, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 2, 3, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 8, 8, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 6, 7, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 2, 7, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 8, 7, {" R ": [[4, 4]]}, {}),
+        ("black", " R ", 0, 3, {" R ": [[4, 4]]}, {}),
+        ("white", " R ", 0, 0, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 8, 8, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 1, 1, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 2, 2, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 0, 8, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 6, 6, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 5, 6, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 8, 0, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 0, 2, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 1, 3, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 2, 3, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 8, 8, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 6, 7, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 2, 7, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 8, 7, {}, {" R ": [[4, 4]]}),
+        ("white", " R ", 0, 3, {}, {" R ": [[4, 4]]}),
+        ("black", " R ", 4, 1, {" R ": [[4, 4]]}, {"P1 ": [[4, 2]]}),
+        ("black", " R ", 4, 8, {" R ": [[4, 4]]}, {"P1 ": [[4, 6]]}),
+        ("black", " R ", 0, 4, {" R ": [[4, 4]]}, {"P1 ": [[2, 4]]}),
+        ("black", " R ", 7, 4, {" R ": [[4, 4]]}, {"P1 ": [[6, 4]]}),
+        ("white", " R ", 4, 1, {" P ": [[4, 2]]}, {" R ": [[4, 4]]}),
+        ("white", " R ", 4, 8, {" P ": [[4, 6]]}, {" R ": [[4, 4]]}),
+        ("white", " R ", 0, 4, {" P ": [[2, 4]]}, {" R ": [[4, 4]]}),
+        ("white", " R ", 7, 4, {" P ": [[6, 4]]}, {" R ": [[4, 4]]}),
+        ("black", " R ", 4, 1, {" R ": [[4, 4]], " P ": [[4, 2]]}, {}),
+        ("black", " R ", 4, 8, {" R ": [[4, 4]], " P ": [[4, 6]]}, {}),
+        ("black", " R ", 0, 4, {" R ": [[4, 4]], " P ": [[2, 4]]}, {}),
+        ("black", " R ", 7, 4, {" R ": [[4, 4]], " P ": [[6, 4]]}, {}),
+        ("black", " R ", 0, 4, {" R ": [[4, 4]], " P ": [[0, 4]]}, {}),
+        ("white", " R ", 0, 4, {}, {" R ": [[4, 4]], " P ": [[0, 4]]}),
+    ])
+    def test_promoted_rook_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+        example_black = Board_objects(example_black_coords)
+        example_white = Board_objects(example_white_coords)
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
