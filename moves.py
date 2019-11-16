@@ -28,43 +28,43 @@ class Moves():
     def get_move_array(self, turn, piece_to_move, piece_index, x, y, player, other_player):
         move_array = []
         if turn == "black":
-            if "P" in piece_to_move:
+            if " P " == piece_to_move:
                 new_coords = player.get_coords(piece_to_move, piece_index, 0, -1)
                 if self.__inside_the_board(new_coords):
                     move_array.append(new_coords)
-            elif "L" in piece_to_move:
+            elif " L " == piece_to_move:
                 end, step = -1, -1
                 move_array = self.get_lance_moves(piece_to_move, piece_index, move_array, end, step, player, other_player)
-            elif "KN" in piece_to_move:
+            elif "KN " == piece_to_move:
                 move_array = self.get_knight_moves(player, piece_to_move, piece_index, move_array, -2)
-            elif "SG" in piece_to_move:
+            elif "SG " == piece_to_move:
                 move_array = self.get_SG_moves(player, piece_to_move, piece_index, move_array, -1)
-            elif "GG" in piece_to_move:
+            elif "GG " == piece_to_move:
                 move_array = self.get_GG_moves(player, piece_to_move, piece_index, move_array, -1, 1)
-            elif "R" in piece_to_move:
+            elif " R " == piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, piece_index, move_array)
-            elif "B" in piece_to_move:
+            elif " B " == piece_to_move:
                 move_array = self.get_bishop_moves(player, other_player, piece_to_move, piece_index, move_array)
-            elif " K " in piece_to_move:
+            elif " K " == piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, piece_index, move_array)
             
         elif turn == "white":
-            if "P" in piece_to_move:
+            if " P " == piece_to_move:
                 move_array.append(player.get_coords(piece_to_move, piece_index, 0, 1))
-            elif "L" in piece_to_move:
+            elif " L " == piece_to_move:
                 end, step = 9, 1
                 move_array = self.get_lance_moves(piece_to_move, piece_index, move_array, end, step, player, other_player)
-            elif "KN" in piece_to_move:
+            elif "KN " == piece_to_move:
                 move_array = self.get_knight_moves(player, piece_to_move, piece_index, move_array, 2)
-            elif "SG" in piece_to_move:
+            elif "SG " == piece_to_move:
                 move_array = self.get_SG_moves(player, piece_to_move, piece_index, move_array, 1)
-            elif "GG" in piece_to_move:
+            elif "GG " == piece_to_move:
                 move_array = self.get_GG_moves(player, piece_to_move, piece_index, move_array, 1, -1)
-            elif "R" in piece_to_move:
+            elif " R " == piece_to_move:
                 move_array = self.get_rook_moves(player, other_player, piece_to_move, piece_index, move_array)
-            elif "B" in piece_to_move:
+            elif " B " in piece_to_move:
                 move_array = self.get_bishop_moves(player, other_player, piece_to_move, piece_index, move_array)
-            elif " K " in piece_to_move:
+            elif " K " == piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, piece_index, move_array)
         print(move_array)
         return move_array
