@@ -2,6 +2,8 @@
 
 class Moves():
     def validate(self, turn, piece_to_move, piece_index, x, y, black, white, move_array=None):
+        if [x, y] == [10, 4] or [x, y] == [12, 4]:
+            return False
         if turn == "black":
             if self.validate_player(turn, piece_to_move, piece_index, x, y, black, white, move_array):
                 return False
