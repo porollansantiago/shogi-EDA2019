@@ -11,22 +11,22 @@ class test_moves(unittest.TestCase):
         self.white = Board_objects(c.white)
 
     @parameterized.expand([
-        ("white", "P2 ", 4, 5, {}, {"P2 ": [[4, 4]], "P1": [[4, 5]]}),
-        ("white", " R ", 4, 5, {}, {" R ": [[4, 4]], "P1": [[4, 5]]}),
-        ("white", "L1 ", 4, 5, {}, {"L1 ": [[4, 4]], "P1": [[4, 5]]}),
-        ("white", "KN1", 3, 6, {}, {"KN1": [[4, 4]], "P1": [[3, 6]]}),
-        ("white", "SG1", 4, 5, {}, {"SG1": [[4, 4]], "P1": [[4, 5]]}),
-        ("white", "GG1", 4, 5, {}, {"GG1": [[4, 4]], "P1": [[4, 5]]}),
-        ("white", " B ", 3, 3, {}, {" B ": [[4, 4]], "P1": [[3, 3]]}),
-        ("white", " K ", 4, 5, {}, {" K ": [[4, 4]], "P1": [[4, 5]]}),
-        ("black", "P2 ", 4, 3, {"P2 ": [[4, 4]], "P1": [[4, 3]]}, {}),
-        ("black", " R ", 4, 3, {" R ": [[4, 4]], "P1": [[4, 3]]}, {}),
-        ("black", "L1 ", 4, 3, {"L1 ": [[4, 4]], "P1": [[4, 3]]}, {}),
-        ("black", "KN1", 5, 2, {"KN1": [[4, 4]], "P1": [[5, 2]]}, {}),
-        ("black", "SG1", 4, 3, {"SG1": [[4, 4]], "P1": [[4, 3]]}, {}),
-        ("black", "GG1", 4, 3, {"GG1": [[4, 4]], "P1": [[4, 3]]}, {}),
-        ("black", " B ", 3, 3, {" B ": [[4, 4]], "P1": [[3, 3]]}, {}),
-        ("black", " K ", 4, 3, {" K ": [[4, 4]], "P1": [[4, 3]]}, {}),
+        ("white", " P ", 4, 5, {}, {" P ": [[4, 4]], " P": [[4, 5]]}),
+        ("white", " R ", 4, 5, {}, {" R ": [[4, 4]], " P": [[4, 5]]}),
+        ("white", " L ", 4, 5, {}, {" L ": [[4, 4]], " P": [[4, 5]]}),
+        ("white", "KN ", 3, 6, {}, {"KN ": [[4, 4]], " P": [[3, 6]]}),
+        ("white", "SG ", 4, 5, {}, {"SG ": [[4, 4]], " P": [[4, 5]]}),
+        ("white", "GG ", 4, 5, {}, {"GG ": [[4, 4]], " P": [[4, 5]]}),
+        ("white", " B ", 3, 3, {}, {" B ": [[4, 4]], " P": [[3, 3]]}),
+        ("white", " K ", 4, 5, {}, {" K ": [[4, 4]], " P": [[4, 5]]}),
+        ("black", " P ", 4, 3, {" P ": [[4, 4]], " P": [[4, 3]]}, {}),
+        ("black", " R ", 4, 3, {" R ": [[4, 4]], " P": [[4, 3]]}, {}),
+        ("black", " L ", 4, 3, {" L ": [[4, 4]], " P": [[4, 3]]}, {}),
+        ("black", "KN ", 5, 2, {"KN ": [[4, 4]], " P": [[5, 2]]}, {}),
+        ("black", "SG ", 4, 3, {"SG ": [[4, 4]], " P": [[4, 3]]}, {}),
+        ("black", "GG ", 4, 3, {"GG ": [[4, 4]], " P": [[4, 3]]}, {}),
+        ("black", " B ", 3, 3, {" B ": [[4, 4]], " P": [[3, 3]]}, {}),
+        ("black", " K ", 4, 3, {" K ": [[4, 4]], " P": [[4, 3]]}, {}),
     ])
     def test_validate_overlapping(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -34,20 +34,20 @@ class test_moves(unittest.TestCase):
         self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
 
     @parameterized.expand([
-        ("white", "P2 ", 4, 5, {}, {"P2 ": [[4, 4]]}),
+        ("white", " P ", 4, 5, {}, {" P ": [[4, 4]]}),
         ("white", " R ", 4, 5, {}, {" R ": [[4, 4]]}),
-        ("white", "L1 ", 4, 5, {}, {"L1 ": [[4, 4]]}),
-        ("white", "KN1", 3, 6, {}, {"KN1": [[4, 4]]}),
-        ("white", "SG1", 4, 5, {}, {"SG1": [[4, 4]]}),
-        ("white", "GG1", 4, 5, {}, {"GG1": [[4, 4]]}),
+        ("white", " L ", 4, 5, {}, {" L ": [[4, 4]]}),
+        ("white", "KN ", 3, 6, {}, {"KN ": [[4, 4]]}),
+        ("white", "SG ", 4, 5, {}, {"SG ": [[4, 4]]}),
+        ("white", "GG ", 4, 5, {}, {"GG ": [[4, 4]]}),
         ("white", " B ", 3, 3, {}, {" B ": [[4, 4]]}),
         ("white", " K ", 4, 5, {}, {" K ": [[4, 4]]}),
-        ("black", "P2 ", 4, 3, {"P2 ": [[4, 4]]}, {}),
+        ("black", " P ", 4, 3, {" P ": [[4, 4]]}, {}),
         ("black", " R ", 4, 3, {" R ": [[4, 4]]}, {}),
-        ("black", "L1 ", 4, 3, {"L1 ": [[4, 4]]}, {}),
-        ("black", "KN1", 5, 2, {"KN1": [[4, 4]]}, {}),
-        ("black", "SG1", 4, 3, {"SG1": [[4, 4]]}, {}),
-        ("black", "GG1", 4, 3, {"GG1": [[4, 4]]}, {}),
+        ("black", " L ", 4, 3, {" L ": [[4, 4]]}, {}),
+        ("black", "KN ", 5, 2, {"KN ": [[4, 4]]}, {}),
+        ("black", "SG ", 4, 3, {"SG ": [[4, 4]]}, {}),
+        ("black", "GG ", 4, 3, {"GG ": [[4, 4]]}, {}),
         ("black", " B ", 3, 3, {" B ": [[4, 4]]}, {}),
         ("black", " K ", 4, 3, {" K ": [[4, 4]]}, {}),
     ])
@@ -57,24 +57,24 @@ class test_moves(unittest.TestCase):
         self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
 
     @parameterized.expand([
-        ("white", "P2 ", 4, 5, {"P1 ": [[4, 5]]}, {"P2 ": [[4, 4]]}),
-        ("white", " R ", 4, 5, {"P1 ": [[4, 5]]}, {" R ": [[4, 4]]}),
-        ("white", "L1 ", 4, 5, {"P1 ": [[4, 5]]}, {"L1 ": [[4, 4]]}),
-        ("white", "KN1", 3, 6, {"P1 ": [[3, 6]]}, {"KN1": [[4, 4]]}),
-        ("white", "SG1", 4, 5, {"P1 ": [[4, 5]]}, {"SG1": [[4, 4]]}),
-        ("white", "GG1", 4, 5, {"P1 ": [[4, 5]]}, {"GG1": [[4, 4]]}),
-        ("white", " B ", 3, 3, {"P1 ": [[3, 3]]}, {" B ": [[4, 4]]}),
-        ("white", " K ", 4, 5, {"P1 ": [[4, 5]]}, {" K ": [[4, 4]]}),
-        ("black", "P2 ", 4, 3, {"P2 ": [[4, 4]]}, {"P1 ": [[4, 3]]}),
-        ("black", " R ", 4, 3, {" R ": [[4, 4]]}, {"P1 ": [[4, 3]]}),
-        ("black", "L1 ", 4, 3, {"L1 ": [[4, 4]]}, {"P1 ": [[4, 3]]}),
-        ("black", "KN1", 5, 2, {"KN1": [[4, 4]]}, {"P1 ": [[5, 2]]}),
-        ("black", "SG1", 4, 3, {"SG1": [[4, 4]]}, {"P1 ": [[4, 3]]}),
-        ("black", "GG1", 4, 3, {"GG1": [[4, 4]]}, {"P1 ": [[4, 3]]}),
-        ("black", " B ", 3, 3, {" B ": [[4, 4]]}, {"P1 ": [[3, 3]]}),
-        ("black", " K ", 4, 3, {" K ": [[4, 4]]}, {"P1 ": [[4, 3]]}),
+        ("white", " P ", 4, 5, {" P ": [[4, 5]]}, {" P ": [[4, 4]]}),
+        ("white", " R ", 4, 5, {" P ": [[4, 5]]}, {" R ": [[4, 4]]}),
+        ("white", " L ", 4, 5, {" P ": [[4, 5]]}, {" L ": [[4, 4]]}),
+        ("white", "KN ", 3, 6, {" P ": [[3, 6]]}, {"KN ": [[4, 4]]}),
+        ("white", "SG ", 4, 5, {" P ": [[4, 5]]}, {"SG ": [[4, 4]]}),
+        ("white", "GG ", 4, 5, {" P ": [[4, 5]]}, {"GG ": [[4, 4]]}),
+        ("white", " B ", 3, 3, {" P ": [[3, 3]]}, {" B ": [[4, 4]]}),
+        ("white", " K ", 4, 5, {" P ": [[4, 5]]}, {" K ": [[4, 4]]}),
+        ("black", " P ", 4, 3, {" P ": [[4, 4]]}, {" P ": [[4, 3]]}),
+        ("black", " R ", 4, 3, {" R ": [[4, 4]]}, {" P ": [[4, 3]]}),
+        ("black", " L ", 4, 3, {" L ": [[4, 4]]}, {" P ": [[4, 3]]}),
+        ("black", "KN ", 5, 2, {"KN ": [[4, 4]]}, {" P ": [[5, 2]]}),
+        ("black", "SG ", 4, 3, {"SG ": [[4, 4]]}, {" P ": [[4, 3]]}),
+        ("black", "GG ", 4, 3, {"GG ": [[4, 4]]}, {" P ": [[4, 3]]}),
+        ("black", " B ", 3, 3, {" B ": [[4, 4]]}, {" P ": [[3, 3]]}),
+        ("black", " K ", 4, 3, {" K ": [[4, 4]]}, {" P ": [[4, 3]]}),
     ])
-    def test_validate_overlapping2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_vaildate_overlapping2(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
         self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
@@ -121,22 +121,22 @@ class test_moves(unittest.TestCase):
 # LANCE
 
     @parameterized.expand([
-        ("black", "L1 ", 0, 7, {"L1 ": [[0, 8]]}, {}),
-        ("black", "L1 ", 0, 6, {"L1 ": [[0, 8]]}, {}),
-        ("black", "L1 ", 0, 5, {"L1 ": [[0, 8]]}, {}),
-        ("black", "L1 ", 0, 4, {"L1 ": [[0, 8]]}, {}),
-        ("black", "L1 ", 0, 3, {"L1 ": [[0, 8]]}, {}),
-        ("black", "L1 ", 0, 2, {"L1 ": [[0, 8]]}, {}),
-        ("black", "L1 ", 0, 1, {"L1 ": [[0, 8]]}, {}),
-        ("black", "L1 ", 0, 0, {"L1 ": [[0, 8]]}, {}),
-        ("white", "L1 ", 8, 8, {}, {"L1 ": [[8, 0]]}),
-        ("white", "L1 ", 8, 1, {}, {"L1 ": [[8, 0]]}),
-        ("white", "L1 ", 8, 2, {}, {"L1 ": [[8, 0]]}),
-        ("white", "L1 ", 8, 3, {}, {"L1 ": [[8, 0]]}),
-        ("white", "L1 ", 8, 4, {}, {"L1 ": [[8, 0]]}),
-        ("white", "L1 ", 8, 5, {}, {"L1 ": [[8, 0]]}),
-        ("white", "L1 ", 8, 6, {}, {"L1 ": [[8, 0]]}),
-        ("white", "L1 ", 8, 7, {}, {"L1 ": [[8, 0]]}),
+        ("black", " L ", 0, 7, {" L ": [[0, 8]]}, {}),
+        ("black", " L ", 0, 6, {" L ": [[0, 8]]}, {}),
+        ("black", " L ", 0, 5, {" L ": [[0, 8]]}, {}),
+        ("black", " L ", 0, 4, {" L ": [[0, 8]]}, {}),
+        ("black", " L ", 0, 3, {" L ": [[0, 8]]}, {}),
+        ("black", " L ", 0, 2, {" L ": [[0, 8]]}, {}),
+        ("black", " L ", 0, 1, {" L ": [[0, 8]]}, {}),
+        ("black", " L ", 0, 0, {" L ": [[0, 8]]}, {}),
+        ("white", " L ", 8, 8, {}, {" L ": [[8, 0]]}),
+        ("white", " L ", 8, 1, {}, {" L ": [[8, 0]]}),
+        ("white", " L ", 8, 2, {}, {" L ": [[8, 0]]}),
+        ("white", " L ", 8, 3, {}, {" L ": [[8, 0]]}),
+        ("white", " L ", 8, 4, {}, {" L ": [[8, 0]]}),
+        ("white", " L ", 8, 5, {}, {" L ": [[8, 0]]}),
+        ("white", " L ", 8, 6, {}, {" L ": [[8, 0]]}),
+        ("white", " L ", 8, 7, {}, {" L ": [[8, 0]]}),
 
     ])
     def test_validate_Lance_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
@@ -145,30 +145,30 @@ class test_moves(unittest.TestCase):
         self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
 
     @parameterized.expand([
-        ("black", "L1 ", 4, 8, {"L1 ": [[4, 5]]}, {}),
-        ("black", "L1 ", 5, 7, {"L1 ": [[5, 5]]}, {}),
-        ("black", "L1 ", 6, 6, {"L1 ": [[6, 5]]}, {}),
-        ("black", "L1 ", 6, 6, {"L1 ": [[5, 5]]}, {}),
-        ("black", "L1 ", 4, 4, {"L1 ": [[5, 5]]}, {}),
-        ("black", "L1 ", 0, 0, {"L1 ": [[5, 5]]}, {}),
-        ("black", "L1 ", 1, 1, {"L1 ": [[5, 5]]}, {}),
-        ("black", "L1 ", 5, 6, {"L1 ": [[5, 5]]}, {}),
-        ("black", "L1 ", 5, 7, {"L1 ": [[5, 5]]}, {}),
-        ("black", "L1 ", 5, 8, {"L1 ": [[5, 5]]}, {}),
-        ("white", "L1 ", 4, 3, {}, {"L1 ": [[5, 5]]}),
-        ("white", "L1 ", 3, 4, {}, {"L1 ": [[5, 5]]}),
-        ("white", "L1 ", 2, 5, {}, {"L1 ": [[5, 5]]}),
-        ("white", "L1 ", 1, 6, {}, {"L1 ": [[5, 5]]}),
-        ("white", "L1 ", 0, 7, {}, {"L1 ": [[5, 5]]}),
-        ("white", "L1 ", 4, 4, {}, {"L1 ": [[5, 5]]}),
-        ("white", "L1 ", 0, 0, {}, {"L1 ": [[5, 5]]}),
-        ("white", "L1 ", 1, 5, {}, {"L1 ": [[5, 5]]}),
-        ("black", "L1 ", 4, 1, {"L1 ": [[4, 4]]}, {"P1 ": [[4, 2]]}),
-        ("black", "L1 ", 4, 0, {"L1 ": [[4, 4]]}, {"P1 ": [[4, 2]]}),
+        ("black", " L ", 4, 8, {" L ": [[4, 5]]}, {}),
+        ("black", " L ", 5, 7, {" L ": [[5, 5]]}, {}),
+        ("black", " L ", 6, 6, {" L ": [[6, 5]]}, {}),
+        ("black", " L ", 6, 6, {" L ": [[5, 5]]}, {}),
+        ("black", " L ", 4, 4, {" L ": [[5, 5]]}, {}),
+        ("black", " L ", 0, 0, {" L ": [[5, 5]]}, {}),
+        ("black", " L ", 1, 1, {" L ": [[5, 5]]}, {}),
+        ("black", " L ", 5, 6, {" L ": [[5, 5]]}, {}),
+        ("black", " L ", 5, 7, {" L ": [[5, 5]]}, {}),
+        ("black", " L ", 5, 8, {" L ": [[5, 5]]}, {}),
+        ("white", " L ", 4, 3, {}, {" L ": [[5, 5]]}),
+        ("white", " L ", 3, 4, {}, {" L ": [[5, 5]]}),
+        ("white", " L ", 2, 5, {}, {" L ": [[5, 5]]}),
+        ("white", " L ", 1, 6, {}, {" L ": [[5, 5]]}),
+        ("white", " L ", 0, 7, {}, {" L ": [[5, 5]]}),
+        ("white", " L ", 4, 4, {}, {" L ": [[5, 5]]}),
+        ("white", " L ", 0, 0, {}, {" L ": [[5, 5]]}),
+        ("white", " L ", 1, 5, {}, {" L ": [[5, 5]]}),
+        ("black", " L ", 4, 1, {" L ": [[4, 4]]}, {" P ": [[4, 2]]}),
+        ("black", " L ", 4, 0, {" L ": [[4, 4]]}, {" P ": [[4, 2]]}),
         ("black", " L ", 0, 0, {" L ": [[0, 8]]}, {" P ": [[0, 4]]}),
         ("black", " L ", 0, 0, {" L ": [[0, 8]], " P ": [[0, 4]]}, {}),
-        ("white", "L1 ", 4, 7, {"P1 ": [[4, 6]]}, {"L1 ": [[4, 4]]}),
-        ("white", "L1 ", 4, 8, {"P1 ": [[4, 6]]}, {"L1 ": [[4, 4]]}),
+        ("white", " L ", 4, 7, {" P ": [[4, 6]]}, {" L ": [[4, 4]]}),
+        ("white", " L ", 4, 8, {" P ": [[4, 6]]}, {" L ": [[4, 4]]}),
     ])
     def test_validate_Lance_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -178,10 +178,10 @@ class test_moves(unittest.TestCase):
 # KNIGHT
 
     @parameterized.expand([
-        ("black", "KN1", 3, 3, {"KN1": [[4, 5]]}, {}),
-        ("black", "KN1", 5, 3, {"KN1": [[4, 5]]}, {}),
-        ("white", "KN1", 3, 7, {}, {"KN1": [[4, 5]]}),
-        ("white", "KN1", 5, 7, {}, {"KN1": [[4, 5]]}),
+        ("black", "KN ", 3, 3, {"KN ": [[4, 5]]}, {}),
+        ("black", "KN ", 5, 3, {"KN ": [[4, 5]]}, {}),
+        ("white", "KN ", 3, 7, {}, {"KN ": [[4, 5]]}),
+        ("white", "KN ", 5, 7, {}, {"KN ": [[4, 5]]}),
 
     ])
     def test_validate_Knight_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
@@ -190,19 +190,19 @@ class test_moves(unittest.TestCase):
         self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
 
     @parameterized.expand([
-        ("black", "KN1", 2, 3, {"KN1": [[4, 5]]}, {}),
-        ("black", "KN1", 4, 3, {"KN1": [[4, 5]]}, {}),
-        ("black", "KN1", 4, 7, {"KN1": [[4, 5]]}, {}),
-        ("black", "KN1", 3, 7, {"KN1": [[4, 5]]}, {}),
-        ("black", "KN1", 5, 7, {"KN1": [[4, 5]]}, {}),
-        ("black", "KN1", 3, 6, {"KN1": [[4, 5]]}, {}),
-        ("black", "KN1", 7, 8, {"KN1": [[4, 5]]}, {}),
-        ("white", "KN1", 2, 3, {}, {"KN1": [[4, 5]]}),
-        ("white", "KN1", 4, 3, {}, {"KN1": [[4, 5]]}),
-        ("white", "KN1", 4, 7, {}, {"KN1": [[4, 5]]}),
-        ("white", "KN1", 3, 3, {}, {"KN1": [[4, 5]]}),
-        ("white", "KN1", 5, 3, {}, {"KN1": [[4, 5]]}),
-        ("white", "KN1", 0, 0, {}, {"KN1": [[4, 5]]})
+        ("black", "KN ", 2, 3, {"KN ": [[4, 5]]}, {}),
+        ("black", "KN ", 4, 3, {"KN ": [[4, 5]]}, {}),
+        ("black", "KN ", 4, 7, {"KN ": [[4, 5]]}, {}),
+        ("black", "KN ", 3, 7, {"KN ": [[4, 5]]}, {}),
+        ("black", "KN ", 5, 7, {"KN ": [[4, 5]]}, {}),
+        ("black", "KN ", 3, 6, {"KN ": [[4, 5]]}, {}),
+        ("black", "KN ", 7, 8, {"KN ": [[4, 5]]}, {}),
+        ("white", "KN ", 2, 3, {}, {"KN ": [[4, 5]]}),
+        ("white", "KN ", 4, 3, {}, {"KN ": [[4, 5]]}),
+        ("white", "KN ", 4, 7, {}, {"KN ": [[4, 5]]}),
+        ("white", "KN ", 3, 3, {}, {"KN ": [[4, 5]]}),
+        ("white", "KN ", 5, 3, {}, {"KN ": [[4, 5]]}),
+        ("white", "KN ", 0, 0, {}, {"KN ": [[4, 5]]})
 
     ])
     def test_validate_Knight_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
@@ -213,16 +213,16 @@ class test_moves(unittest.TestCase):
 # SILVER GENERAL
 
     @parameterized.expand([
-        ("black", "SG1", 3, 3, {"SG1": [[4, 4]]}, {}),
-        ("black", "SG1", 4, 3, {"SG1": [[4, 4]]}, {}),
-        ("black", "SG1", 5, 3, {"SG1": [[4, 4]]}, {}),
-        ("black", "SG1", 3, 5, {"SG1": [[4, 4]]}, {}),
-        ("black", "SG1", 5, 5, {"SG1": [[4, 4]]}, {}),
-        ("white", "SG1", 3, 5, {}, {"SG1": [[4, 4]]}),
-        ("white", "SG1", 4, 5, {}, {"SG1": [[4, 4]]}),
-        ("white", "SG1", 5, 5, {}, {"SG1": [[4, 4]]}),
-        ("white", "SG1", 3, 3, {}, {"SG1": [[4, 4]]}),
-        ("white", "SG1", 5, 3, {}, {"SG1": [[4, 4]]}),
+        ("black", "SG ", 3, 3, {"SG ": [[4, 4]]}, {}),
+        ("black", "SG ", 4, 3, {"SG ": [[4, 4]]}, {}),
+        ("black", "SG ", 5, 3, {"SG ": [[4, 4]]}, {}),
+        ("black", "SG ", 3, 5, {"SG ": [[4, 4]]}, {}),
+        ("black", "SG ", 5, 5, {"SG ": [[4, 4]]}, {}),
+        ("white", "SG ", 3, 5, {}, {"SG ": [[4, 4]]}),
+        ("white", "SG ", 4, 5, {}, {"SG ": [[4, 4]]}),
+        ("white", "SG ", 5, 5, {}, {"SG ": [[4, 4]]}),
+        ("white", "SG ", 3, 3, {}, {"SG ": [[4, 4]]}),
+        ("white", "SG ", 5, 3, {}, {"SG ": [[4, 4]]}),
     ])
     def test_silverGeneral_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -230,16 +230,16 @@ class test_moves(unittest.TestCase):
         self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
 
     @parameterized.expand([
-        ("black", "SG1", 8, 8, {"SG1": [[4, 4]]}, {}),
-        ("black", "SG1", 0, 0, {"SG1": [[4, 4]]}, {}),
-        ("black", "SG1", 4, 5, {"SG1": [[4, 4]]}, {}),
-        ("black", "SG1", 3, 4, {"SG1": [[4, 4]]}, {}),
-        ("black", "SG1", 5, 4, {"SG1": [[4, 4]]}, {}),
-        ("white", "SG1", 0, 0, {}, {"SG1": [[4, 4]]}),
-        ("white", "SG1", 8, 8, {}, {"SG1": [[4, 4]]}),
-        ("white", "SG1", 4, 3, {}, {"SG1": [[4, 4]]}),
-        ("white", "SG1", 3, 4, {}, {"SG1": [[4, 4]]}),
-        ("white", "SG1", 5, 4, {}, {"SG1": [[4, 4]]}),
+        ("black", "SG ", 8, 8, {"SG ": [[4, 4]]}, {}),
+        ("black", "SG ", 0, 0, {"SG ": [[4, 4]]}, {}),
+        ("black", "SG ", 4, 5, {"SG ": [[4, 4]]}, {}),
+        ("black", "SG ", 3, 4, {"SG ": [[4, 4]]}, {}),
+        ("black", "SG ", 5, 4, {"SG ": [[4, 4]]}, {}),
+        ("white", "SG ", 0, 0, {}, {"SG ": [[4, 4]]}),
+        ("white", "SG ", 8, 8, {}, {"SG ": [[4, 4]]}),
+        ("white", "SG ", 4, 3, {}, {"SG ": [[4, 4]]}),
+        ("white", "SG ", 3, 4, {}, {"SG ": [[4, 4]]}),
+        ("white", "SG ", 5, 4, {}, {"SG ": [[4, 4]]}),
     ])
     def test_silverGeneral_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -249,18 +249,18 @@ class test_moves(unittest.TestCase):
 # GOLD GENERAL
 
     @parameterized.expand([
-        ("black", "GG1", 3, 3, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 4, 3, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 5, 3, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 3, 4, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 5, 4, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 4, 5, {"GG1": [[4, 4]]}, {}),
-        ("white", "GG1", 3, 5, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 4, 5, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 5, 5, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 3, 4, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 5, 4, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 4, 3, {}, {"GG1": [[4, 4]]}),
+        ("black", "GG ", 3, 3, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 4, 3, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 5, 3, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 3, 4, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 5, 4, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 4, 5, {"GG ": [[4, 4]]}, {}),
+        ("white", "GG ", 3, 5, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 4, 5, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 5, 5, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 3, 4, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 5, 4, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 4, 3, {}, {"GG ": [[4, 4]]}),
     ]) 
     def test_goldGeneral_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -268,18 +268,18 @@ class test_moves(unittest.TestCase):
         self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
 
     @parameterized.expand([
-        ("black", "GG1", 0, 0, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 8, 8, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 3, 5, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 5, 5, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 4, 2, {"GG1": [[4, 4]]}, {}),
-        ("black", "GG1", 4, 6, {"GG1": [[4, 4]]}, {}),
-        ("white", "GG1", 3, 3, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 5, 3, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 0, 0, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 8, 8, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 4, 2, {}, {"GG1": [[4, 4]]}),
-        ("white", "GG1", 4, 6, {}, {"GG1": [[4, 4]]}),
+        ("black", "GG ", 0, 0, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 8, 8, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 3, 5, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 5, 5, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 4, 2, {"GG ": [[4, 4]]}, {}),
+        ("black", "GG ", 4, 6, {"GG ": [[4, 4]]}, {}),
+        ("white", "GG ", 3, 3, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 5, 3, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 0, 0, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 8, 8, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 4, 2, {}, {"GG ": [[4, 4]]}),
+        ("white", "GG ", 4, 6, {}, {"GG ": [[4, 4]]}),
     ])
     def test_goldGeneral_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -369,8 +369,8 @@ class test_moves(unittest.TestCase):
         ("white", " R ", 6, 4, {}, {" R ": [[4, 4]]}),
         ("white", " R ", 7, 4, {}, {" R ": [[4, 4]]}),
         ("white", " R ", 8, 4, {}, {" R ": [[4, 4]]}),
-        ("black", " R ", 0, 4, {" R ": [[4, 4]]}, {"P1": [[0, 4]]}),
-        ("white", " R ", 0, 4, {"P1": [[0, 4]]}, {" R ": [[4, 4]]}),
+        ("black", " R ", 0, 4, {" R ": [[4, 4]]}, {" P ": [[0, 4]]}),
+        ("white", " R ", 0, 4, {" P ": [[0, 4]]}, {" R ": [[4, 4]]}),
     ])
     def test_rook_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
@@ -414,16 +414,16 @@ class test_moves(unittest.TestCase):
         ("black", " R ", 4, 8, {" R ": [[4, 4]]}, {"P1 ": [[4, 6]]}),
         ("black", " R ", 0, 4, {" R ": [[4, 4]]}, {"P1 ": [[2, 4]]}),
         ("black", " R ", 7, 4, {" R ": [[4, 4]]}, {"P1 ": [[6, 4]]}),
-        ("white", " R ", 4, 1, {"P1 ": [[4, 2]]}, {" R ": [[4, 4]]}),
-        ("white", " R ", 4, 8, {"P1 ": [[4, 6]]}, {" R ": [[4, 4]]}),
-        ("white", " R ", 0, 4, {"P1 ": [[2, 4]]}, {" R ": [[4, 4]]}),
-        ("white", " R ", 7, 4, {"P1 ": [[6, 4]]}, {" R ": [[4, 4]]}),
-        ("black", " R ", 4, 1, {" R ": [[4, 4]], "P1 ": [[4, 2]]}, {}),
-        ("black", " R ", 4, 8, {" R ": [[4, 4]], "P1 ": [[4, 6]]}, {}),
-        ("black", " R ", 0, 4, {" R ": [[4, 4]], "P1 ": [[2, 4]]}, {}),
-        ("black", " R ", 7, 4, {" R ": [[4, 4]], "P1 ": [[6, 4]]}, {}),
-        ("black", " R ", 0, 4, {" R ": [[4, 4]], "P1 ": [[0, 4]]}, {}),
-        ("white", " R ", 0, 4, {}, {" R ": [[4, 4]], "P1 ": [[0, 4]]}),
+        ("white", " R ", 4, 1, {" P ": [[4, 2]]}, {" R ": [[4, 4]]}),
+        ("white", " R ", 4, 8, {" P ": [[4, 6]]}, {" R ": [[4, 4]]}),
+        ("white", " R ", 0, 4, {" P ": [[2, 4]]}, {" R ": [[4, 4]]}),
+        ("white", " R ", 7, 4, {" P ": [[6, 4]]}, {" R ": [[4, 4]]}),
+        ("black", " R ", 4, 1, {" R ": [[4, 4]], " P ": [[4, 2]]}, {}),
+        ("black", " R ", 4, 8, {" R ": [[4, 4]], " P ": [[4, 6]]}, {}),
+        ("black", " R ", 0, 4, {" R ": [[4, 4]], " P ": [[2, 4]]}, {}),
+        ("black", " R ", 7, 4, {" R ": [[4, 4]], " P ": [[6, 4]]}, {}),
+        ("black", " R ", 0, 4, {" R ": [[4, 4]], " P ": [[0, 4]]}, {}),
+        ("white", " R ", 0, 4, {}, {" R ": [[4, 4]], " P ": [[0, 4]]}),
     ])
     def test_rook_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
