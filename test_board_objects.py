@@ -120,26 +120,28 @@ class Test_board_objects(unittest.TestCase):
         self.assertTrue(board_objects.compare_coords(new_coords))
 
     @parameterized.expand([
-        ({"P1 ": [[5, 2]]}, [4, 2]),
-        ({"P1 ": [[2, 1]]}, [1, 1]),
-        ({"P1 ": [[0, 0]]}, [2, 0]),
-        ({"P1 ": [[8, 8]]}, [8, 1])
+        ({" P ": [[5, 2]]}, [4, 2]),
+        ({" P ": [[2, 1]]}, [1, 1]),
+        ({" P ": [[0, 0]]}, [2, 0]),
+        ({" P ": [[8, 8]]}, [8, 1])
     ])
     def test_compare_coords2(self, board, new_coords):
         board_objects = Board_objects(board)
         self.assertFalse(board_objects.compare_coords(new_coords))
 
     @parameterized.expand([
-        ({"P1 ": [[5, 2]]}, [[5, 2]]),
-        ({"P2 ": [[3, 5]], "P9 ": [[1, 2]]}, [[3, 5], [1, 2]]),
+        ({" P ": [[5, 2]]}, [[5, 2]]),
+        ({" P ": [[3, 5], [1, 2]]}, [[3, 5], [1, 2]]),
+        ({" P ": [[3, 5], [1, 2]], " B ": [[4, 4]]}, [[3, 5], [1, 2], [4, 4]]),
+        
     ])
     def test_get_all_coords(self, board, all_coords):
         board_objects = Board_objects(board)
         self.assertEqual(board_objects.get_all_coords(), all_coords)
 
     @parameterized.expand([
-        ([4, 4], "P1 ", {"P1 ": [[4, 4]]}, {}),
-        ([2, 2], "P1 ", {"P1 ": [[2, 2]], "P2 ": [[3, 3]]}, {"P2 ": [[3, 3]]})
+        ([4, 4], " P ", {" P ": [[4, 4]]}, {}),
+        ([2, 2], " P ", {" P ": [[2, 2]], " B ": [[3, 3]]}, {" B ": [[3, 3]]})
     ])
     def test_pop(self, coord, piece, board, new_board):
         board_objects = Board_objects(board)
@@ -147,12 +149,12 @@ class Test_board_objects(unittest.TestCase):
         self.assertEqual(board_objects.coords, new_board)
 
     @parameterized.expand([
-        ("black", "P1 ", None, None, {}, {"P1 ": [[10, 8]]}),
-        ("black", "P1 ","P2 ", None, {}, {"P1 ": [[10, 8]], "P2 ": [[11, 8]]}),
-        ("black", " R ", "KN1", " B ", {}, {" R ": [[10, 8]], "KN1": [[11, 8]], " B ": [[12, 8]]}),
-        ("white", "P1 ", None, None, {}, {"P1 ": [[10, 0]]}),
-        ("white", "P1 ","P2 ", None, {}, {"P1 ": [[10, 0]], "P2 ": [[11, 0]]}),
-        ("white", " R ", "KN1", " B ", {}, {" R ": [[10, 0]], "KN1": [[11, 0]], " B ": [[12, 0]]})
+        ("black", " P ", None, None, {}, {" P ": [[10, 8]]}),
+        ("black", " P "," P ", None, {}, {" P ": [[10, 8], [11, 8]]}),
+        ("black", " R ", "KN ", " B ", {}, {" R ": [[10, 8]], "KN ": [[11, 8]], " B ": [[12, 8]]}),
+        ("white", " P ", None, None, {}, {" P ": [[10, 0]]}),
+        ("white", " P "," P ", None, {}, {" P ": [[10, 0], [11, 0]]}),
+        ("white", " R ", "KN ", " B ", {}, {" R ": [[10, 0]], "KN ": [[11, 0]], " B ": [[12, 0]]})
     ])
     def test_add_piece(self, side, piece, piece2, piece3, board, new_board):
         board_objects = Board_objects(board)
