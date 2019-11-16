@@ -131,21 +131,25 @@ class Test_board(unittest.TestCase):
 
     @parameterized.expand([
         ("black", {" P ": [[10, 8], [11, 8], [12, 8]]}, {},
-            [11, 8], [0, 5], " P ",
+            [11, 8], [0, 5], " P ", 13, 10, [[" P ", [11, 8]], [" P ", [10, 8]],[" P ", [12, 8]]], [],
             ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P ', ' P ']),
         ("black", {" P ": [[10, 8], [11, 8], [13, 8]], " B ": [[12, 8]]}, {},
-            [11, 8], [0, 5], " P ",
+            [11, 8], [0, 5], " P ", 14, 10, [[" P ", [13, 8]], [" P ", [11, 8]], [" B ", [12, 8]], [" P ", [10, 8]]], [],
             ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P ', ' B ', ' P ']),
         ("white", {}, {" P ": [[10, 0], [11, 0], [12, 0]]},
-            [11, 0], [0, 5], " P ",
+            [11, 0], [0, 5], " P ", 10, 13, [], [[" P ", [11, 0]], [" P ", [10, 0]],[" P ", [12, 0]]],
             ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P ', ' P ']),
-        ("white", {" P ": [[10, 0], [11, 0], [13, 0]], " B ": [[12, 0]]}, {},
-            [11, 0], [0, 5], " P ",
+        ("white", {}, {" P ": [[10, 0], [11, 0], [13, 0]], " B ": [[12, 0]]},
+            [11, 0], [0, 5], " P ", 10, 14, [], [[" P ", [11, 0]], [" P ", [10, 0]], [" P ", [13, 0]], [" B ", [12, 0]]],
             ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P ', ' B ', ' P ']),
     ])
-    def test_play_reintroduce(self, turn, black, white, coords, new_coords, expected_piece, expected_row):
+    def test_play_reintroduce(self, turn, black, white, coords, new_coords, expected_piece, b_xtop, w_xtop, b_capt, w_capt, expected_row):
         board = Board(white, black)
         board.turn = turn
+        board.white.captured_x_top = w_xtop
+        board.black.captured_x_top = b_xtop
+        board.white.captured_pieces = w_capt
+        board.black.captured_pieces = b_capt
         board.play(coords[0], coords[1])
         board.play(new_coords[0], new_coords[1])
         b = board.make_board()
