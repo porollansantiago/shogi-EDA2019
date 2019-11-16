@@ -129,5 +129,45 @@ class Test_board(unittest.TestCase):
         board.play(new_coords[0], new_coords[1])
         self.assertEqual(board.make_board(), new_board)
 
+    @parameterized.expand([
+        ([0, 6], [0, 5],[[' L ', 'KN ', 'SG ', 'GG ', ' K ', 'GG ', 'SG ', 'KN ', ' L ', '   '], 
+                         ['   ', ' R ', '   ', '   ', '   ', '   ', '   ', ' B ', '   '], 
+                         [' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         [' P ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P '], 
+                         ['   ', ' B ', '   ', '   ', '   ', '   ', '   ', ' R ', '   '], 
+                         [' L ', 'KN ', 'SG ', 'GG ', ' K ', 'GG ', 'SG ', 'KN ', ' L ', '   ']]),
+        ([8, 6], [8, 5],[[' L ', 'KN ', 'SG ', 'GG ', ' K ', 'GG ', 'SG ', 'KN ', ' L ', '   '], 
+                         ['   ', ' R ', '   ', '   ', '   ', '   ', '   ', ' B ', '   '], 
+                         [' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                         ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', ' P '], 
+                         [' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P ', ' P ', '   '], 
+                         ['   ', ' B ', '   ', '   ', '   ', '   ', '   ', ' R ', '   '], 
+                         [' L ', 'KN ', 'SG ', 'GG ', ' K ', 'GG ', 'SG ', 'KN ', ' L ', '   ']])
+    ])
+
+    @parameterized.expand([
+        ({" P ": [1, 3]}, {}, [1, 3], [1, 2], [10, 4]), 
+                    [['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                     ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                     ['   ', 'PP ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                     ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                     ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                     ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                     ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                     ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   '], 
+                     ['   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ', '   ']] ),
+    ])
+    def test_play_promote(self, black, white, piece_coords, new_coords, promote, new_board):
+        board = Board(white, black)
+        board.play(piece_coords[0], piece_coords[1])
+        board.play(new_coords[0], new_coords[1])
+        board.play(promote[0], promote[1])
+        self.assertEqual(self.board.make_board(), new_board)
+
 if __name__ == "__main__":
     unittest.main()
