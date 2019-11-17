@@ -70,6 +70,7 @@ class Moves():
                 move_array = self.get_bishop_moves(player, other_player, piece_to_move, piece_index, move_array)
             elif " K " == piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, piece_index, move_array)
+        print(move_array)
         return move_array
 
 
@@ -103,9 +104,9 @@ class Moves():
         return move_array
 
     def get_king_moves(self, player, piece, piece_index, move_array):
-        move_array.append(self.__get_front_moves(move_array, player, piece, piece_index, 1))
-        move_array.append(self.__get_front_moves(move_array, player, piece, piece_index, -1))
-        move_array.append(self.__get_side_moves(move_array, player, piece, piece_index, 0))
+        self.__get_front_moves(move_array, player, piece, piece_index, 1)
+        self.__get_front_moves(move_array, player, piece, piece_index, -1)
+        self.__get_side_moves(move_array, player, piece, piece_index, 0)
         return move_array
 
     def get_rook_moves(self, player, other_player, piece, piece_index, move_array):
@@ -156,8 +157,7 @@ class Moves():
                     move_array.append(new_coords1)
                 if self.__inside_the_board(new_coords2):
                     move_array.append(new_coords2)
-        return move_array
-
+        return move_array                
 
     def __get_rook_col(self, coords, player, piece, piece_index, move_array, other_player):
         for val in range(coords[1] + 1, 9):
@@ -170,7 +170,6 @@ class Moves():
             move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
-        return move_array
 
     def __get_rook_row(self, coords, player, piece, piece_index, move_array, other_player):
         for val in range(coords[0] + 1, 9):
@@ -183,7 +182,6 @@ class Moves():
             move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
-        return move_array
 
     def __get_side_moves(self, move_array, player, piece, piece_index, val):
         for x in range(-1, 2, 2):
@@ -196,7 +194,7 @@ class Moves():
             new_coords = player.get_coords(piece, piece_index, x, val)
             if self.__inside_the_board(new_coords):
                 move_array.append(new_coords)
-        return move_array
+
 
     def __inside_the_board(self, new_coords):
         return new_coords[0] >= 0 and new_coords[0] <= 8 and new_coords[1] <= 8 and new_coords[1] >= 0
@@ -205,7 +203,6 @@ class Moves():
         move_array = []
         p = []
         pawn_columns = []
-        
         if piece == " P ":
             for x in player.get_pawn_cols():
                 pawn_columns.append(x)

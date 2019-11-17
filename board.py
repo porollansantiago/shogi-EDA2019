@@ -132,24 +132,21 @@ class Board:
             for idx, piece in enumerate(opponent.coords[pieces]):
                 if piece[0] < 9:
                     for move in self.moves.get_move_array(opponent_turn, pieces, idx, 0, 0, opponent, player):
-                        try:
-                            if type(move[0]) is int:
-                                possible_opponent_coords = copy.deepcopy(opponent.coords)
-                                possible_player_coords = player.coords
-                                possible_opponent_coords[pieces][idx] = move
-                                white = possible_opponent_coords if turn == "black" else possible_player_coords
-                                black = possible_player_coords if turn == "black" else possible_opponent_coords
-                                white.captured_x_top = opponent.captured_x_top if turn == "black" else player.captured_x_top
-                                white.captured_pieces = opponent.captured_pieces if turn == "black" else player.captured_pieces
-                                black.captured_x_top = opponent.captured_x_top if turn == "white" else player.captured_x_top
-                                black.captured_pieces = opponent.captured_pieces if turn == "white" else player.captured_pieces
-                                possible_board = Board(white, black)
-                                possible_board.turn = turn
-                                possible_board.capture(opponent, player, opponent_turn)
-                                
-                                possible_board.get_check(turn, player, opponent)
-                                if not possible_board.check:
-                                    return False
-                        except:
-                            pass
+                        possible_opponent_coords = copy.deepcopy(opponent.coords)
+                        possible_player_coords = player.coords
+                        possible_opponent_coords[pieces][idx] = move
+                        white = possible_opponent_coords if turn == "black" else possible_player_coords
+                        black = possible_player_coords if turn == "black" else possible_opponent_coords
+                        possible_board = Board(white, black)
+                        possible_board.white.captured_x_top = opponent.captured_x_top if turn == "black" else player.captured_x_top
+                        possible_board.white.captured_pieces = opponent.captured_pieces if turn == "black" else player.captured_pieces
+                        possible_board.black.captured_x_top = opponent.captured_x_top if turn == "white" else player.captured_x_top
+                        possible_board.black.captured_pieces = opponent.captured_pieces if turn == "white" else player.captured_pieces
+                        possible_board.turn = turn
+                        pb_player = possible_board.black if turn == "black" else possible_board.white
+                        pb_opponent = possible_board.white if turn == "black" else possible_board.black
+                        possible_board.capture(pb_opponent, pb_player, opponent_turn)
+                        possible_board.get_check(turn, pb_player, pb_opponent)
+                        if not possible_board.check:
+                            return False
         return True
