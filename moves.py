@@ -233,6 +233,9 @@ class Moves():
         move_array = []
         for piece in player.coords:
             for idx, coord in enumerate(player.coords[piece]):
-                for move in self.get_move_array(turn, piece, idx, coord[0], coord[1], player, opponent):
-                    move_array.append(move)
+                try:
+                    for move in self.get_move_array(turn, piece, idx, coord[0], coord[1], player, opponent):
+                        move_array.append(move)
+                except TypeError:
+                    pass
         return move_array
