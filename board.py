@@ -97,6 +97,7 @@ class Board:
 
     def __check(self, turn, piece, piece_index, x, y, player, opponent):
         all_player_moves = self.moves.get_all_player_moves(turn, player, opponent)
+        print(all_player_moves)
         try:
             king_coords = opponent.get_coords(" K ", 0)
         except KeyError:
@@ -108,7 +109,12 @@ class Board:
     def __check_mate(self, turn, player, opponent, king_coords, all_player_moves):
         opponent_turn = "white" if turn == "black" else "black"
         for coord in self.moves.get_move_array(opponent_turn, " K ", 0, king_coords[0], king_coords[1], opponent, player):
-            if coord not in all_player_moves:
-                return
+            print("K:",coord)
+            try:
+                if type(coord[0]) is int:
+                    if coord not in all_player_moves:
+                        return
+            except:
+                pass
         self.check_mate = True
         
