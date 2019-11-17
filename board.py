@@ -75,7 +75,7 @@ class Board:
         p_y = player.get_coords(piece, piece_index)[1]
         player.move(piece, piece_index, x, y)
         self.__capture(player, opponent, self.turn)
-        self.__check(self.turn, piece, piece_index, x, y, player, opponent)
+        self.is_game_over(self.turn, piece, piece_index, x, y, player, opponent)
         if not self.__promotion(p_y, y, x):
             self.turn = "white" if self.turn == "black" else "black"
             self.piece = None
@@ -95,7 +95,7 @@ class Board:
     def __promotion(self, p_y, y, x):
         return ((self.turn == "white" and (y > 5 or p_y >5)) or (self.turn == "black" and (y < 3 or p_y < 3))) and x < 9
 
-    def __check(self, turn, piece, piece_index, x, y, player, opponent):
+    def is_game_over(self, turn, piece, piece_index, x, y, player, opponent):
         all_player_moves = self.moves.get_all_player_moves(turn, player, opponent)
         print(all_player_moves)
         try:
@@ -104,17 +104,24 @@ class Board:
             return
         else:
             self.check = king_coords in all_player_moves
-        self.__check_mate(turn, player, opponent, king_coords, all_player_moves)
+        
+        self.check_mate = ((self.__k_cant_move(turn, player,  opponent, 
+                                               king_coords, all_player_moves)) 
+                            and self.__k_cant_be_saved(turn, 
+                                                       player, opponent, king_coords))
+
     
-    def __check_mate(self, turn, player, opponent, king_coords, all_player_moves):
+    def __k_cant_move(self, turn, player, opponent, king_coords, all_player_moves):
         opponent_turn = "white" if turn == "black" else "black"
         for coord in self.moves.get_move_array(opponent_turn, " K ", 0, king_coords[0], king_coords[1], opponent, player):
             print("K:",coord)
             try:
                 if type(coord[0]) is int:
                     if coord not in all_player_moves:
-                        return
+                        return False
             except:
                 pass
-        self.check_mate = True
-        
+        return True
+
+    def __k_cant_be_saved(self, turn, player, opponent, king_coords):
+        return True
