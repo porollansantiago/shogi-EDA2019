@@ -1,7 +1,7 @@
 from board_objects import Board_objects
 import coordinates as coords
 from moves import Moves
-
+import copy
 
 class Board:  
     def __init__(self, white=coords.white, black=coords.black):
@@ -74,7 +74,7 @@ class Board:
     def make_move(self, piece, piece_index, x, y, player, opponent):
         p_y = player.get_coords(piece, piece_index)[1]
         player.move(piece, piece_index, x, y)
-        self.__capture(player, opponent, self.turn)
+        self.capture(player, opponent, self.turn)
         self.is_game_over(self.turn, piece, piece_index, x, y, player, opponent)
         if not self.__promotion(p_y, y, x):
             self.turn = "white" if self.turn == "black" else "black"
@@ -85,7 +85,7 @@ class Board:
         else:
             self.promotion = [x, y]
     
-    def __capture(self, player, opponent, side):
+    def capture(self, player, opponent, side):
         player_coords = player.get_all_coords()
         for coord in opponent.get_all_coords():
             if coord in player_coords:
@@ -98,7 +98,7 @@ class Board:
     def is_game_over(self, turn, piece, piece_index, x, y, player, opponent):
         all_player_moves = self.moves.get_all_player_moves(turn, player, opponent)
         opponent_turn = "white" if turn == "black" else "black"
-        king_coords = self.__check(turn, player, opponent, all_player_moves)
+        king_coords = self.get_check(turn, player, opponent, all_player_moves)
         if not king_coords:
             return
         self.check_mate = ((self.__k_cant_move(turn, opponent_turn, player,  opponent,
@@ -106,7 +106,9 @@ class Board:
                             and self.__k_cant_be_saved(turn, opponent_turn,
                                                        player, opponent, king_coords))
 
-    def __check(self, turn, player, opponent, all_player_moves=None):
+    def get_check(self, turn, player, opponent, all_player_moves=None):
+        if not all_player_moves:
+            all_player_moves = self.moves.get_all_player_moves(turn, player, opponent)
         try:
             king_coords = opponent.get_coords(" K ", 0)
         except KeyError:
@@ -117,7 +119,6 @@ class Board:
 
     def __k_cant_move(self, turn, opponent_turn, player, opponent, king_coords, all_player_moves):
         for coord in self.moves.get_move_array(opponent_turn, " K ", 0, king_coords[0], king_coords[1], opponent, player):
-            print("K:",coord)
             try:
                 if type(coord[0]) is int:
                     if coord not in all_player_moves:
@@ -127,4 +128,28 @@ class Board:
         return True
 
     def __k_cant_be_saved(self, turn, opponent_turn, player, opponent, king_coords):
+        for pieces in opponent.coords.keys():
+            for idx, piece in enumerate(opponent.coords[pieces]):
+                if piece[0] < 9:
+                    for move in self.moves.get_move_array(opponent_turn, pieces, idx, 0, 0, opponent, player):
+                        try:
+                            if type(move[0]) is int:
+                                possible_opponent_coords = copy.deepcopy(opponent.coords)
+                                possible_player_coords = player.coords
+                                possible_opponent_coords[pieces][idx] = move
+                                white = possible_opponent_coords if turn == "black" else possible_player_coords
+                                black = possible_player_coords if turn == "black" else possible_opponent_coords
+                                white.captured_x_top = opponent.captured_x_top if turn == "black" else player.captured_x_top
+                                white.captured_pieces = opponent.captured_pieces if turn == "black" else player.captured_pieces
+                                black.captured_x_top = opponent.captured_x_top if turn == "white" else player.captured_x_top
+                                black.captured_pieces = opponent.captured_pieces if turn == "white" else player.captured_pieces
+                                possible_board = Board(white, black)
+                                possible_board.turn = turn
+                                possible_board.capture(opponent, player, opponent_turn)
+                                
+                                possible_board.get_check(turn, player, opponent)
+                                if not possible_board.check:
+                                    return False
+                        except:
+                            pass
         return True
