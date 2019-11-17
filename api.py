@@ -17,6 +17,12 @@ class Api:
             coords = coords_i.split()
         else:
             coords = coords_i
-        coords = [int(coords[0]), int(coords[1])]
+        try:
+            coords = [int(coords[0]), int(coords[1])]
+        except ValueError:
+            return (self.get_board(), "solo se permiten numeros")
+        except IndexError:
+            return(self.get_board(), "")
         move_array = self.board.play(coords[0], coords[1])
+        move_array = "" if not move_array else move_array
         return (self.get_board(), move_array)
