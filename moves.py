@@ -70,7 +70,6 @@ class Moves():
                 move_array = self.get_bishop_moves(player, other_player, piece_to_move, piece_index, move_array)
             elif " K " == piece_to_move:
                 move_array = self.get_king_moves(player, piece_to_move, piece_index, move_array)
-        print(move_array)
         return move_array
 
 
@@ -91,13 +90,13 @@ class Moves():
         return move_array
 
     def get_SG_moves(self, player, piece, piece_index, move_array, val):
-        move_array.append(self.__get_front_moves(move_array, player, piece, piece_index, val))
-        move_array.append(self.__get_side_moves(move_array, player, piece, piece_index, val))
+        self.__get_front_moves(move_array, player, piece, piece_index, val)
+        self.__get_side_moves(move_array, player, piece, piece_index, val)
         return move_array
 
     def get_GG_moves(self, player, piece, piece_index, move_array, front_val, back_val):
-        move_array.append(self.__get_front_moves(move_array, player, piece, piece_index, front_val))
-        move_array.append(self.__get_side_moves(move_array, player, piece, piece_index, 0))
+        self.__get_front_moves(move_array, player, piece, piece_index, front_val)
+        self.__get_side_moves(move_array, player, piece, piece_index, 0)
         new_coord = player.get_coords(piece, piece_index, 0, back_val)
         if self.__inside_the_board(new_coord):
             move_array.append(new_coord)
@@ -111,8 +110,8 @@ class Moves():
 
     def get_rook_moves(self, player, other_player, piece, piece_index, move_array):
         coords = player.get_coords(piece, piece_index)
-        move_array.append(self.__get_rook_col(coords, player, piece, piece_index, move_array, other_player))
-        move_array.append(self.__get_rook_row(coords, player, piece, piece_index, move_array, other_player))
+        self.__get_rook_col(coords, player, piece, piece_index, move_array, other_player)
+        self.__get_rook_row(coords, player, piece, piece_index, move_array, other_player)
         if "PR " == piece:
             for val in [-1, 1]:
                 new_coords1 = player.get_coords(piece, piece_index, val, val)
@@ -187,13 +186,15 @@ class Moves():
         for x in range(-1, 2, 2):
             new_coords = player.get_coords(piece, piece_index, x, -val)
             if self.__inside_the_board(new_coords):
-                move_array.append(new_coords)
+                if new_coords:
+                    move_array.append(new_coords)
 
     def __get_front_moves(self, move_array, player, piece, piece_index, val):
         for x in range(-1, 2):
             new_coords = player.get_coords(piece, piece_index, x, val)
             if self.__inside_the_board(new_coords):
-                move_array.append(new_coords)
+                if new_coords:
+                    move_array.append(new_coords)
 
 
     def __inside_the_board(self, new_coords):
