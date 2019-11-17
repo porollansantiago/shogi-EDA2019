@@ -218,7 +218,6 @@ class Test_board(unittest.TestCase):
         ({}, {"SG ": [[1, 6]]}, [1, 6], [1, 7], [12, 4], "SG ", "white"),
         ({}, {"SG ": [[1, 6]]}, [1, 6], [2, 5], [10, 4], "PSG", "white"),
         ({}, {"SG ": [[1, 6]]}, [1, 6], [2, 5], [12, 4], "SG ", "white"),
-
         ({"KN ": [[3, 3]]}, {}, [3, 3], [4, 1], [10, 4], "PKN", "black"),
         ({"KN ": [[3, 3]]}, {}, [3, 3], [4, 1], [12, 4], "KN ", "black"),
         ({"KN ": [[3, 2]]}, {}, [3, 2], [4, 0], [10, 4], "PKN", "black"),
@@ -269,6 +268,23 @@ class Test_board(unittest.TestCase):
         board.play(promote[0], promote[1])
         self.assertNotEqual(board.turn, turn)
         self.assertEqual(board.make_board()[new_coords[1]][new_coords[0]], expected)
+
+    @parameterized.expand([
+        ("black", {" R ": [[8, 8]]}, {" K ": [[4, 0]]}, [8, 8], [4, 8]),
+        ("white", {" K ": [[4, 8]]}, {" R ": [[8, 0]]}, [8, 0], [4, 0]),
+    ])
+    def test_play_check(self, turn, black, white, piece_coords, new_coords):
+        board = Board(white, black)
+        board.turn = turn
+        board.play(piece_coords[0], piece_coords[1])
+        self.assertFalse(board.check)
+        self.assertFalse(board.check)
+        board.play(new_coords[0], new_coords[1])
+        self.assertTrue(board.check)
+        self.assertFalse(board.check_mate)
+    
+    def test_play_check_mate(self, black, white, piece_coords, new_coords):
+        pass
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
