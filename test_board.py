@@ -286,7 +286,6 @@ class Test_board(unittest.TestCase):
     @parameterized.expand([
         ("black", {" R ": [[2, 3]], "GG ": [[2, 1], [6, 1]] }, {" K ": [[4, 0]]}, [2, 3], [4, 3]),
         ("white", {" K ": [[4, 8]]},{" R ": [[2, 3]], "GG ": [[2, 7], [6, 7]] }, [2, 3], [4, 3]),
-        ("black", {" R ": [[2, 3]], "GG ": [[3, 1], [6, 1]]}, { " K ": [[4, 0]]}, [2, 3], [4, 3]),
     ])
     def test_play_check_mate(self, turn, black, white, piece_coords, new_coords):
         board = Board(white, black)
@@ -300,7 +299,9 @@ class Test_board(unittest.TestCase):
 
     @parameterized.expand([
         ("black", {" R ": [[2, 3]], "GG ": [[3, 1], [6, 1]]}, { " K ": [[4, 0]]}, [2, 3], [4, 3]),
-        ("white", {" K ": [[4, 8]]},{" R ": [[2, 3]], "GG ": [[3, 7], [6, 7]] }, [2, 3], [4, 3]),
+        ("white", {" K ": [[4, 8]]}, {" R ": [[2, 3]], "GG ": [[3, 7], [6, 7]] }, [2, 3], [4, 3]),
+        ("black", {" R ": [[2, 3]], "GG ": [[6, 1]], " P ": [[3, 1]]}, { " K ": [[4, 0]]}, [2, 3], [4, 3]),
+        ("white", {" K ": [[4, 8]]}, {" R ": [[2, 3]], "GG ": [[6, 7]], " P ": [[3, 7]]}, [2, 3], [4, 3]),
     ])
     def test_play_check_mate_false(self, turn, black, white, piece_coords, new_coords):
         board = Board(white, black)
