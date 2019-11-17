@@ -220,3 +220,11 @@ class Moves():
                     if x not in pawn_columns:
                         move_array.append([x, y])
         return move_array
+
+    def get_all_player_moves(self, turn, player, opponent):
+        move_array = []
+        for piece in player.coords:
+            for idx, coord in enumerate(player.coords[piece]):
+                for move in self.get_move_array(turn, piece, idx, coord[0], coord[1], player, opponent):
+                    move_array.append(move)
+        return move_array
