@@ -97,22 +97,25 @@ class Board:
 
     def is_game_over(self, turn, piece, piece_index, x, y, player, opponent):
         all_player_moves = self.moves.get_all_player_moves(turn, player, opponent)
-        print(all_player_moves)
+        opponent_turn = "white" if turn == "black" else "black"
+        king_coords = self.__check(turn, player, opponent, all_player_moves)
+        if not king_coords:
+            return
+        self.check_mate = ((self.__k_cant_move(turn, opponent_turn, player,  opponent,
+                                               king_coords, all_player_moves,)) 
+                            and self.__k_cant_be_saved(turn, opponent_turn,
+                                                       player, opponent, king_coords))
+
+    def __check(self, turn, player, opponent, all_player_moves=None):
         try:
             king_coords = opponent.get_coords(" K ", 0)
         except KeyError:
             return
         else:
             self.check = king_coords in all_player_moves
-        
-        self.check_mate = ((self.__k_cant_move(turn, player,  opponent, 
-                                               king_coords, all_player_moves)) 
-                            and self.__k_cant_be_saved(turn, 
-                                                       player, opponent, king_coords))
+            return king_coords
 
-    
-    def __k_cant_move(self, turn, player, opponent, king_coords, all_player_moves):
-        opponent_turn = "white" if turn == "black" else "black"
+    def __k_cant_move(self, turn, opponent_turn, player, opponent, king_coords, all_player_moves):
         for coord in self.moves.get_move_array(opponent_turn, " K ", 0, king_coords[0], king_coords[1], opponent, player):
             print("K:",coord)
             try:
@@ -123,5 +126,5 @@ class Board:
                 pass
         return True
 
-    def __k_cant_be_saved(self, turn, player, opponent, king_coords):
+    def __k_cant_be_saved(self, turn, opponent_turn, player, opponent, king_coords):
         return True
