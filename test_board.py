@@ -278,13 +278,24 @@ class Test_board(unittest.TestCase):
         board.turn = turn
         board.play(piece_coords[0], piece_coords[1])
         self.assertFalse(board.check)
-        self.assertFalse(board.check)
+        self.assertFalse(board.check_mate)
         board.play(new_coords[0], new_coords[1])
         self.assertTrue(board.check)
         self.assertFalse(board.check_mate)
-    
-    def test_play_check_mate(self, black, white, piece_coords, new_coords):
-        pass
+
+    @parameterized.expand([
+        ("black", {" R ": [[2, 3]], "GG ": [[2, 1], [6, 1]] }, {" K ": [[4, 0]]}, [2, 3], [4, 3]),
+        ("white", {" K ": [[4, 8]]},{" R ": [[2, 3]], "GG ": [[2, 7], [6, 7]] }, [2, 3], [4, 3]),
+    ])
+    def test_play_check_mate(self, turn, black, white, piece_coords, new_coords):
+        board = Board(white, black)
+        board.turn = turn
+        board.play(piece_coords[0], piece_coords[1])
+        self.assertFalse(board.check)
+        self.assertFalse(board.check_mate)
+        board.play(new_coords[0], new_coords[1])
+        self.assertTrue(board.check)
+        self.assertTrue(board.check_mate)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
