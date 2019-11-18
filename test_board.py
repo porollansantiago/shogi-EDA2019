@@ -319,5 +319,38 @@ class Test_board(unittest.TestCase):
         self.assertTrue(board.check)
         self.assertFalse(board.checkmate)
 
+    @parameterized.expand([
+        ("black", {" R ": [[8, 8]]}, {" K ": [[4, 0]]}, [8, 8], [4, 8], [4, 0], [5, 0]),
+        ("white", {" K ": [[4, 8]]}, {" R ": [[8, 0]]}, [8, 0], [4, 0], [4, 8], [5, 8]),
+    ])
+    def test_play_check_move(self, turn, black, white, piece_coords, new_coords, piece2_coords, new_coords2):
+        board = Board(white, black)
+        board.turn = turn
+        board.play(piece_coords[0], piece_coords[1])
+        board.play(new_coords[0], new_coords[1])
+        self.assertTrue(board.check)
+        self.assertFalse(board.checkmate)
+        board.play(piece2_coords[0], piece2_coords[1])
+        board.play(new_coords2[0], new_coords2[1])
+        self.assertFalse(board.check)
+        self.assertFalse(board.checkmate)
+
+    @parameterized.expand([
+        ("black", {" R ": [[8, 8]]}, {" K ": [[4, 0]]}, [8, 8], [4, 8], [4, 0], [4, 1]),
+        ("white", {" K ": [[4, 8]]}, {" R ": [[8, 0]]}, [8, 0], [4, 0], [4, 8], [4, 7]),
+    ])
+    def test_play_check_move_false(self, turn, black, white, piece_coords, new_coords, piece2_coords, new_coords2):
+        board = Board(white, black)
+        board.turn = turn
+        turn = "black" if turn == "white" else "white"
+        board.play(piece_coords[0], piece_coords[1])
+        board.play(new_coords[0], new_coords[1])
+        self.assertEqual(turn, board.turn)
+        self.assertTrue(board.check)
+        board.play(piece2_coords[0], piece2_coords[1])
+        board.play(new_coords2[0], new_coords2[1])
+        self.assertEqual(turn, board.turn)
+        self.assertTrue(board.check)
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
