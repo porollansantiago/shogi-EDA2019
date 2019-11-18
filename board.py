@@ -11,6 +11,8 @@ class Board:
         self.moves = Moves()
         self.check = False
         self.checkmate = False
+        self.check_pieces = []
+        self.safe_moves = {}
         self.__init_move()
 
     def __init_move(self):
@@ -35,7 +37,7 @@ class Board:
         if not self.piece:
             return self.get_piece(x, y)
         if self.moves.validate(self.turn, self.piece, self.piece_index, x, y,
-                                self.black, self.white, self.move_array):
+                                self.black, self.white, self.move_array, self.check, self.safe_moves):
             return self.eval_move(x, y)
         else:
             self.__init_move()
@@ -48,8 +50,11 @@ class Board:
 
     def __get_piece(self, x, y, player, opponent):
         self.piece, self.piece_index = player.get_piece(x, y)
+        if self.check and ([self.piece, self.piece_index] not in self.check_pieces):
+            self.__init_move()
+            return
         try:
-            move_array = self.moves.get_move_array(self.turn, self.piece, self.piece_index, x, y, player, opponent)
+            move_array = self.moves.get_move_array(self.turn, self.piece, self.piece_index, x, y, player, opponent, self.check, self.safe_moves)
         except TypeError:
             return
         else:
@@ -96,6 +101,8 @@ class Board:
         return ((self.turn == "white" and (y > 5 or p_y >5)) or (self.turn == "black" and (y < 3 or p_y < 3))) and x < 9
     
     def capture(self, player, opponent, side):
+        self.check = False
+        self.check_pieces = []
         player_coords = player.get_all_coords()
         for coord in opponent.get_all_coords():
             if coord in player_coords:
@@ -108,9 +115,7 @@ class Board:
         king_coords = self.get_check(turn, player, opponent, all_player_moves)
         if not king_coords:
             return
-        self.checkmate = ((self.__k_cant_move(turn, opponent_turn, player,  opponent,
-                                               king_coords, all_player_moves,)) 
-                            and self.__k_cant_be_saved(turn, opponent_turn,
+        self.checkmate = (self.__k_cant_be_saved(turn, opponent_turn,
                                                        player, opponent, king_coords))
 
     def get_check(self, turn, player, opponent, all_player_moves=None):
@@ -124,17 +129,8 @@ class Board:
             self.check = king_coords in all_player_moves
             return king_coords
 
-    def __k_cant_move(self, turn, opponent_turn, player, opponent, king_coords, all_player_moves):
-        for coord in self.moves.get_move_array(opponent_turn, " K ", 0, king_coords[0], king_coords[1], opponent, player):
-            try:
-                if type(coord[0]) is int:
-                    if coord not in all_player_moves:
-                        return False
-            except:
-                pass
-        return True
-
     def __k_cant_be_saved(self, turn, opponent_turn, player, opponent, king_coords):
+        checkmate = True
         for pieces in opponent.coords.keys():
             for idx, piece in enumerate(opponent.coords[pieces]):
                 if piece[0] < 9:
@@ -145,8 +141,13 @@ class Board:
                         possible_board.capture(pb_opponent, pb_player, opponent_turn)
                         possible_board.get_check(turn, pb_player, pb_opponent)
                         if not possible_board.check:
-                            return False
-        return True
+                            self.check_pieces.append([pieces, idx])
+                            try:
+                                self.safe_moves[(pieces, idx)].append(move)
+                            except KeyError:
+                                self.safe_moves[(pieces, idx)] = [move]
+                            checkmate = False
+        return checkmate
 
     def __get_possible_board(self, turn, player, opponent, pieces, idx, move):
         white, black = self.__get_possible_board_coords(turn, player, opponent, pieces, idx, move)
