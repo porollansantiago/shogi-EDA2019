@@ -13,7 +13,7 @@ class Board:
         self.moves = Moves()
         self.promotion = None
         self.check = False
-        self.check_mate = False
+        self.checkmate = False
 
     def make_board(self):
         board = [["   " for _ in range(self.white.captured_x_top)], ["   " for _ in range(9)],
@@ -32,12 +32,15 @@ class Board:
                     self.black.promote(self.promotion)
                 elif self.turn == "white":
                     self.white.promote(self.promotion)
+            player = self.black if self.turn == "black" else self.white
+            opponent = self.black if self.turn == "white" else self.white
+            self.is_game_over(self.turn, player, opponent)
             self.turn = "white" if self.turn == "black" else "black"
             self.piece = None
             self.piece_index = 0
             self.move_array = []
             self.promotion = None
-            return
+            return self.check
             
         if self.turn == "black":
             if not self.piece:
@@ -63,8 +66,14 @@ class Board:
         if self.moves.validate(self.turn, self.piece, self.piece_index, x, y, self.black, self.white, self.move_array):
             if self.turn == "black":
                 self.make_move(self.piece, self.piece_index, x, y, self.black, self.white)
+                if self.promotion:
+                    return "promotion"
+                return self.check
             elif self.turn == "white":
                 self.make_move(self.piece, self.piece_index, x, y, self.white, self.black)
+                if self.promotion:
+                    return "promotion"
+                return self.check
         else:
             self.promotion = None
             self.piece = None
@@ -75,7 +84,7 @@ class Board:
         p_y = player.get_coords(piece, piece_index)[1]
         player.move(piece, piece_index, x, y)
         self.capture(player, opponent, self.turn)
-        self.is_game_over(self.turn, piece, piece_index, x, y, player, opponent)
+        self.is_game_over(self.turn, player, opponent)
         if not self.__promotion(p_y, y, x):
             self.turn = "white" if self.turn == "black" else "black"
             self.piece = None
@@ -95,13 +104,13 @@ class Board:
     def __promotion(self, p_y, y, x):
         return ((self.turn == "white" and (y > 5 or p_y >5)) or (self.turn == "black" and (y < 3 or p_y < 3))) and x < 9
 
-    def is_game_over(self, turn, piece, piece_index, x, y, player, opponent):
+    def is_game_over(self, turn, player, opponent):
         all_player_moves = self.moves.get_all_player_moves(turn, player, opponent)
         opponent_turn = "white" if turn == "black" else "black"
         king_coords = self.get_check(turn, player, opponent, all_player_moves)
         if not king_coords:
             return
-        self.check_mate = ((self.__k_cant_move(turn, opponent_turn, player,  opponent,
+        self.checkmate = ((self.__k_cant_move(turn, opponent_turn, player,  opponent,
                                                king_coords, all_player_moves,)) 
                             and self.__k_cant_be_saved(turn, opponent_turn,
                                                        player, opponent, king_coords))
