@@ -338,6 +338,8 @@ class Test_board(unittest.TestCase):
     @parameterized.expand([
         ("black", {" R ": [[8, 8]]}, {" K ": [[4, 0]]}, [8, 8], [4, 8], [4, 0], [4, 1]),
         ("white", {" K ": [[4, 8]]}, {" R ": [[8, 0]]}, [8, 0], [4, 0], [4, 8], [4, 7]),
+        ("black", {" R ": [[8, 8]]}, {" K ": [[4, 0]], " P ": [[0, 2]]}, [8, 8], [4, 8], [0, 2], [0, 3]),
+        ("white", {" K ": [[4, 8]], " P ": [[0, 6]]}, {" R ": [[8, 0]]}, [8, 0], [4, 0], [0, 6], [0, 5]),
     ])
     def test_play_check_move_false(self, turn, black, white, piece_coords, new_coords, piece2_coords, new_coords2):
         board = Board(white, black)
