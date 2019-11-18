@@ -1,6 +1,7 @@
 from board_objects import Board_objects
 import coordinates as coords
 from moves import Moves
+from piece import Piece
 import copy
 
 class Board:  
@@ -167,3 +168,33 @@ class Board:
         white = possible_opponent_coords if turn == "black" else possible_player_coords
         black = possible_player_coords if turn == "black" else possible_opponent_coords
         return white, black
+
+    def get_pygame_objects(self, screen, settings):
+        return (self.white.get_pygame_obj(screen, settings, "white"), 
+                self.black.get_pygame_obj(screen, settings, "black"), 
+                self.prep_board(screen, settings),
+                self.prep_move_array(screen, settings))
+
+    def prep_move_array(self, screen, settings):
+        move_array = []
+        try:
+            for move in self.move_array:
+                p = Piece(screen, settings, 0, move[0], move[1], "movearray")
+                move_array.append(p)
+        except TypeError:
+            return
+        return move_array
+
+    def prep_board(self, screen, settings):
+        b = []
+        for x in range(self.white.captured_x_top):
+            p = Piece(screen, settings, None, x, 0, "board")
+            b.append(p)
+        for x in range(self.black.captured_x_top):
+            p = Piece(screen, settings, None, x, 8, "board")
+            b.append(p)
+        for x in range(9):
+            for y in range(1, 8):
+                p = Piece(screen, settings, None, x, y, "board")
+                b.append(p)
+        return b
