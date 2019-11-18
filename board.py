@@ -110,6 +110,7 @@ class Board:
                 player.add_piece(piece, idx, side)
 
     def game_is_over(self, turn, player, opponent):
+        self.safe_moves = {}
         all_player_moves = self.moves.get_all_player_moves(turn, player, opponent)
         opponent_turn = "white" if turn == "black" else "black"
         king_coords = self.get_check(turn, player, opponent, all_player_moves)
