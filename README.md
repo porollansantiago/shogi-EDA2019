@@ -1,7 +1,7 @@
 # shogi-EDA2019
 Funcionalidades
 - Movimiento de piezas por turnos
-  - Movimientos de todas las piezas, incluyendo las promovidas
+  - Movimientos de todas las piezas, incluyendo las promocionadas
 - Captura
   - Se degradan las piezas promovidas
 - Reintroducción de piezas capturadas
