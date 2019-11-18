@@ -56,6 +56,10 @@ class Board_objects:
         compact = self.coords[piece_to_move][piece_index][0] >= 10
         self.coords[piece_to_move][piece_index] = [x, y]
         if compact:
+            try:
+                self.captured_pieces.remove([piece_to_move, self.coords[piece_to_move][piece_index]])
+            except ValueError:
+                pass
             self.__compact_captured(piece_to_move, piece_index)
     
     def __compact_captured(self, piece, piece_index):
