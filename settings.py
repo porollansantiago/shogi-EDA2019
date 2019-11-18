@@ -1,7 +1,7 @@
 class Settings():
     def __init__(self):
         # Screen
-        self.background_color = (100, 100, 100)
+        self.background_color = (100, 0, 0)
         self.screen_width = 800
         self.screen_height = 600
         # Piece
