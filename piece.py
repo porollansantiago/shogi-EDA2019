@@ -1,13 +1,14 @@
 import pygame.font
+import pygame
 from pygame.sprite import Group
 
-class Scoreboard():
+class Piece():
     def __init__(self, screen, settings, letter, x, y, color):
+        self.color = color
         self.text_color = self.prep_color(color)
         self.screen = screen
         self.screen_rect = screen.get_rect()
-        self.font = pygame.font.SysFont(None, settings.piece_font_size)
-        self.image = self.font.render(letter, True, self.text_color)
+        self.image = self.prep_rect(color, settings, letter, x, y)
         self.rect = self.image.get_rect()
         self.x = x * settings.block_size
         self.y = x * settings.block_size
@@ -23,4 +24,14 @@ class Scoreboard():
             return (250, 0, 250)
 
     def show_score(self):
-        self.screen.blit(self.image, self.rect)
+        if self.color == "movearray":
+            pygame.draw.rect(self.screen, self.text_color, self.rect)
+        else:
+            self.screen.blit(self.image, self.rect)
+
+    def prep_rect(self, color, settings, letter, x, y):
+        if color == "movearray":
+            return pygame.Rect(x, y, 25, 25)
+        else:
+            self.font = pygame.font.SysFont(None, settings.piece_font_size)
+            return self.font.render(letter, True, self.text_color)
