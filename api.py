@@ -12,6 +12,9 @@ class Api:
             new_board += "".join(line) + "\n"
         return new_board
 
+    def game_is_running(self):
+        return not self.board.checkmate
+
     def play(self, coords_i):
         if " " in coords_i:
             coords = coords_i.split()
@@ -25,4 +28,6 @@ class Api:
             return(self.get_board(), "")
         move_array = self.board.play(coords[0], coords[1])
         move_array = "" if not move_array else move_array
+        move_array = "jaque" if move_array == True else move_array
+        move_array = "promover? si:(10 4): " if move_array == "promotion" else move_array
         return (self.get_board(), move_array)
