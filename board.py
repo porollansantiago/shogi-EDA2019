@@ -8,12 +8,16 @@ class Board:
         self.black = Board_objects(black)
         self.white = Board_objects(white)
         self.turn = "black"
-        self.piece = ""
-        self.piece_index = 0
         self.moves = Moves()
-        self.promotion = None
         self.check = False
         self.checkmate = False
+        self.__init_move()
+
+    def __init_move(self):
+        self.promotion = None
+        self.piece = None
+        self.piece_index = 0
+        self.move_array = []
 
     def make_board(self):
         board = [["   " for _ in range(self.white.captured_x_top)], ["   " for _ in range(9)],
@@ -27,72 +31,69 @@ class Board:
 
     def play(self, x, y):
         if self.promotion:
-            if [x, y] == [10, 4]:
-                if self.turn == "black":
-                    self.black.promote(self.promotion)
-                elif self.turn == "white":
-                    self.white.promote(self.promotion)
-            player = self.black if self.turn == "black" else self.white
-            opponent = self.black if self.turn == "white" else self.white
-            self.is_game_over(self.turn, player, opponent)
-            self.turn = "white" if self.turn == "black" else "black"
-            self.piece = None
-            self.piece_index = 0
-            self.move_array = []
-            self.promotion = None
-            return self.check
-            
-        if self.turn == "black":
-            if not self.piece:
-                self.piece, self.piece_index = self.black.get_piece(x, y)
-                try:
-                    move_array = self.moves.get_move_array(self.turn, self.piece, self.piece_index, x, y, self.black, self.white)
-                except TypeError:
-                    return
-                else:
-                    self.move_array = move_array
-                    return move_array
-        if self.turn == "white":
-            if not self.piece:
-                self.piece, self.piece_index = self.white.get_piece(x, y)
-                try:
-                    move_array = self.moves.get_move_array(self.turn, self.piece, self.piece_index, x, y, self.white, self.black)
-                except TypeError:
-                    return
-                else:
-                    self.move_array = move_array
-                    return move_array
-
-        if self.moves.validate(self.turn, self.piece, self.piece_index, x, y, self.black, self.white, self.move_array):
-            if self.turn == "black":
-                self.make_move(self.piece, self.piece_index, x, y, self.black, self.white)
-                if self.promotion:
-                    return "promotion"
-                return self.check
-            elif self.turn == "white":
-                self.make_move(self.piece, self.piece_index, x, y, self.white, self.black)
-                if self.promotion:
-                    return "promotion"
-                return self.check
+            return self.eval_promotion(x, y)
+        if not self.piece:
+            return self.get_piece(x, y)
+        if self.moves.validate(self.turn, self.piece, self.piece_index, x, y,
+                                self.black, self.white, self.move_array):
+            return self.eval_move(x, y)
         else:
-            self.promotion = None
-            self.piece = None
-            self.piece_index = 0
-            self.move_array = []
+            self.__init_move()
+
+    def get_piece(self, x, y):
+        if self.turn == "black":
+            return self.__get_piece(x, y, self.black, self.white)
+        if self.turn == "white":
+            return self.__get_piece(x, y, self.white, self.black)
+
+    def __get_piece(self, x, y, player, opponent):
+        self.piece, self.piece_index = player.get_piece(x, y)
+        try:
+            move_array = self.moves.get_move_array(self.turn, self.piece, self.piece_index, x, y, player, opponent)
+        except TypeError:
+            return
+        else:
+            self.move_array = move_array
+            return move_array
+
+    def eval_promotion(self, x, y):
+        if [x, y] == [10, 4]:
+            if self.turn == "black":
+                self.black.promote(self.promotion)
+            elif self.turn == "white":
+                self.white.promote(self.promotion)
+        player = self.black if self.turn == "black" else self.white
+        opponent = self.black if self.turn == "white" else self.white
+        self.game_is_over(self.turn, player, opponent)
+        self.turn = "white" if self.turn == "black" else "black"
+        self.__init_move()
+        return self.check
+
+    def eval_move(self, x, y):
+        if self.turn == "black":
+            self.make_move(self.piece, self.piece_index, x, y, self.black, self.white)
+            if self.promotion:
+                return "promotion"
+            return self.check
+        elif self.turn == "white":
+            self.make_move(self.piece, self.piece_index, x, y, self.white, self.black)
+            if self.promotion:
+                return "promotion"
+            return self.check
 
     def make_move(self, piece, piece_index, x, y, player, opponent):
         p_y = player.get_coords(piece, piece_index)[1]
         player.move(piece, piece_index, x, y)
         self.capture(player, opponent, self.turn)
-        self.is_game_over(self.turn, player, opponent)
+        self.game_is_over(self.turn, player, opponent)
         if not self.__promotion(p_y, y, x):
             self.turn = "white" if self.turn == "black" else "black"
-            self.piece = None
-            self.piece_index = 0
-            self.move_array = []
-            self.promotion = None
+            self.__init_move()
         else:
             self.promotion = [x, y]
+
+    def __promotion(self, p_y, y, x):
+        return ((self.turn == "white" and (y > 5 or p_y >5)) or (self.turn == "black" and (y < 3 or p_y < 3))) and x < 9
     
     def capture(self, player, opponent, side):
         player_coords = player.get_all_coords()
@@ -101,10 +102,7 @@ class Board:
                 piece, idx = opponent.pop(coord)
                 player.add_piece(piece, idx, side)
 
-    def __promotion(self, p_y, y, x):
-        return ((self.turn == "white" and (y > 5 or p_y >5)) or (self.turn == "black" and (y < 3 or p_y < 3))) and x < 9
-
-    def is_game_over(self, turn, player, opponent):
+    def game_is_over(self, turn, player, opponent):
         all_player_moves = self.moves.get_all_player_moves(turn, player, opponent)
         opponent_turn = "white" if turn == "black" else "black"
         king_coords = self.get_check(turn, player, opponent, all_player_moves)
@@ -141,17 +139,7 @@ class Board:
             for idx, piece in enumerate(opponent.coords[pieces]):
                 if piece[0] < 9:
                     for move in self.moves.get_move_array(opponent_turn, pieces, idx, 0, 0, opponent, player):
-                        possible_opponent_coords = copy.deepcopy(opponent.coords)
-                        possible_player_coords = player.coords
-                        possible_opponent_coords[pieces][idx] = move
-                        white = possible_opponent_coords if turn == "black" else possible_player_coords
-                        black = possible_player_coords if turn == "black" else possible_opponent_coords
-                        possible_board = Board(white, black)
-                        possible_board.white.captured_x_top = opponent.captured_x_top if turn == "black" else player.captured_x_top
-                        possible_board.white.captured_pieces = opponent.captured_pieces if turn == "black" else player.captured_pieces
-                        possible_board.black.captured_x_top = opponent.captured_x_top if turn == "white" else player.captured_x_top
-                        possible_board.black.captured_pieces = opponent.captured_pieces if turn == "white" else player.captured_pieces
-                        possible_board.turn = turn
+                        possible_board = self.__get_possible_board(turn, player, opponent, pieces, idx, move)
                         pb_player = possible_board.black if turn == "black" else possible_board.white
                         pb_opponent = possible_board.white if turn == "black" else possible_board.black
                         possible_board.capture(pb_opponent, pb_player, opponent_turn)
@@ -159,3 +147,21 @@ class Board:
                         if not possible_board.check:
                             return False
         return True
+
+    def __get_possible_board(self, turn, player, opponent, pieces, idx, move):
+        white, black = self.__get_possible_board_coords(turn, player, opponent, pieces, idx, move)
+        possible_board = Board(white, black)
+        possible_board.white.captured_x_top = opponent.captured_x_top if turn == "black" else player.captured_x_top
+        possible_board.white.captured_pieces = opponent.captured_pieces if turn == "black" else player.captured_pieces
+        possible_board.black.captured_x_top = opponent.captured_x_top if turn == "white" else player.captured_x_top
+        possible_board.black.captured_pieces = opponent.captured_pieces if turn == "white" else player.captured_pieces
+        possible_board.turn = turn
+        return possible_board
+
+    def __get_possible_board_coords(self, turn, player, opponent, pieces, idx, move):
+        possible_opponent_coords = copy.deepcopy(opponent.coords)
+        possible_player_coords = player.coords
+        possible_opponent_coords[pieces][idx] = move
+        white = possible_opponent_coords if turn == "black" else possible_player_coords
+        black = possible_player_coords if turn == "black" else possible_opponent_coords
+        return white, black
