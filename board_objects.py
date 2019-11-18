@@ -1,4 +1,6 @@
 import copy
+from piece import Piece
+
 
 class Board_objects:
     def __init__(self, coord_dictionary, side=8):
@@ -155,4 +157,10 @@ class Board_objects:
             return " R "
         return piece 
             
-    
+    def get_pygame_obj(self, screen, settings, color):
+        images = []
+        for pieces in self.coords.keys():
+            for coord in self.coords[pieces]:
+                p = Piece(screen, settings, pieces, coord[0], coord[1], color)
+                images.append(p)
+        return images
