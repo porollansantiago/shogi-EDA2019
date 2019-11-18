@@ -8,12 +8,11 @@ class Piece():
         self.text_color = self.prep_color(color)
         self.screen = screen
         self.screen_rect = screen.get_rect()
-        self.image = self.prep_rect(color, settings, letter, x, y)
-        self.rect = self.image.get_rect()
-        self.x = x * settings.block_size
-        self.y = x * settings.block_size
-        self.rect.left = self.screen_rect.left + self.x
-        self.rect.top = self.screen_rect.top + self.y
+        self.prep_rect(color, settings, letter, x, y)
+        self.x = (settings.block_size/2) + x * settings.block_size
+        self.y = (settings.block_size/2) + y * settings.block_size
+        self.rect.centerx = self.x
+        self.rect.centery = self.y
 
     def prep_color(self, color):
         if color == "white":
@@ -22,16 +21,23 @@ class Piece():
             return (0, 0, 0)
         elif color == "movearray":
             return (250, 0, 250)
+        elif color == "board":
+            return (240, 180, 60)
 
-    def show_score(self):
-        if self.color == "movearray":
+    def draw(self):
+        if self.color == "movearray" or self.color == "board":
             pygame.draw.rect(self.screen, self.text_color, self.rect)
-        else:
+        elif self.color == "black" or self.color == "white":
             self.screen.blit(self.image, self.rect)
 
     def prep_rect(self, color, settings, letter, x, y):
         if color == "movearray":
-            return pygame.Rect(x, y, 25, 25)
-        else:
+            self.image = pygame.Rect(x, y, 25, 25)
+            self.rect = pygame.Rect(x, y, 25, 25)
+        elif color == "black" or color == "white":
             self.font = pygame.font.SysFont(None, settings.piece_font_size)
-            return self.font.render(letter, True, self.text_color)
+            self.image = self.font.render(letter, True, self.text_color)
+            self.rect = self.image.get_rect()
+        elif color == "board":
+            self.image = pygame.Rect(x, y, settings.block_size - 5, settings.block_size-5)
+            self.rect = pygame.Rect(x, y, settings.block_size-5, settings.block_size-5)
