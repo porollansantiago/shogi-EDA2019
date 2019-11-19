@@ -157,7 +157,7 @@ class Board_objects:
             return " P "
         elif piece == "PL ":
             return " L "
-        elif piece == "PKN ":
+        elif piece == "PKN":
             return "KN "
         elif piece == "PSG":
             return "SG "
