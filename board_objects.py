@@ -106,9 +106,10 @@ class Board_objects:
         return all_coords
 
     def pop(self, coord):
-        for piece in self.coords.keys():
-            if coord in self.coords[piece]:
-                for val in self.coords[piece]:
+        coords_copy = copy.deepcopy(self.coords)
+        for piece in coords_copy.keys():
+            if coord in coords_copy[piece]:
+                for val in coords_copy[piece]:
                     if val == coord:
                         self.coords[piece].remove(val)
                         if self.coords[piece] == []:
@@ -132,7 +133,7 @@ class Board_objects:
         piece, val = self.pop(coords)
         promoted_piece = self.__promote(piece)
         try:
-            self.coords[promoted_piece].append([val])
+            self.coords[promoted_piece].append(val)
         except KeyError:
             self.coords[promoted_piece] = [val]
 
