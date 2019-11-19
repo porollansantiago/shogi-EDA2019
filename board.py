@@ -100,7 +100,9 @@ class Board:
             self.promotion = [x, y]
 
     def __promotion(self, prev_coords, y, x, piece):
-        return ((self.turn == "white" and (y > 5 or prev_coords[1] > 5)) or (self.turn == "black" and (y < 3 or prev_coords[1] < 3))) and x < 9 and piece != "GG " and prev_coords[0] < 9
+        return (((self.turn == "white" and (y > 5 or prev_coords[1] > 5)) or 
+                (self.turn == "black" and (y < 3 or prev_coords[1] < 3))) and 
+                x < 9 and piece not in ["GG ","PP ", "PSG", "PKN", "PB ", "PR ", "PL "] and prev_coords[0] < 9)
     
     def capture(self, player, opponent, side):
         self.check = False
