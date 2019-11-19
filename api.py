@@ -33,15 +33,12 @@ class Api:
 
     def get_coords(self, s, screen):
         for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                    self.check_keydown_events(event, s, screen)
+            if event.type == pygame.QUIT:
+                sys.exit()
+
             elif event.type == pygame.MOUSEBUTTONUP:
                 coords = [ int((event.pos[0]) / 50), int((event.pos[1]) / 50) ]
                 return coords
-
-    def check_keydown_events(self, event, s, screen):
-            if event.key == pygame.K_q:
-                sys.exit()   
 
     def draw_screen(self, screen, settings):
         screen.fill(settings.background_color)
@@ -52,8 +49,11 @@ class Api:
             piece.draw()
         for piece in black:
             piece.draw()
-        for element in movearray:
-            element.draw()
+        try:
+            for element in movearray:
+                element.draw()
+        except TypeError:
+            pass
         if sign:
             sign.draw()
         pygame.display.flip()
