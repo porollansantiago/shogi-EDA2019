@@ -45,7 +45,7 @@ class Api:
 
     def draw_screen(self, screen, settings):
         screen.fill(settings.background_color)
-        white, black, board, movearray = self.board.get_pygame_objects(screen, settings)
+        white, black, board, movearray, sign = self.board.get_pygame_objects(screen, settings)
         for element in board:
             element.draw()
         for piece in white:
@@ -54,4 +54,6 @@ class Api:
             piece.draw()
         for element in movearray:
             element.draw()
+        if sign:
+            sign.draw()
         pygame.display.flip()

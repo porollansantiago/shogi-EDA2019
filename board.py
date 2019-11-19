@@ -92,14 +92,15 @@ class Board:
         player.move(piece, piece_index, x, y)
         self.capture(player, opponent, self.turn)
         self.game_is_over(self.turn, player, opponent)
-        if not self.__promotion(p_y, y, x):
+        if not self.__promotion(p_y, y, x, piece):
             self.turn = "white" if self.turn == "black" else "black"
             self.__init_move()
         else:
+            self.move_array = []
             self.promotion = [x, y]
 
-    def __promotion(self, p_y, y, x):
-        return ((self.turn == "white" and (y > 5 or p_y >5)) or (self.turn == "black" and (y < 3 or p_y < 3))) and x < 9
+    def __promotion(self, p_y, y, x, piece):
+        return ((self.turn == "white" and (y > 5 or p_y >5)) or (self.turn == "black" and (y < 3 or p_y < 3))) and x < 9 and piece != "GG "
     
     def capture(self, player, opponent, side):
         self.check = False
@@ -117,6 +118,8 @@ class Board:
         opponent_turn = "white" if turn == "black" else "black"
         king_coords = self.get_check(turn, player, opponent, all_player_moves)
         if not king_coords:
+            return
+        if not self.check:
             return
         self.checkmate = (self.__k_cant_be_saved(turn, opponent_turn,
                                                        player, opponent, king_coords))
@@ -174,7 +177,16 @@ class Board:
         return (self.white.get_pygame_obj(screen, settings, "white"), 
                 self.black.get_pygame_obj(screen, settings, "black"), 
                 self.prep_board(screen, settings),
-                self.prep_move_array(screen, settings))
+                self.prep_move_array(screen, settings),
+                self.prep_sign(screen, settings))
+
+    def prep_sign(self, screen, settings):
+        if self.promotion:
+            return Piece(screen, settings, "PRM", 10, 4, "black")
+        elif self.check:
+            return Piece(screen, settings, "Jaque", 10, 4, "black")
+        elif self.checkmate:
+            return Piece(screen, settings, "Jaque mate", 10, 4, "black")
 
     def prep_move_array(self, screen, settings):
         move_array = []
