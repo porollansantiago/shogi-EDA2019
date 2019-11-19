@@ -80,7 +80,6 @@ class Board:
                     self.check_moves[(self.piece, self.piece_index)].append(move)
                 except KeyError:
                     self.check_moves[(self.piece, self.piece_index)] = [move]
-        print(self.check_moves)
     def eval_promotion(self, x, y):
         if [x, y] == [10, 4]:
             if self.turn == "black":
@@ -180,9 +179,7 @@ class Board:
         white, black = self.__get_possible_board_coords(turn, player, opponent, pieces, idx, move, side)
         possible_board = Board(white, black)
         possible_board.white.captured_x_top = opponent.captured_x_top if turn == "black" else player.captured_x_top
-        possible_board.white.captured_pieces = opponent.captured_pieces if turn == "black" else player.captured_pieces
         possible_board.black.captured_x_top = opponent.captured_x_top if turn == "white" else player.captured_x_top
-        possible_board.black.captured_pieces = opponent.captured_pieces if turn == "white" else player.captured_pieces
         possible_board.turn = turn
         pb_player = possible_board.black if turn == "black" else possible_board.white
         pb_opponent = possible_board.white if turn == "black" else possible_board.black

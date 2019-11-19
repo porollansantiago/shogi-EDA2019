@@ -104,7 +104,7 @@ class Moves():
         self.__get_front_moves(move_array, player, piece, piece_index, front_val, all_player_coords, check, safe_moves, possible_check, check_moves)
         self.__get_side_moves(move_array, player, piece, piece_index, 0, all_player_coords, check, safe_moves, possible_check, check_moves)
         new_coord = player.get_coords(piece, piece_index, 0, back_val)
-        if self.__inside_the_board(new_coord) and new_coord not in all_player_coords and ((not check) or (new_coord in safe_moves[(piece, piece_index)])):
+        if self.__inside_the_board(new_coord) and new_coord not in all_player_coords and ((not check) or (new_coord in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coord not in check_moves[(piece, piece_index)])):
             move_array.append(new_coord)
         return move_array
 
