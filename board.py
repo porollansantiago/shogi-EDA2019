@@ -88,19 +88,19 @@ class Board:
             return self.check
 
     def make_move(self, piece, piece_index, x, y, player, opponent):
-        p_y = player.get_coords(piece, piece_index)[1]
+        prev_coords = player.get_coords(piece, piece_index)
         player.move(piece, piece_index, x, y)
         self.capture(player, opponent, self.turn)
         self.game_is_over(self.turn, player, opponent)
-        if not self.__promotion(p_y, y, x, piece):
+        if not self.__promotion(prev_coords, y, x, piece):
             self.turn = "white" if self.turn == "black" else "black"
             self.__init_move()
         else:
             self.move_array = []
             self.promotion = [x, y]
 
-    def __promotion(self, p_y, y, x, piece):
-        return ((self.turn == "white" and (y > 5 or p_y >5)) or (self.turn == "black" and (y < 3 or p_y < 3))) and x < 9 and piece != "GG "
+    def __promotion(self, prev_coords, y, x, piece):
+        return ((self.turn == "white" and (y > 5 or prev_coords[1] > 5)) or (self.turn == "black" and (y < 3 or prev_coords[1] < 3))) and x < 9 and piece != "GG " and prev_coords[0] < 9
     
     def capture(self, player, opponent, side):
         self.check = False
