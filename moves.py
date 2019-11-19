@@ -139,7 +139,6 @@ class Moves():
                 break
         start2 = coords[0] if coords[0] < coords[1] else coords[1]
         for val in range(1, start2 + 1):
-            print(val)
             new_coords = player.get_coords(piece, piece_index, -val, -val)
             if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
