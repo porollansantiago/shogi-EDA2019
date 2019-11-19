@@ -23,15 +23,17 @@ class Moves():
     def get_move_array(self, turn, piece, piece_index, x, y, player, other_player, check=False, safe_moves=[]):
         move_array = []
         all_player_coords = player.get_all_coords()
-        if x > 9:
-            return self.get_empty_spaces(player, other_player, piece)
+        if not piece:
+            return []
         if turn == "black":
-            move_array = self.black_side_moves(turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves)
+            move_array = self.black_side_moves(turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, x, y)
         elif turn == "white":
-            move_array = self.white_side_moves(turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves)
+            move_array = self.white_side_moves(turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, x, y)
         return move_array
 
-    def black_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves):
+    def black_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, x, y):
+        if x > 9 and y == 8:
+            return self.get_empty_spaces(player, other_player, piece)
         if " P " == piece:
             new_coords = player.get_coords(piece, piece_index, 0, -1)
             if self.__inside_the_board(new_coords) and new_coords not in all_player_coords  and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
@@ -52,7 +54,9 @@ class Moves():
         elif " K " == piece:
             return self.get_king_moves(player, piece, piece_index, move_array, all_player_coords, check, safe_moves)
 
-    def white_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves):
+    def white_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, x, y):
+        if x > 9 and y == 0:
+            return self.get_empty_spaces(player, other_player, piece)
         if " P " == piece:
             new_coords = player.get_coords(piece, piece_index, 0, 1)
             if self.__inside_the_board(new_coords) and new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
