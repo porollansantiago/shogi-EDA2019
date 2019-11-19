@@ -1,7 +1,7 @@
 
 
 class Moves():
-    def validate(self, turn, piece_to_move, piece_index, x, y, black, white, move_array=None, check=False, safe_moves=[]):
+    def validate(self, turn, piece_to_move, piece_index, x, y, black, white, move_array=None, check=False, safe_moves={}):
         if [x, y] == [10, 4] or [x, y] == [12, 4]:
             return False
         if turn == "black":
@@ -20,104 +20,104 @@ class Moves():
         except TypeError:
             return True
 
-    def get_move_array(self, turn, piece, piece_index, x, y, player, other_player, check=False, safe_moves=[]):
+    def get_move_array(self, turn, piece, piece_index, x, y, player, other_player, check=False, safe_moves={}, possible_check=False, check_moves={}):
         move_array = []
         all_player_coords = player.get_all_coords()
         if not piece:
             return []
         if turn == "black":
-            move_array = self.black_side_moves(turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, x, y)
+            move_array = self.black_side_moves(turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, possible_check, check_moves, x, y)
         elif turn == "white":
-            move_array = self.white_side_moves(turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, x, y)
+            move_array = self.white_side_moves(turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, possible_check, check_moves, x, y)
         return move_array
 
-    def black_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, x, y):
+    def black_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, possible_check, check_moves, x, y):
         if x > 9 and y == 8:
             return self.get_empty_spaces(player, other_player, piece)
         if " P " == piece:
             new_coords = player.get_coords(piece, piece_index, 0, -1)
-            if self.__inside_the_board(new_coords) and new_coords not in all_player_coords  and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if self.__inside_the_board(new_coords) and new_coords not in all_player_coords  and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 return [new_coords]
         elif " L " == piece:
             end, step = -1, -1
-            return self.get_lance_moves(piece, piece_index, move_array, end, step, player, other_player, all_player_coords, check, safe_moves)
+            return self.get_lance_moves(piece, piece_index, move_array, end, step, player, other_player, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif "KN " == piece:
-            return self.get_knight_moves(player, piece, piece_index, move_array, -2, all_player_coords, check, safe_moves)
+            return self.get_knight_moves(player, piece, piece_index, move_array, -2, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif "SG " == piece:
-            return self.get_SG_moves(player, piece, piece_index, move_array, -1, all_player_coords, check, safe_moves)
+            return self.get_SG_moves(player, piece, piece_index, move_array, -1, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif piece in ["GG ", "PP ", "PKN", "PSG", "PL "]:
-            return self.get_GG_moves(player, piece, piece_index, move_array, -1, 1, all_player_coords, check, safe_moves)
+            return self.get_GG_moves(player, piece, piece_index, move_array, -1, 1, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif "R" in piece:
-            return self.get_rook_moves(player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves)
+            return self.get_rook_moves(player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif "B" in piece:
-            return self.get_bishop_moves(player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves)
+            return self.get_bishop_moves(player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif " K " == piece:
-            return self.get_king_moves(player, piece, piece_index, move_array, all_player_coords, check, safe_moves)
+            return self.get_king_moves(player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves)
 
-    def white_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, x, y):
+    def white_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, possible_check, check_moves, x, y):
         if x > 9 and y == 0:
             return self.get_empty_spaces(player, other_player, piece)
         if " P " == piece:
             new_coords = player.get_coords(piece, piece_index, 0, 1)
-            if self.__inside_the_board(new_coords) and new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if self.__inside_the_board(new_coords) and new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 return [new_coords]
         elif " L " == piece:
             end, step = 9, 1
-            return self.get_lance_moves(piece, piece_index, move_array, end, step, player, other_player, all_player_coords, check, safe_moves)
+            return self.get_lance_moves(piece, piece_index, move_array, end, step, player, other_player, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif "KN " == piece:
-            return self.get_knight_moves(player, piece, piece_index, move_array, 2, all_player_coords, check, safe_moves)
+            return self.get_knight_moves(player, piece, piece_index, move_array, 2, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif "SG " == piece:
-            return self.get_SG_moves(player, piece, piece_index, move_array, 1, all_player_coords, check, safe_moves)
+            return self.get_SG_moves(player, piece, piece_index, move_array, 1, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif piece in ["GG ", "PP ", "PKN", "PSG", "PL "]:
-            return self.get_GG_moves(player, piece, piece_index, move_array, 1, -1, all_player_coords, check, safe_moves)
+            return self.get_GG_moves(player, piece, piece_index, move_array, 1, -1, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif "R" in piece:
-            return self.get_rook_moves(player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves)
+            return self.get_rook_moves(player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif "B" in piece:
-            return self.get_bishop_moves(player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves)
+            return self.get_bishop_moves(player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves)
         elif " K " == piece:
-            return self.get_king_moves(player, piece, piece_index, move_array, all_player_coords, check, safe_moves)
+            return self.get_king_moves(player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves)
 
-    def get_lance_moves(self, piece, piece_index, move_array, end, step, player, other_player, all_player_coords, check, safe_moves):
+    def get_lance_moves(self, piece, piece_index, move_array, end, step, player, other_player, all_player_coords, check, safe_moves, possible_check, check_moves):
         for val in range(player.coords[piece][piece_index][1] + step, end, step):
             new_coords = player.get_coords(piece, piece_index, 0, val, False, True)
             if self.__inside_the_board(new_coords):
-                if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+                if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                     move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
         return move_array
 
-    def get_knight_moves(self, player, piece, piece_index, move_array, y, all_player_coords, check, safe_moves):
+    def get_knight_moves(self, player, piece, piece_index, move_array, y, all_player_coords, check, safe_moves, possible_check, check_moves):
         for x in range(-1, 2, 2):
             new_coords = player.get_coords(piece, piece_index, x, y)
             if self.__inside_the_board(new_coords) and new_coords not in all_player_coords:
-                if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+                if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                     move_array.append(new_coords)
         return move_array
 
-    def get_SG_moves(self, player, piece, piece_index, move_array, val, all_player_coords, check, safe_moves):
-        self.__get_front_moves(move_array, player, piece, piece_index, val, all_player_coords, check, safe_moves)
-        self.__get_side_moves(move_array, player, piece, piece_index, val, all_player_coords, check, safe_moves)
+    def get_SG_moves(self, player, piece, piece_index, move_array, val, all_player_coords, check, safe_moves, possible_check, check_moves):
+        self.__get_front_moves(move_array, player, piece, piece_index, val, all_player_coords, check, safe_moves, possible_check, check_moves)
+        self.__get_side_moves(move_array, player, piece, piece_index, val, all_player_coords, check, safe_moves, possible_check, check_moves)
         return move_array
 
-    def get_GG_moves(self, player, piece, piece_index, move_array, front_val, back_val, all_player_coords, check, safe_moves):
-        self.__get_front_moves(move_array, player, piece, piece_index, front_val, all_player_coords, check, safe_moves)
-        self.__get_side_moves(move_array, player, piece, piece_index, 0, all_player_coords, check, safe_moves)
+    def get_GG_moves(self, player, piece, piece_index, move_array, front_val, back_val, all_player_coords, check, safe_moves, possible_check, check_moves):
+        self.__get_front_moves(move_array, player, piece, piece_index, front_val, all_player_coords, check, safe_moves, possible_check, check_moves)
+        self.__get_side_moves(move_array, player, piece, piece_index, 0, all_player_coords, check, safe_moves, possible_check, check_moves)
         new_coord = player.get_coords(piece, piece_index, 0, back_val)
         if self.__inside_the_board(new_coord) and new_coord not in all_player_coords and ((not check) or (new_coord in safe_moves[(piece, piece_index)])):
             move_array.append(new_coord)
         return move_array
 
-    def get_king_moves(self, player, piece, piece_index, move_array, all_player_coords, check, safe_moves):
-        self.__get_front_moves(move_array, player, piece, piece_index, 1, all_player_coords, check, safe_moves)
-        self.__get_front_moves(move_array, player, piece, piece_index, -1, all_player_coords, check, safe_moves)
-        self.__get_side_moves(move_array, player, piece, piece_index, 0, all_player_coords, check, safe_moves)
+    def get_king_moves(self, player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves):
+        self.__get_front_moves(move_array, player, piece, piece_index, 1, all_player_coords, check, safe_moves, possible_check, check_moves)
+        self.__get_front_moves(move_array, player, piece, piece_index, -1, all_player_coords, check, safe_moves, possible_check, check_moves)
+        self.__get_side_moves(move_array, player, piece, piece_index, 0, all_player_coords, check, safe_moves, possible_check, check_moves)
         return move_array
 
-    def get_rook_moves(self, player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves):
+    def get_rook_moves(self, player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves):
         coords = player.get_coords(piece, piece_index)
-        self.__get_rook_col(coords, player, piece, piece_index, move_array, other_player, all_player_coords, check, safe_moves)
-        self.__get_rook_row(coords, player, piece, piece_index, move_array, other_player, all_player_coords, check, safe_moves)
+        self.__get_rook_col(coords, player, piece, piece_index, move_array, other_player, all_player_coords, check, safe_moves, possible_check, check_moves)
+        self.__get_rook_row(coords, player, piece, piece_index, move_array, other_player, all_player_coords, check, safe_moves, possible_check, check_moves)
         if "PR " == piece:
             for val in [-1, 1]:
                 new_coords1 = player.get_coords(piece, piece_index, val, val)
@@ -128,33 +128,33 @@ class Moves():
                     move_array.append(new_coords2)
         return move_array
 
-    def get_bishop_moves(self, player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves):
+    def get_bishop_moves(self, player, other_player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves):
         coords = player.get_coords(piece, piece_index)
         start1 = coords[0] if coords[0] > coords[1] else coords[1]
         for val in range(1, 9 - start1):
             new_coords = player.get_coords(piece, piece_index, val, val)
-            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
         start2 = coords[0] if coords[0] < coords[1] else coords[1]
         for val in range(1, start2 + 1):
             new_coords = player.get_coords(piece, piece_index, -val, -val)
-            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
         start3 = 8 - coords[0] if 8 - coords[0] < coords[1] else coords[1]
         for val in range(1, start3 + 1):
             new_coords = player.get_coords(piece, piece_index, val, -val)
-            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
         start4 = 8 - coords[1] if 8 - coords[1] < coords[0] else coords[0]
         for val in range(1, start4 + 1):
             new_coords = player.get_coords(piece, piece_index, -val, val)
-            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
@@ -162,52 +162,52 @@ class Moves():
             for val in [-1, 1]:
                 new_coords1 = player.get_coords(piece, piece_index, val)
                 new_coords2 = player.get_coords(piece, piece_index, 0, val)
-                if self.__inside_the_board(new_coords1) and new_coords1 not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+                if self.__inside_the_board(new_coords1) and new_coords1 not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                     move_array.append(new_coords1)
-                if self.__inside_the_board(new_coords2) and new_coords2 not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+                if self.__inside_the_board(new_coords2) and new_coords2 not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                     move_array.append(new_coords2)
         return move_array                
 
-    def __get_rook_col(self, coords, player, piece, piece_index, move_array, other_player, all_player_coords, check, safe_moves):
+    def __get_rook_col(self, coords, player, piece, piece_index, move_array, other_player, all_player_coords, check, safe_moves, possible_check, check_moves):
         for val in range(coords[1] + 1, 9):
             new_coords = player.get_coords(piece, piece_index, 0, val, False, True)
-            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
         for val in range(coords[1] - 1, -1, -1):
             new_coords = player.get_coords(piece, piece_index, 0, val, False, True)
-            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
 
-    def __get_rook_row(self, coords, player, piece, piece_index, move_array, other_player, all_player_coords, check, safe_moves):
+    def __get_rook_row(self, coords, player, piece, piece_index, move_array, other_player, all_player_coords, check, safe_moves, possible_check, check_moves):
         for val in range(coords[0] + 1, 9):
             new_coords = player.get_coords(piece, piece_index, val, 0, True)
-            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
         for val in range(coords[0] - 1, -1, -1):
             new_coords = player.get_coords(piece, piece_index, val, 0, True)
-            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+            if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or other_player.compare_coords(new_coords):
                 break
 
-    def __get_side_moves(self, move_array, player, piece, piece_index, val, all_player_coords, check, safe_moves):
+    def __get_side_moves(self, move_array, player, piece, piece_index, val, all_player_coords, check, safe_moves, possible_check, check_moves):
         for x in range(-1, 2, 2):
             new_coords = player.get_coords(piece, piece_index, x, -val)
             if self.__inside_the_board(new_coords) and new_coords:
-                if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+                if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                     move_array.append(new_coords)
 
-    def __get_front_moves(self, move_array, player, piece, piece_index, val, all_player_coords, check, safe_moves):
+    def __get_front_moves(self, move_array, player, piece, piece_index, val, all_player_coords, check, safe_moves, possible_check, check_moves):
         for x in range(-1, 2):
             new_coords = player.get_coords(piece, piece_index, x, val)
             if self.__inside_the_board(new_coords) and new_coords:
-                if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])):
+                if new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
                     move_array.append(new_coords)
 
 
