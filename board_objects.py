@@ -53,23 +53,28 @@ class Board_objects:
                     return True
 
     def move(self, piece_to_move, piece_index, x, y):
+        prev_coords = self.coords[piece_to_move][piece_index]
         compact = self.coords[piece_to_move][piece_index][0] >= 10
         self.coords[piece_to_move][piece_index] = [x, y]
         if compact:
             try:
-                self.captured_pieces.remove([piece_to_move, self.coords[piece_to_move][piece_index]])
+                self.captured_pieces.remove([piece_to_move, prev_coords])
             except ValueError:
                 pass
             self.__compact_captured(piece_to_move, piece_index)
+
     
     def __compact_captured(self, piece, piece_index):
         prev_coords = 9
         self.__sort(self.captured_pieces)
-        for cpiece in self.captured_pieces:
+        captured_pieces = copy.deepcopy(self.captured_pieces)
+        for cpiece in captured_pieces:
                 for idx, coord in enumerate(self.coords[cpiece[0]]):
                     if coord == cpiece[1]:
                         if coord[0] - prev_coords != 1:
                             self.coords[cpiece[0]][idx] = [coord[0] - (-1 + coord[0] - prev_coords), coord[1]]
+                            self.captured_pieces.remove(cpiece)
+                            self.captured_pieces.append([cpiece[0], self.coords[cpiece[0]][idx]])
                             prev_coords = coord[0] - (-1 + coord[0] - prev_coords)
                         else:
                             self.coords[cpiece[0]][idx] = [coord[0], coord[1]]
