@@ -20,7 +20,7 @@ class Board_objects:
             for coor in self.coords[piece]:
                 try:
                     board[coor[1]][coor[0]] = piece
-                except:
+                except IndexError:
                     pass
         return board
 
@@ -40,7 +40,6 @@ class Board_objects:
 
     def get_pawn_cols(self):
         p_cols = []
-        
         for coord in self.coords[" P "]:
             if coord[0] not in p_cols:
                 p_cols.append(coord[0])
@@ -57,19 +56,19 @@ class Board_objects:
         compact = self.coords[piece_to_move][piece_index][0] >= 10
         self.coords[piece_to_move][piece_index] = [x, y]
         if compact:
-            try:
-                self.captured_pieces.remove([piece_to_move, prev_coords])
-            except ValueError:
-                pass
-            self.__compact_captured(piece_to_move, piece_index)
-
+            self.captured_pieces.remove([piece_to_move, prev_coords])
+            if prev_coords[0] != self.captured_x_top - 1:
+                self.__compact_captured(piece_to_move, piece_index)
+            self.captured_x_top -= 1
     
     def __compact_captured(self, piece, piece_index):
         prev_coords = 9
-        self.__sort(self.captured_pieces)
+        if len(self.captured_pieces) > 1:
+            self.__sort(self.captured_pieces)
         captured_pieces = copy.deepcopy(self.captured_pieces)
+        coords_copy = copy.deepcopy(self.coords)
         for cpiece in captured_pieces:
-                for idx, coord in enumerate(self.coords[cpiece[0]]):
+                for idx, coord in enumerate(coords_copy[cpiece[0]]):
                     if coord == cpiece[1]:
                         if coord[0] - prev_coords != 1:
                             self.coords[cpiece[0]][idx] = [coord[0] - (-1 + coord[0] - prev_coords), coord[1]]
@@ -79,24 +78,19 @@ class Board_objects:
                         else:
                             self.coords[cpiece[0]][idx] = [coord[0], coord[1]]
                             prev_coords = coord[0]
-        self.captured_x_top -= 1
+
 
     def __sort(self, captured_pieces):
-        for idx in range(1, len(captured_pieces)):
-            val = captured_pieces[idx]
-            idx2 = idx - 1
-            while idx2 >= 0 and val[1][0] < captured_pieces[idx2][1][0]:
-                captured_pieces[idx2 + 1] = captured_pieces[idx2]
-                idx2 -= 1
-            captured_pieces[idx2 + 1] = val
-
-    #    stop = 0
-    #    while stop != 20:
-    #        for idx in range(0, len(captured_pieces) - 1):
-    #            if captured_pieces[idx][1] > captured_pieces[idx + 1][1]:
-    #                popped = captured_pieces.pop(idx + 1)
-    #                captured_pieces.insert(idx, popped)
-    #        stop += 1
+        stop = 0
+        while stop < 5:
+            print(stop)
+            for idx in range(0, len(captured_pieces) - 1):
+                if captured_pieces[idx][1][0] > captured_pieces[idx + 1][1][0]:
+                    popped = captured_pieces.pop(idx + 1)
+                    captured_pieces.insert(idx, popped)
+                    stop = 0
+                else:
+                    stop += 1
 
     def get_all_coords(self):
         all_coords = []
@@ -125,7 +119,9 @@ class Board_objects:
             self.coords[piece].append([self.captured_x_top, self.y])
         except KeyError:
             self.coords[piece] = [[self.captured_x_top, self.y]]
-        self.captured_pieces.append([piece, [self.captured_x_top, self.y]])
+
+        if [piece, [self.captured_x_top, self.y]] not in self.captured_pieces:
+            self.captured_pieces.append([piece, [self.captured_x_top, self.y]])
         self.captured_x_top += 1
         return self.coords
 
