@@ -121,8 +121,9 @@ class Board:
             return
         if not self.check:
             return
-        self.checkmate = (self.__k_cant_be_saved(turn, opponent_turn,
-                                                       player, opponent, king_coords))
+        if (self.__k_cant_be_saved(turn, opponent_turn,
+                                                       player, opponent, king_coords)):
+            self.checkmate = True
 
     def get_check(self, turn, player, opponent, all_player_moves=None):
         if not all_player_moves:
@@ -140,19 +141,22 @@ class Board:
         for pieces in opponent.coords.keys():
             for idx, piece in enumerate(opponent.coords[pieces]):
                 if piece[0] < 9:
-                    for move in self.moves.get_move_array(opponent_turn, pieces, idx, 0, 0, opponent, player):
-                        possible_board = self.__get_possible_board(turn, player, opponent, pieces, idx, move)
-                        pb_player = possible_board.black if turn == "black" else possible_board.white
-                        pb_opponent = possible_board.white if turn == "black" else possible_board.black
-                        possible_board.capture(pb_opponent, pb_player, opponent_turn)
-                        possible_board.get_check(turn, pb_player, pb_opponent)
-                        if not possible_board.check:
-                            self.check_pieces.append([pieces, idx])
-                            try:
-                                self.safe_moves[(pieces, idx)].append(move)
-                            except KeyError:
-                                self.safe_moves[(pieces, idx)] = [move]
-                            checkmate = False
+                    try:
+                        for move in self.moves.get_move_array(opponent_turn, pieces, idx, 0, 0, opponent, player):
+                            possible_board = self.__get_possible_board(turn, player, opponent, pieces, idx, move)
+                            pb_player = possible_board.black if turn == "black" else possible_board.white
+                            pb_opponent = possible_board.white if turn == "black" else possible_board.black
+                            possible_board.capture(pb_opponent, pb_player, opponent_turn)
+                            possible_board.get_check(turn, pb_player, pb_opponent)
+                            if not possible_board.check:
+                                self.check_pieces.append([pieces, idx])
+                                try:
+                                    self.safe_moves[(pieces, idx)].append(move)
+                                except KeyError:
+                                    self.safe_moves[(pieces, idx)] = [move]
+                                checkmate = False
+                    except ValueError:
+                        pass
         return checkmate
 
     def __get_possible_board(self, turn, player, opponent, pieces, idx, move):
@@ -181,12 +185,14 @@ class Board:
                 self.prep_sign(screen, settings))
 
     def prep_sign(self, screen, settings):
+        winner = "blanco" if self.turn == "black" else "negro"
+        if self.checkmate:
+            return Piece(screen, settings, "Jaque mate, Gana " + winner, 12, 4, "black")
         if self.promotion:
             return Piece(screen, settings, "PRM", 10, 4, "black")
         elif self.check:
             return Piece(screen, settings, "Jaque", 10, 4, "black")
-        elif self.checkmate:
-            return Piece(screen, settings, "Jaque mate", 10, 4, "black")
+
 
     def prep_move_array(self, screen, settings):
         move_array = []

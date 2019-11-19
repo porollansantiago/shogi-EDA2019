@@ -7,7 +7,7 @@ if __name__ == "__main__":
     pygame.init()
     s = Settings()
     screen = pygame.display.set_mode((s.screen_width, s.screen_height))
-    while api_shogi.game_is_running():
+    while True:
         coord = api_shogi.get_coords(s, screen)
         api_shogi.play(coord)
         api_shogi.draw_screen(screen, s)
