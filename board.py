@@ -155,7 +155,7 @@ class Board:
                                 except KeyError:
                                     self.safe_moves[(pieces, idx)] = [move]
                                 checkmate = False
-                    except ValueError:
+                    except TypeError:
                         pass
         return checkmate
 
