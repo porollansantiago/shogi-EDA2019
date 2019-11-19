@@ -235,7 +235,7 @@ class Moves():
 
     def get_all_player_moves(self, turn, player, opponent):
         move_array = []
-        for piece in player.coords:
+        for piece in player.coords.keys():
             for idx, coord in enumerate(player.coords[piece]):
                 try:
                     for move in self.get_move_array(turn, piece, idx, coord[0], coord[1], player, opponent):
