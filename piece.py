@@ -32,8 +32,8 @@ class Piece():
 
     def prep_rect(self, color, settings, letter, x, y):
         if color == "movearray":
-            self.image = pygame.Rect(x, y, 25, 25)
-            self.rect = pygame.Rect(x, y, 25, 25)
+            self.image = pygame.Rect(x, y, settings.move_array_block_size, settings.move_array_block_size)
+            self.rect = pygame.Rect(x, y, settings.move_array_block_size, settings.move_array_block_size)
         elif color == "black" or color == "white":
             self.font = pygame.font.SysFont(None, settings.piece_font_size)
             self.image = self.font.render(letter, True, self.text_color)
