@@ -2,19 +2,21 @@ import unittest
 from api import Api
 from parameterized import parameterized
 
+
 class test_Api(unittest.TestCase):
     def setUp(self):
         self.api = Api()
+
     def test_get_board_original(self):
-        new_board =(" L KN SG GG  K GG SG KN  L    \n"
-                    "    R                 B    \n"
-                    " P  P  P  P  P  P  P  P  P \n"
-                    "                           \n"
-                    "                           \n"
-                    "                           \n"
-                    " P  P  P  P  P  P  P  P  P \n"
-                    "    B                 R    \n"
-                    " L KN SG GG  K GG SG KN  L    \n")
+        new_board = (" L KN SG GG  K GG SG KN  L    \n"
+                     "    R                 B    \n"
+                     " P  P  P  P  P  P  P  P  P \n"
+                     "                           \n"
+                     "                           \n"
+                     "                           \n"
+                     " P  P  P  P  P  P  P  P  P \n"
+                     "    B                 R    \n"
+                     " L KN SG GG  K GG SG KN  L    \n")
         self.assertEqual(self.api.get_board(), new_board)
 
     @parameterized.expand([
@@ -70,11 +72,13 @@ class test_Api(unittest.TestCase):
                                           "    B                 R    \n"
                                           " L KN SG GG  K GG SG KN  L    \n"))
     ])
-    def test_play_multiple(self, coords1, coords2, coords3, coords4, new_board):
+    def test_play_multiple(self, coords1, coords2, coords3,
+                           coords4, new_board):
         self.api.play(coords1)
         self.api.play(coords2)
         self.api.play(coords3)
         self.assertEqual(self.api.play(coords4)[0], new_board)
+
 
 if __name__ == "__main__":
     unittest.main()

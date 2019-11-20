@@ -2,6 +2,7 @@ from board import Board
 import pygame
 import sys
 
+
 class Api:
     def __init__(self):
         self.board = Board()
@@ -27,8 +28,10 @@ class Api:
             return(self.get_board(), "")
         move_array = self.board.play(coords[0], coords[1])
         move_array = "" if not move_array else move_array
-        move_array = "jaque" if move_array == True else move_array
-        move_array = "promover? si:(10 4): " if move_array == "promotion" else move_array
+        if type(move_array) is bool:
+            move_array = "jaque" if move_array else move_array
+        move_array = "promover? si:(10 4): " if move_array == "promotion" else(
+            move_array)
         return (self.get_board(), move_array)
 
     def get_coords(self, s, screen):
@@ -37,12 +40,13 @@ class Api:
                 sys.exit()
 
             elif event.type == pygame.MOUSEBUTTONUP:
-                coords = [ int((event.pos[0]) / 50), int((event.pos[1]) / 50) ]
+                coords = [int((event.pos[0]) / 50), int((event.pos[1]) / 50)]
                 return coords
 
     def draw_screen(self, screen, settings):
         screen.fill(settings.background_color)
-        white, black, board, movearray, sign = self.board.get_pygame_objects(screen, settings)
+        white, black, board, movearray, sign = (
+            self.board.get_pygame_objects(screen, settings))
         for element in board:
             element.draw()
         for piece in white:

@@ -1,6 +1,6 @@
 import pygame.font
 import pygame
-from pygame.sprite import Group
+
 
 class Piece():
     def __init__(self, screen, settings, letter, x, y, color):
@@ -32,12 +32,16 @@ class Piece():
 
     def prep_rect(self, color, settings, letter, x, y):
         if color == "movearray":
-            self.image = pygame.Rect(x, y, settings.move_array_block_size, settings.move_array_block_size)
-            self.rect = pygame.Rect(x, y, settings.move_array_block_size, settings.move_array_block_size)
+            self.image = pygame.Rect(x, y, settings.move_array_block_size,
+                                     settings.move_array_block_size)
+            self.rect = pygame.Rect(x, y, settings.move_array_block_size,
+                                    settings.move_array_block_size)
         elif color == "black" or color == "white":
             self.font = pygame.font.SysFont(None, settings.piece_font_size)
             self.image = self.font.render(letter, True, self.text_color)
             self.rect = self.image.get_rect()
         elif color == "board":
-            self.image = pygame.Rect(x, y, settings.block_size - 5, settings.block_size-5)
-            self.rect = pygame.Rect(x, y, settings.block_size-5, settings.block_size-5)
+            self.image = pygame.Rect(x, y, settings.block_size - 5,
+                                     settings.block_size - 5)
+            self.rect = pygame.Rect(x, y, settings.block_size-5,
+                                    settings.block_size - 5)

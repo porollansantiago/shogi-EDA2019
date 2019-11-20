@@ -6,7 +6,7 @@ class Board_objects:
     def __init__(self, coord_dictionary, side=8):
         self.coords = copy.deepcopy(coord_dictionary)
         self.captured_x_top = 10
-        try: 
+        try:
             self.y = self.coords[" K "][0][1]
         except KeyError:
             self.y = side
@@ -31,10 +31,13 @@ class Board_objects:
                         return piece, idx
         return None, 0
 
-    def get_coords(self, piece, piece_index, x=0, y=0, replace_x=False, replace_y=False):
+    def get_coords(self, piece, piece_index, x=0, y=0,
+                   replace_x=False, replace_y=False):
         new_coords = [0, 0]
-        new_coords[0] = x if replace_x else self.coords[piece][piece_index][0] + x
-        new_coords[1] = y if replace_y else self.coords[piece][piece_index][1] + y
+        new_coords[0] = x if replace_x else (
+            self.coords[piece][piece_index][0] + x)
+        new_coords[1] = y if replace_y else (
+            self.coords[piece][piece_index][1] + y)
         return new_coords
 
     def get_pawn_cols(self):
@@ -58,7 +61,7 @@ class Board_objects:
             if prev_coords[0] != self.captured_x_top - 1:
                 self.__compact_captured(piece_to_move, piece_index)
             self.captured_x_top -= 1
-    
+
     def __compact_captured(self, piece, piece_index):
         prev_coords = 9
         captured_pieces = self.get_captured_pieces()
@@ -68,10 +71,17 @@ class Board_objects:
         coords_copy = copy.deepcopy(self.coords)
         for cpiece in cp:
             if cpiece[2] - prev_coords != 1:
-                self.coords[cpiece[0]][cpiece[1]] = [coords_copy[cpiece[0]][cpiece[1]][0] - (-1 + coords_copy[cpiece[0]][cpiece[1]][0] - prev_coords), coords_copy[cpiece[0]][cpiece[1]][1]]
-                prev_coords = coords_copy[cpiece[0]][cpiece[1]][0] - (-1 + coords_copy[cpiece[0]][cpiece[1]][0] - prev_coords)
+                self.coords[cpiece[0]][cpiece[1]] = [(
+                    coords_copy[cpiece[0]][cpiece[1]][0] -
+                    (-1 + coords_copy[cpiece[0]][cpiece[1]][0] - prev_coords)),
+                    coords_copy[cpiece[0]][cpiece[1]][1]]
+                prev_coords = (coords_copy[cpiece[0]][cpiece[1]][0] -
+                               (-1 + coords_copy[cpiece[0]][cpiece[1]][0] -
+                               prev_coords))
             else:
-                self.coords[cpiece[0]][cpiece[1]] = [coords_copy[cpiece[0]][cpiece[1]][0], coords_copy[cpiece[0]][cpiece[1]][1]]
+                self.coords[cpiece[0]][cpiece[1]] = [(
+                    coords_copy[cpiece[0]][cpiece[1]][0]), (
+                        coords_copy[cpiece[0]][cpiece[1]][1])]
                 prev_coords = coords_copy[cpiece[0]][cpiece[1]][0]
 
     def get_captured_pieces(self):
@@ -145,7 +155,7 @@ class Board_objects:
         elif piece == " R ":
             return "PR "
         return piece
-    
+
     def __demote(self, piece):
         if piece == "PP ":
             return " P "
@@ -159,8 +169,8 @@ class Board_objects:
             return " B "
         elif piece == "PR ":
             return " R "
-        return piece 
-            
+        return piece
+
     def get_pygame_obj(self, screen, settings, color):
         images = []
         for pieces in self.coords.keys():
