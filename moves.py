@@ -32,8 +32,9 @@ class Moves():
         return move_array
 
     def black_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, possible_check, check_moves, x, y):
-        if x > 9 and y == 8:
-            return self.get_empty_spaces(player, other_player, piece)
+        current_coords = player.get_coords(piece, piece_index)
+        if current_coords[0] > 9 and current_coords[1] == 8:
+            return self.get_empty_spaces(player, other_player, piece, piece_index, check, safe_moves, possible_check, check_moves)
         if " P " == piece:
             new_coords = player.get_coords(piece, piece_index, 0, -1)
             if self.__inside_the_board(new_coords) and new_coords not in all_player_coords  and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
@@ -55,8 +56,9 @@ class Moves():
             return self.get_king_moves(player, piece, piece_index, move_array, all_player_coords, check, safe_moves, possible_check, check_moves)
 
     def white_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, possible_check, check_moves, x, y):
-        if x > 9 and y == 0:
-            return self.get_empty_spaces(player, other_player, piece)
+        current_coords = player.get_coords(piece, piece_index)
+        if current_coords[0] > 9 and current_coords[1] == 0:
+            return self.get_empty_spaces(player, other_player, piece, piece_index, check, safe_moves, possible_check, check_moves)
         if " P " == piece:
             new_coords = player.get_coords(piece, piece_index, 0, 1)
             if self.__inside_the_board(new_coords) and new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
@@ -214,21 +216,20 @@ class Moves():
     def __inside_the_board(self, new_coords):
         return new_coords[0] >= 0 and new_coords[0] <= 8 and new_coords[1] <= 8 and new_coords[1] >= 0
 
-    def get_empty_spaces(self, player, other_player, piece):
+    def get_empty_spaces(self, player, other_player, piece, piece_index, check, safe_moves, possible_check, check_moves):
         move_array = []
         p = []
         pawn_columns = []
         if piece == " P ":
             for x in player.get_pawn_cols():
                 pawn_columns.append(x)
-        
         for coord in player.get_all_coords():
             p.append(coord)
         for coord in other_player.get_all_coords():
             p.append(coord)
         for x in range(9):
             for y in range(9):
-                if [x, y] not in p:
+                if [x, y] not in p and ((not check) or ([x, y] in safe_moves[(piece, piece_index)])) and ((not possible_check) or ([x, y] not in check_moves[(piece, piece_index)])):
                     if x not in pawn_columns:
                         move_array.append([x, y])
         return move_array

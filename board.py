@@ -175,19 +175,18 @@ class Board:
         checkmate = True
         for pieces in opponent.coords.keys():
             for idx, piece in enumerate(opponent.coords[pieces]):
-                if piece[0] < 9:
-                    try:
-                        for move in self.moves.get_move_array(opponent_turn, pieces, idx, 0, 0, opponent, player):
-                            possible_board = self.__get_possible_board(turn, opponent_turn, player, opponent, pieces, idx, move, "opponent")
-                            if not possible_board.check:
-                                self.check_pieces.append([pieces, idx])
-                                try:
-                                    self.safe_moves[(pieces, idx)].append(move)
-                                except KeyError:
-                                    self.safe_moves[(pieces, idx)] = [move]
-                                checkmate = False
-                    except TypeError:
-                        pass
+                try:
+                    for move in self.moves.get_move_array(opponent_turn, pieces, idx, 0, 0, opponent, player):
+                        possible_board = self.__get_possible_board(turn, opponent_turn, player, opponent, pieces, idx, move, "opponent")
+                        if not possible_board.check:
+                            self.check_pieces.append([pieces, idx])
+                            try:
+                                self.safe_moves[(pieces, idx)].append(move)
+                            except KeyError:
+                                self.safe_moves[(pieces, idx)] = [move]
+                            checkmate = False
+                except TypeError:
+                    pass
         return checkmate
 
     def __get_possible_board(self, turn, opponent_turn, player, opponent, pieces, idx, move, side):
