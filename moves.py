@@ -34,7 +34,7 @@ class Moves():
     def black_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, possible_check, check_moves, x, y):
         current_coords = player.get_coords(piece, piece_index)
         if current_coords[0] > 9 and current_coords[1] == 8:
-            return self.get_empty_spaces(player, other_player, piece, piece_index, check, safe_moves, possible_check, check_moves)
+            return self.get_empty_spaces(turn, player, other_player, piece, piece_index, check, safe_moves, possible_check, check_moves)
         if " P " == piece:
             new_coords = player.get_coords(piece, piece_index, 0, -1)
             if self.__inside_the_board(new_coords) and new_coords not in all_player_coords  and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
@@ -58,7 +58,7 @@ class Moves():
     def white_side_moves(self, turn, piece, piece_index, player, other_player, move_array, all_player_coords, check, safe_moves, possible_check, check_moves, x, y):
         current_coords = player.get_coords(piece, piece_index)
         if current_coords[0] > 9 and current_coords[1] == 0:
-            return self.get_empty_spaces(player, other_player, piece, piece_index, check, safe_moves, possible_check, check_moves)
+            return self.get_empty_spaces(turn, player, other_player, piece, piece_index, check, safe_moves, possible_check, check_moves)
         if " P " == piece:
             new_coords = player.get_coords(piece, piece_index, 0, 1)
             if self.__inside_the_board(new_coords) and new_coords not in all_player_coords and ((not check) or (new_coords in safe_moves[(piece, piece_index)])) and ((not possible_check) or (new_coords not in check_moves[(piece, piece_index)])):
@@ -216,11 +216,21 @@ class Moves():
     def __inside_the_board(self, new_coords):
         return new_coords[0] >= 0 and new_coords[0] <= 8 and new_coords[1] <= 8 and new_coords[1] >= 0
 
-    def get_empty_spaces(self, player, other_player, piece, piece_index, check, safe_moves, possible_check, check_moves):
+    def get_empty_spaces(self, turn, player, other_player, piece, piece_index, check, safe_moves, possible_check, check_moves):
         move_array = []
         p = []
         pawn_columns = []
         if piece == " P ":
+            try:
+                king_coords = other_player.get_coords(" K ", 0)
+            except KeyError:
+                pass
+            else:
+                if turn == "white":
+                    king_coords[1] -= 1
+                elif turn == "black":
+                    king_coords[1] += 1
+                p.append(king_coords)
             for x in player.get_pawn_cols():
                 pawn_columns.append(x)
         for coord in player.get_all_coords():
