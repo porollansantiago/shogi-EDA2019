@@ -242,29 +242,64 @@ class Moves():
                             possible_check, check_moves)
 
         if "PR " == piece:
-            for val in [-1, 1]:
-                new_coords1 = player.get_coords(piece, piece_index, val, val)
-                new_coords2 = player.get_coords(piece, piece_index, -val, val)
-                if self.__inside_the_board(new_coords1):
-                    if new_coords1 not in all_player_coords and ((not check)or(
-                          new_coords1 in safe_moves[(piece, piece_index)]))and(
-                                (not possible_check) or (
-                                    new_coords1 not in
-                                    check_moves[(piece, piece_index)])):
-                        move_array.append(new_coords1)
-                if self.__inside_the_board(new_coords1):
-                    if new_coords2 not in all_player_coords and ((not check)or(
-                          new_coords2 in safe_moves[(piece, piece_index)]))and(
-                                (not possible_check) or (
-                                    new_coords2 not in
-                                    check_moves[(piece, piece_index)])):
-                        move_array.append(new_coords2)
+            self.__get_promoted_rook(player, other_player, piece, piece_index,
+                                     move_array, all_player_coords, check,
+                                     safe_moves, possible_check, check_moves)
+
         return move_array
 
-    def get_bishop_moves(self, player, other_player, piece, piece_index,
+    def __get_promoted_rook(self, player, other_player, piece, piece_index,
+                            move_array, all_player_coords, check, safe_moves,
+                            possible_check, check_moves):
+        for val in [-1, 1]:
+            new_coords1 = player.get_coords(piece, piece_index, val, val)
+            new_coords2 = player.get_coords(piece, piece_index, -val, val)
+            if self.__inside_the_board(new_coords1):
+                if new_coords1 not in all_player_coords and ((not check)or(
+                        new_coords1 in safe_moves[(piece, piece_index)]))and(
+                            (not possible_check) or (
+                                new_coords1 not in
+                                check_moves[(piece, piece_index)])):
+                    move_array.append(new_coords1)
+            if self.__inside_the_board(new_coords1):
+                if new_coords2 not in all_player_coords and ((not check)or(
+                        new_coords2 in safe_moves[(piece, piece_index)]))and(
+                            (not possible_check) or (
+                                new_coords2 not in
+                                check_moves[(piece, piece_index)])):
+                    move_array.append(new_coords2)
+
+    def get_bishop_moves(self, player, opponent, piece, piece_index,
                          move_array, all_player_coords, check, safe_moves,
                          possible_check, check_moves):
         coords = player.get_coords(piece, piece_index)
+        self.__get_bishop_down_right(coords, piece, piece_index,
+                                     player, opponent, all_player_coords,
+                                     check, safe_moves, possible_check,
+                                     check_moves, move_array)
+        self.__get_bishop_up_left(coords, piece, piece_index,
+                                  player, opponent, all_player_coords,
+                                  check, safe_moves, possible_check,
+                                  check_moves, move_array)
+        self.__get_bishop_up_right(coords, piece, piece_index,
+                                   player, opponent, all_player_coords,
+                                   check, safe_moves, possible_check,
+                                   check_moves, move_array)
+        self.__get_bishop_down_left(coords, piece, piece_index,
+                                    player, opponent, all_player_coords,
+                                    check, safe_moves, possible_check,
+                                    check_moves, move_array)
+        if "PB " == piece:
+            self.__get_promoted_bishop(coords, piece, piece_index,
+                                       player, opponent, all_player_coords,
+                                       check, safe_moves, possible_check,
+                                       check_moves, move_array)
+        return move_array
+
+    def __get_bishop_down_right(self, coords, piece, piece_index,
+                                player, opponent, all_player_coords,
+                                check, safe_moves, possible_check,
+                                check_moves, move_array):
         start1 = coords[0] if coords[0] > coords[1] else coords[1]
         for val in range(1, 9 - start1):
             new_coords = player.get_coords(piece, piece_index, val, val)
@@ -275,8 +310,13 @@ class Moves():
                             check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or (
-               other_player.compare_coords(new_coords)):
+               opponent.compare_coords(new_coords)):
                 break
+
+    def __get_bishop_up_left(self, coords, piece, piece_index,
+                             player, opponent, all_player_coords,
+                             check, safe_moves, possible_check,
+                             check_moves, move_array):
         start2 = coords[0] if coords[0] < coords[1] else coords[1]
         for val in range(1, start2 + 1):
             new_coords = player.get_coords(piece, piece_index, -val, -val)
@@ -287,8 +327,13 @@ class Moves():
                             check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or (
-               other_player.compare_coords(new_coords)):
+               opponent.compare_coords(new_coords)):
                 break
+
+    def __get_bishop_up_right(self, coords, piece, piece_index,
+                              player, opponent, all_player_coords,
+                              check, safe_moves, possible_check,
+                              check_moves, move_array):
         start3 = 8 - coords[0] if 8 - coords[0] < coords[1] else coords[1]
         for val in range(1, start3 + 1):
             new_coords = player.get_coords(piece, piece_index, val, -val)
@@ -299,8 +344,13 @@ class Moves():
                             check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or (
-               other_player.compare_coords(new_coords)):
+               opponent.compare_coords(new_coords)):
                 break
+
+    def __get_bishop_down_left(self, coords, piece, piece_index,
+                               player, opponent, all_player_coords,
+                               check, safe_moves, possible_check,
+                               check_moves, move_array):
         start4 = 8 - coords[1] if 8 - coords[1] < coords[0] else coords[0]
         for val in range(1, start4 + 1):
             new_coords = player.get_coords(piece, piece_index, -val, val)
@@ -311,32 +361,46 @@ class Moves():
                             check_moves[(piece, piece_index)])):
                 move_array.append(new_coords)
             if player.compare_coords(new_coords) or (
-               other_player.compare_coords(new_coords)):
+               opponent.compare_coords(new_coords)):
                 break
-        if "PB " == piece:
-            for val in [-1, 1]:
-                new_coords1 = player.get_coords(piece, piece_index, val)
-                new_coords2 = player.get_coords(piece, piece_index, 0, val)
-                if self.__inside_the_board(new_coords1):
-                    if new_coords1 not in all_player_coords and ((not check)or(
-                          new_coords1 in safe_moves[(piece, piece_index)]))and(
-                                (not possible_check) or (
-                                    new_coords1 not in
-                                    check_moves[(piece, piece_index)])):
-                        move_array.append(new_coords1)
-                if self.__inside_the_board(new_coords2):
-                    if new_coords2 not in all_player_coords and ((not check)or(
-                          new_coords2 in safe_moves[(piece, piece_index)]))and(
-                                (not possible_check) or (
-                                    new_coords2 not in
-                                    check_moves[(piece, piece_index)])):
-                        move_array.append(new_coords2)
-        return move_array
+
+    def __get_promoted_bishop(self, coords, piece, piece_index,
+                              player, opponent, all_player_coords,
+                              check, safe_moves, possible_check,
+                              check_moves, move_array):
+        for val in [-1, 1]:
+            new_coords1 = player.get_coords(piece, piece_index, val)
+            new_coords2 = player.get_coords(piece, piece_index, 0, val)
+            if self.__inside_the_board(new_coords1):
+                if new_coords1 not in all_player_coords and ((not check)or(
+                        new_coords1 in safe_moves[(piece, piece_index)]))and(
+                            (not possible_check) or (
+                                new_coords1 not in
+                                check_moves[(piece, piece_index)])):
+                    move_array.append(new_coords1)
+            if self.__inside_the_board(new_coords2):
+                if new_coords2 not in all_player_coords and ((not check)or(
+                        new_coords2 in safe_moves[(piece, piece_index)]))and(
+                            (not possible_check) or (
+                                new_coords2 not in
+                                check_moves[(piece, piece_index)])):
+                    move_array.append(new_coords2)
 
     def __get_rook_col(self, coords, player, piece, piece_index, move_array,
                        opponent, all_player_coords, check, safe_moves,
                        possible_check, check_moves):
-        for val in range(coords[1] + 1, 9):
+        self.__get_rook_col_up(coords, player, piece, piece_index, move_array,
+                               opponent, all_player_coords, check, safe_moves,
+                               possible_check, check_moves)
+        self.__get_rook_col_down(coords, player, piece, piece_index,
+                                 move_array, opponent, all_player_coords,
+                                 check, safe_moves, possible_check,
+                                 check_moves)
+
+    def __get_rook_col_up(self, coords, player, piece, piece_index, move_array,
+                          opponent, all_player_coords, check, safe_moves,
+                          possible_check, check_moves):
+        for val in range(coords[1] - 1, -1, -1):
             new_coords = player.get_coords(
                 piece, piece_index, 0, val, False, True)
             if new_coords not in all_player_coords and ((not check) or (
@@ -348,7 +412,11 @@ class Moves():
             if player.compare_coords(new_coords) or (
                opponent.compare_coords(new_coords)):
                 break
-        for val in range(coords[1] - 1, -1, -1):
+
+    def __get_rook_col_down(self, coords, player, piece, piece_index,
+                            move_array, opponent, all_player_coords, check,
+                            safe_moves, possible_check, check_moves):
+        for val in range(coords[1] + 1, 9):
             new_coords = player.get_coords(
                 piece, piece_index, 0, val, False, True)
             if new_coords not in all_player_coords and ((not check) or (
