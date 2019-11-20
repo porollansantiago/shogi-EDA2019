@@ -114,7 +114,10 @@ class Board:
 
     def moveless_piece(self, piece, y):
         board_y = 8 if self.turn == "white" else 0
-        if y == board_y and piece in [" P ", "KN ", " L "]:
+        board_y_kn = (7, 8) if self.turn == "white" else (0, 1)
+        if y == board_y and piece in [" P ", " L "]:
+            return True
+        if y in board_y_kn and piece == "KN ":
             return True
         return False
 
