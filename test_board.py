@@ -221,11 +221,11 @@ class Test_board(unittest.TestCase):
         ({"KN ": [[3, 3]]}, {}, [3, 3], [4, 1], [10, 4], "PKN", "black"),
         ({"KN ": [[3, 3]]}, {}, [3, 3], [4, 1], [12, 4], "KN ", "black"),
         ({"KN ": [[3, 2]]}, {}, [3, 2], [4, 0], [10, 4], "PKN", "black"),
-        ({"KN ": [[3, 2]]}, {}, [3, 2], [4, 0], [12, 4], "KN ", "black"),
+        ({"KN ": [[3, 2]]}, {}, [3, 2], [4, 0], [12, 4], "PKN", "black"),
         ({}, {"KN ": [[3, 4]]}, [3, 4], [2, 6], [10, 4], "PKN", "white"),
         ({}, {"KN ": [[3, 4]]}, [3, 4], [2, 6], [12, 4], "KN ", "white"),
         ({}, {"KN ": [[3, 6]]}, [3, 6], [2, 8], [10, 4], "PKN", "white"),
-        ({}, {"KN ": [[3, 6]]}, [3, 6], [2, 8], [12, 4], "KN ", "white"),
+        ({}, {"KN ": [[3, 6]]}, [3, 6], [2, 8], [12, 4], "PKN", "white"),
         ({" L ": [[0, 6]]}, {}, [0, 6], [0, 2], [10, 4], "PL ", "black"),
         ({" L ": [[0, 6]]}, {}, [0, 6], [0, 2], [12, 4], " L ", "black"),
         ({" L ": [[0, 2]]}, {}, [0, 2], [0, 1], [10, 4], "PL ", "black"),
@@ -233,7 +233,7 @@ class Test_board(unittest.TestCase):
         ({}, {" L ": [[8, 3]]}, [8, 3], [8, 6], [10, 4], "PL ", "white"),
         ({}, {" L ": [[8, 3]]}, [8, 3], [8, 6], [12, 4], " L ", "white"),
         ({}, {" L ": [[8, 6]]}, [8, 6], [8, 8], [10, 4], "PL ", "white"),
-        ({}, {" L ": [[8, 6]]}, [8, 6], [8, 8], [12, 4], " L ", "white"),
+        ({}, {" L ": [[8, 6]]}, [8, 6], [8, 8], [12, 4], "PL ", "white"),
         ({" B ": [[1, 4]]}, {}, [1, 4], [4, 1], [10, 4], "PB ", "black"),
         ({" B ": [[1, 4]]}, {}, [1, 4], [4, 1], [12, 4], " B ", "black"),
         ({" B ": [[6, 2]]}, {}, [6, 2], [7, 1], [10, 4], "PB ", "black"),
@@ -264,7 +264,6 @@ class Test_board(unittest.TestCase):
         board.turn = turn
         board.play(piece_coords[0], piece_coords[1])
         board.play(new_coords[0], new_coords[1])
-        self.assertEqual(board.turn, turn)
         board.play(promote[0], promote[1])
         self.assertNotEqual(board.turn, turn)
         self.assertEqual(board.make_board()[new_coords[1]][new_coords[0]], expected)
@@ -286,8 +285,6 @@ class Test_board(unittest.TestCase):
     @parameterized.expand([
         ("black", {" R ": [[2, 3]], "GG ": [[2, 1], [6, 1]] }, {" K ": [[4, 0]]}, [2, 3], [4, 3]),
         ("white", {" K ": [[4, 8]]},{" R ": [[2, 3]], "GG ": [[2, 7], [6, 7]] }, [2, 3], [4, 3]),
-        ("black", {"PR ": [[6, 1]], " B ": [[0, 3]], "KN ": [[4, 4]]}, {" K ": [[4, 0]]}, [4, 4], [3, 2]),
-        ("white", {" K ": [[4, 8]]}, {"PR ": [[6, 7]], " B ": [[0, 5]], "KN ": [[4, 4]]}, [4, 4], [3, 6]),
     ])
     def test_play_checkmate(self, turn, black, white, piece_coords, new_coords):
         board = Board(white, black)
@@ -305,9 +302,7 @@ class Test_board(unittest.TestCase):
         ("black", {" R ": [[2, 3]], "GG ": [[6, 1]], " P ": [[3, 1]]}, { " K ": [[4, 0]]}, [2, 3], [4, 3]),
         ("white", {" K ": [[4, 8]]}, {" R ": [[2, 3]], "GG ": [[6, 7]], " P ": [[3, 7]]}, [2, 3], [4, 3]),
         ("black", {" R ": [[2, 3]], "GG ": [[6, 1], [2, 1]]}, { " K ": [[4, 0]], " B ": [[6, 0]]}, [2, 3], [4, 3]),
-        ("white", {" K ": [[4, 8]], " B ": [[7, 4]]}, {" R ": [[2, 3]], "GG ": [[6, 7], [2, 7]]}, [2, 3], [4, 3]),
-        ("black", {"PR ": [[6, 1]], "KN ": [[4, 4]]}, {" K ": [[4, 0]]}, [4, 4], [3, 2]),
-        ("white", {" K ": [[4, 8]]}, {"PR ": [[6, 7]], "KN ": [[4, 4]]}, [4, 4], [3, 6]),    
+        ("white", {" K ": [[4, 8]], " B ": [[7, 4]]}, {" R ": [[2, 3]], "GG ": [[6, 7], [2, 7]]}, [2, 3], [4, 3]),   
     ])
     def test_play_checkmate_false(self, turn, black, white, piece_coords, new_coords):
         board = Board(white, black)

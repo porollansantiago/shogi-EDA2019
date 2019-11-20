@@ -80,18 +80,24 @@ class Board:
                     self.check_moves[(self.piece, self.piece_index)].append(move)
                 except KeyError:
                     self.check_moves[(self.piece, self.piece_index)] = [move]
+
     def eval_promotion(self, x, y):
         if [x, y] == [10, 4]:
-            if self.turn == "black":
-                self.black.promote(self.promotion)
-            elif self.turn == "white":
-                self.white.promote(self.promotion)
-        player = self.black if self.turn == "black" else self.white
-        opponent = self.black if self.turn == "white" else self.white
-        self.game_is_over(self.turn, player, opponent)
-        self.turn = "white" if self.turn == "black" else "black"
-        self.__init_move()
+            self.__promote(self.promotion)
+        self.end_turn()
         return self.check
+
+    def __promote(self, coord):
+        if self.turn == "black":
+            self.black.promote(coord)
+        elif self.turn == "white":
+            self.white.promote(coord)
+
+    def moveless_piece(self, piece, y):
+        board_y = 8 if self.turn == "white" else 0
+        if y == board_y and piece in [" P ", "KN ", " L "]:
+            return True
+        return False
 
     def eval_move(self, x, y):
         if self.turn == "black":
@@ -109,13 +115,22 @@ class Board:
         prev_coords = player.get_coords(piece, piece_index)
         player.move(piece, piece_index, x, y)
         self.capture(player, opponent, self.turn)
-        self.game_is_over(self.turn, player, opponent)
         if not self.__promotion(prev_coords, y, x, piece):
-            self.turn = "white" if self.turn == "black" else "black"
-            self.__init_move()
+            self.end_turn()
+        elif self.moveless_piece(piece, y):
+            self.__promote([x, y])
+            self.end_turn()
         else:
             self.move_array = []
             self.promotion = [x, y]
+
+    def end_turn(self):
+        player = self.black if self.turn == "black" else self.white
+        opponent = self.black if self.turn == "white" else self.white
+        self.game_is_over(self.turn, player, opponent)
+        self.turn = "white" if self.turn == "black" else "black"
+        self.__init_move()
+
 
     def __promotion(self, prev_coords, y, x, piece):
         return (((self.turn == "white" and (y > 5 or prev_coords[1] > 5)) or 
