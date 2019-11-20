@@ -287,11 +287,13 @@ class Board:
     def prep_board(self, screen, settings):
         b = []
         for x in range(self.white.captured_x_top):
-            p = Piece(screen, settings, None, x, 0, "board")
-            b.append(p)
+            if x != 9:
+                p = Piece(screen, settings, None, x, 0, "board")
+                b.append(p)
         for x in range(self.black.captured_x_top):
-            p = Piece(screen, settings, None, x, 8, "board")
-            b.append(p)
+            if x != 9:
+                p = Piece(screen, settings, None, x, 8, "board")
+                b.append(p)
         for x in range(9):
             for y in range(1, 8):
                 p = Piece(screen, settings, None, x, y, "board")
