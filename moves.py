@@ -233,6 +233,15 @@ class Moves():
                 p.append(king_coords)
             for x in player.get_pawn_cols():
                 pawn_columns.append(x)
+        if piece in [" P ", " L "]:
+            op_side = 0 if turn == "black" else 8 
+            for x in range(9):
+                p.append([x, op_side])
+        elif piece == "KN ":
+            start = 0 if turn == "black" else 7
+            for y in range(start, start + 2):
+                for x in range(9):
+                    p.append([x, y])
         for coord in player.get_all_coords():
             p.append(coord)
         for coord in other_player.get_all_coords():
