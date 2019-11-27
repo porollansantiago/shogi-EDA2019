@@ -1,0 +1,25 @@
+# shogi-EDA2019
+Funcionalidades implementadas
+  - Implementación gráfica
+    - Pygame para dibujar el tablero con todas las piezas.
+  - Movimiento de piezas
+    - Movimientos por turnos de todas las piezas, incluyendo las promocionadas.
+    - Las piezas no pueden quedarse sin movimientos.
+  - Promoción
+    - Cuando una pieza entra o sale de la zona de promoción se puede presionar "PRM" para promocionarla.
+    - Las piezas, como el peón y el caballo, son promocionadas automáticamente al quedarse sin movimientos.
+  - Captura
+    - Los jugadores pueden capturar piezas rivales.
+    - Las piezas capturadas se agregan al lado derecho del jugador.
+    - Las piezas capturadas pierden la promoción.
+    - Las zonas de capturadas de cada jugador se reordenan cada vez que se reintroduce una pieza.
+  - Reintroducción
+    - Los jugadores pueden reintroducir piezas que hayan capturado.
+    - No se puede reintroducir una pieza que vaya a quedarse sin movimientos.
+    - Cada jugador puede colocar solo ún peón por columna.
+    - No se puede reintroducir un peón delante del rey contrario.
+  - Jaque y jaque mate
+    - Luego de cada movimiento se comprueba si el rey está en jaque.
+    - Si hay jaque se comprueba si hay movimiento posible que salve al rey. En caso de no haberlo se da jaque mate y termina la partida.
+    - Los jugadores no pueden hacer movimientos que los dejen a ellos mismos en jaque.
+    - El jugador en jaque solo puede hacer movimientos que lo saquen del mismo.
