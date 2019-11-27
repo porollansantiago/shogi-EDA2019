@@ -4,6 +4,7 @@ from parameterized import parameterized
 from board_objects import Board_objects
 import coordinates as c
 
+
 class test_moves(unittest.TestCase):
     def setUp(self):
         self.moves = Moves()
@@ -28,10 +29,12 @@ class test_moves(unittest.TestCase):
         ("black", " B ", 3, 3, {" B ": [[4, 4]], " R": [[3, 3]]}, {}),
         ("black", " K ", 4, 3, {" K ": [[4, 4]], " B": [[4, 3]]}, {}),
     ])
-    def test_validate_overlapping(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_validate_overlapping(self, turn, piece, x, y,
+                                  example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                         example_black, example_white))
 
     @parameterized.expand([
         ("white", " P ", 4, 5, {" P ": [[4, 5]]}, {" P ": [[4, 4]]}),
@@ -51,10 +54,12 @@ class test_moves(unittest.TestCase):
         ("black", " B ", 3, 3, {" B ": [[4, 4]]}, {" P ": [[3, 3]]}),
         ("black", " K ", 4, 3, {" K ": [[4, 4]]}, {" P ": [[4, 3]]}),
     ])
-    def test_validate_overlapping1(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_validate_overlapping1(self, turn, piece, x, y,
+                                   example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                        example_black, example_white))
 
     @parameterized.expand([
         ("white", " P ", 4, 5, {" P ": [[4, 5]]}, {" P ": [[4, 4]]}),
@@ -74,10 +79,12 @@ class test_moves(unittest.TestCase):
         ("black", " B ", 3, 3, {" B ": [[4, 4]]}, {" P ": [[3, 3]]}),
         ("black", " K ", 4, 3, {" K ": [[4, 4]]}, {" P ": [[4, 3]]}),
     ])
-    def test_vaildate_overlapping2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_vaildate_overlapping2(self, turn, piece, x, y,
+                                   example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
 
 # PAWN
     @parameterized.expand([
@@ -99,10 +106,13 @@ class test_moves(unittest.TestCase):
         ("white", " P ", 8, 3, {}, {" P ": [[8, 2]]}),
 
     ])
-    def test_validate_pawn_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_validate_pawn_move(self, turn, piece, x, y, example_black_coords,
+                                example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
+
     @parameterized.expand([
         ("white", " P ", 0, 4),
         ("white", " P ", 1, 4),
@@ -116,7 +126,8 @@ class test_moves(unittest.TestCase):
         ("black", " P ", 4, 3)
     ])
     def test_validate_Pawn_move(self, turn, piece, x, y):
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, self.black, self.white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, self.black,
+                                             self.white))
 
 # LANCE
 
@@ -139,10 +150,12 @@ class test_moves(unittest.TestCase):
         ("white", " L ", 8, 7, {}, {" L ": [[8, 0]]}),
 
     ])
-    def test_validate_Lance_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_validate_Lance_move(self, turn, piece, x, y, example_black_coords,
+                                 example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
 
     @parameterized.expand([
         ("black", " L ", 4, 8, {" L ": [[4, 5]]}, {}),
@@ -170,10 +183,12 @@ class test_moves(unittest.TestCase):
         ("white", " L ", 4, 7, {" P ": [[4, 6]]}, {" L ": [[4, 4]]}),
         ("white", " L ", 4, 8, {" P ": [[4, 6]]}, {" L ": [[4, 4]]}),
     ])
-    def test_validate_Lance_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_validate_Lance_move2(self, turn, piece, x, y,
+                                  example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
 # KNIGHT
 
@@ -184,10 +199,12 @@ class test_moves(unittest.TestCase):
         ("white", "KN ", 5, 7, {}, {"KN ": [[4, 5]]}),
 
     ])
-    def test_validate_Knight_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_validate_Knight_move(self, turn, piece, x, y,
+                                  example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
 
     @parameterized.expand([
         ("black", "KN ", 2, 3, {"KN ": [[4, 5]]}, {}),
@@ -205,10 +222,12 @@ class test_moves(unittest.TestCase):
         ("white", "KN ", 0, 0, {}, {"KN ": [[4, 5]]})
 
     ])
-    def test_validate_Knight_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_validate_Knight_move2(self, turn, piece, x, y,
+                                   example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
 # SILVER GENERAL
 
@@ -224,10 +243,12 @@ class test_moves(unittest.TestCase):
         ("white", "SG ", 3, 3, {}, {"SG ": [[4, 4]]}),
         ("white", "SG ", 5, 3, {}, {"SG ": [[4, 4]]}),
     ])
-    def test_silverGeneral_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_silverGeneral_move(self, turn, piece, x, y, example_black_coords,
+                                example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
 
     @parameterized.expand([
         ("black", "SG ", 8, 8, {"SG ": [[4, 4]]}, {}),
@@ -241,10 +262,12 @@ class test_moves(unittest.TestCase):
         ("white", "SG ", 3, 4, {}, {"SG ": [[4, 4]]}),
         ("white", "SG ", 5, 4, {}, {"SG ": [[4, 4]]}),
     ])
-    def test_silverGeneral_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_silverGeneral_move2(self, turn, piece, x, y, example_black_coords,
+                                 example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
 # GOLD GENERAL
 
@@ -261,11 +284,13 @@ class test_moves(unittest.TestCase):
         ("white", "GG ", 3, 4, {}, {"GG ": [[4, 4]]}),
         ("white", "GG ", 5, 4, {}, {"GG ": [[4, 4]]}),
         ("white", "GG ", 4, 3, {}, {"GG ": [[4, 4]]}),
-    ]) 
-    def test_goldGeneral_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    ])
+    def test_goldGeneral_move(self, turn, piece, x, y, example_black_coords,
+                              example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
 
     @parameterized.expand([
         ("black", "GG ", 0, 0, {"GG ": [[4, 4]]}, {}),
@@ -281,10 +306,12 @@ class test_moves(unittest.TestCase):
         ("white", "GG ", 4, 2, {}, {"GG ": [[4, 4]]}),
         ("white", "GG ", 4, 6, {}, {"GG ": [[4, 4]]}),
     ])
-    def test_goldGeneral_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_goldGeneral_move2(self, turn, piece, x, y, example_black_coords,
+                               example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
 # KING
 
@@ -306,10 +333,12 @@ class test_moves(unittest.TestCase):
         ("white", " K ", 4, 5, {}, {" K ": [[4, 4]]}),
         ("white", " K ", 5, 5, {}, {" K ": [[4, 4]]}),
     ])
-    def test_king_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_king_move(self, turn, piece, x, y, example_black_coords,
+                       example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                        example_black, example_white))
 
     @parameterized.expand([
         ("black", " K ", 0, 0, {" K ": [[4, 4]]}, {}),
@@ -329,10 +358,12 @@ class test_moves(unittest.TestCase):
         ("white", " K ", 2, 4, {}, {" K ": [[4, 4]]}),
         ("white", " K ", 6, 6, {}, {" K ": [[4, 4]]}),
     ])
-    def test_king_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_king_move2(self, turn, piece, x, y, example_black_coords,
+                        example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
 # ROOK
 
@@ -372,10 +403,12 @@ class test_moves(unittest.TestCase):
         ("black", " R ", 0, 4, {" R ": [[4, 4]]}, {" P ": [[0, 4]]}),
         ("white", " R ", 0, 4, {" P ": [[0, 4]]}, {" R ": [[4, 4]]}),
     ])
-    def test_rook_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_rook_move(self, turn, piece, x, y, example_black_coords,
+                       example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                        example_black, example_white))
 
     @parameterized.expand([
         ("black", " R ", 0, 0, {" R ": [[4, 4]]}, {}),
@@ -425,10 +458,12 @@ class test_moves(unittest.TestCase):
         ("black", " R ", 0, 4, {" R ": [[4, 4]], " P ": [[0, 4]]}, {}),
         ("white", " R ", 0, 4, {}, {" R ": [[4, 4]], " P ": [[0, 4]]}),
     ])
-    def test_rook_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_rook_move2(self, turn, piece, x, y, example_black_coords,
+                        example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
 # BISHOP
 
@@ -490,10 +525,12 @@ class test_moves(unittest.TestCase):
         ("black", " B ", 1, 4, {" B ": [[3, 6]]}, {}),
         ("black", " B ", 1, 8, {" B ": [[3, 6]]}, {}),
     ])
-    def test_bishop_move(self, turn, piece, x, y, example_black_coords, example_white_coords, piece_index=0):
+    def test_bishop_move(self, turn, piece, x, y, example_black_coords,
+                         example_white_coords, piece_index=0):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, piece_index, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, piece_index, x, y,
+                        example_black, example_white))
 
     @parameterized.expand([
         ("black", " B ", 0, 4, {" B ": [[4, 4]]}, {}),
@@ -509,10 +546,12 @@ class test_moves(unittest.TestCase):
         ("white", " B ", 5, 4, {}, {" B ": [[4, 4]]}),
         ("white", " B ", 8, 2, {}, {" B ": [[4, 4]]}),
     ])
-    def test_bishop_move2(self, turn, piece, x, y, example_black_coords, example_white_coords, piece_index=0):
+    def test_bishop_move2(self, turn, piece, x, y, example_black_coords,
+                          example_white_coords, piece_index=0):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, piece_index, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, piece_index, x, y,
+                         example_black, example_white))
 
     # PROMOTED PAWN
 
@@ -529,11 +568,13 @@ class test_moves(unittest.TestCase):
         ("white", "PP ", 3, 4, {}, {"PP ": [[4, 4]]}),
         ("white", "PP ", 5, 4, {}, {"PP ": [[4, 4]]}),
         ("white", "PP ", 4, 3, {}, {"PP ": [[4, 4]]}),
-    ]) 
-    def test_promoted_pawn(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    ])
+    def test_promoted_pawn(self, turn, piece, x, y, example_black_coords,
+                           example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                        example_black, example_white))
 
     @parameterized.expand([
         ("black", "PP ", 0, 0, {"PP ": [[4, 4]]}, {}),
@@ -549,10 +590,12 @@ class test_moves(unittest.TestCase):
         ("white", "PP ", 4, 2, {}, {"PP ": [[4, 4]]}),
         ("white", "PP ", 4, 6, {}, {"PP ": [[4, 4]]}),
     ])
-    def test_promoted_pawn2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_promoted_pawn2(self, turn, piece, x, y,
+                            example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
     # PROMOTED SILVER
 
@@ -569,11 +612,13 @@ class test_moves(unittest.TestCase):
         ("white", "PSG", 3, 4, {}, {"PSG": [[4, 4]]}),
         ("white", "PSG", 5, 4, {}, {"PSG": [[4, 4]]}),
         ("white", "PSG", 4, 3, {}, {"PSG": [[4, 4]]}),
-    ]) 
-    def test_promoted_silver(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    ])
+    def test_promoted_silver(self, turn, piece, x, y,
+                             example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
 
     @parameterized.expand([
         ("black", "PSG", 0, 0, {"PSG": [[4, 4]]}, {}),
@@ -589,10 +634,12 @@ class test_moves(unittest.TestCase):
         ("white", "PSG", 4, 2, {}, {"PSG": [[4, 4]]}),
         ("white", "PSG", 4, 6, {}, {"PSG": [[4, 4]]}),
     ])
-    def test_promoted_silver2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_promoted_silver2(self, turn, piece, x, y,
+                              example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
     # PROMOTED KNIGHT
 
@@ -609,11 +656,13 @@ class test_moves(unittest.TestCase):
         ("white", "PKN", 3, 4, {}, {"PKN": [[4, 4]]}),
         ("white", "PKN", 5, 4, {}, {"PKN": [[4, 4]]}),
         ("white", "PKN", 4, 3, {}, {"PKN": [[4, 4]]}),
-    ]) 
-    def test_promoted_knight(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    ])
+    def test_promoted_knight(self, turn, piece, x, y,
+                             example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
 
     @parameterized.expand([
         ("black", "PKN", 0, 0, {"PKN": [[4, 4]]}, {}),
@@ -629,10 +678,12 @@ class test_moves(unittest.TestCase):
         ("white", "PKN", 4, 2, {}, {"PKN": [[4, 4]]}),
         ("white", "PKN", 4, 6, {}, {"PKN": [[4, 4]]}),
     ])
-    def test_promoted_knight2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_promoted_knight2(self, turn, piece, x, y,
+                              example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                         example_black, example_white))
 
     # PROMOTED LANCE
 
@@ -649,11 +700,13 @@ class test_moves(unittest.TestCase):
         ("white", "PL ", 3, 4, {}, {"PL ": [[4, 4]]}),
         ("white", "PL ", 5, 4, {}, {"PL ": [[4, 4]]}),
         ("white", "PL ", 4, 3, {}, {"PL ": [[4, 4]]}),
-    ]) 
-    def test_promoted_lance(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    ])
+    def test_promoted_lance(self, turn, piece, x, y, example_black_coords,
+                            example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
 
     @parameterized.expand([
         ("black", "PL ", 0, 0, {"PL ": [[4, 4]]}, {}),
@@ -669,10 +722,12 @@ class test_moves(unittest.TestCase):
         ("white", "PL ", 4, 2, {}, {"PL ": [[4, 4]]}),
         ("white", "PL ", 4, 6, {}, {"PL ": [[4, 4]]}),
     ])
-    def test_promoted_lance2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_promoted_lance2(self, turn, piece, x, y,
+                             example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
     # PROMOTED BISHOP
 
@@ -743,10 +798,13 @@ class test_moves(unittest.TestCase):
         ("black", "PB ", 3, 7, {"PB ": [[3, 6]]}, {}),
         ("black", "PB ", 2, 6, {"PB ": [[3, 6]]}, {}),
     ])
-    def test_promoted_bishop_move(self, turn, piece, x, y, example_black_coords, example_white_coords, piece_index=0):
+    def test_promoted_bishop_move(self, turn, piece, x, y,
+                                  example_black_coords, example_white_coords,
+                                  piece_index=0):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, piece_index, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, piece_index, x, y,
+                                            example_black, example_white))
 
     @parameterized.expand([
         ("black", "PB ", 0, 4, {"PB ": [[4, 4]]}, {}),
@@ -762,10 +820,12 @@ class test_moves(unittest.TestCase):
         ("white", "PB ", 6, 0, {}, {"PB ": [[4, 4]]}),
         ("white", "PB ", 8, 2, {}, {"PB ": [[4, 4]]}),
     ])
-    def test_promoted_bishop(self, turn, piece, x, y, example_black_coords, example_white_coords, piece_index=0):
+    def test_promoted_bishop(self, turn, piece, x, y, example_black_coords,
+                             example_white_coords, piece_index=0):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, piece_index, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, piece_index, x, y,
+                                             example_black, example_white))
 
     # PROMOTED ROOK
 
@@ -813,10 +873,12 @@ class test_moves(unittest.TestCase):
         ("white", "PR ", 3, 3, {}, {"PR ": [[4, 4]]}),
         ("white", "PR ", 3, 5, {}, {"PR ": [[4, 4]]}),
     ])
-    def test_promoted_rook_move(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_promoted_rook_move(self, turn, piece, x, y, example_black_coords,
+                                example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertTrue(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertTrue(self.moves.validate(turn, piece, 0, x, y,
+                                            example_black, example_white))
 
     @parameterized.expand([
         ("black", " R ", 0, 0, {" R ": [[4, 4]]}, {}),
@@ -866,10 +928,12 @@ class test_moves(unittest.TestCase):
         ("black", " R ", 0, 4, {" R ": [[4, 4]], " P ": [[0, 4]]}, {}),
         ("white", " R ", 0, 4, {}, {" R ": [[4, 4]], " P ": [[0, 4]]}),
     ])
-    def test_promoted_rook_move2(self, turn, piece, x, y, example_black_coords, example_white_coords):
+    def test_promoted_rook_move2(self, turn, piece, x, y,
+                                 example_black_coords, example_white_coords):
         example_black = Board_objects(example_black_coords)
         example_white = Board_objects(example_white_coords)
-        self.assertFalse(self.moves.validate(turn, piece, 0, x, y, example_black, example_white))
+        self.assertFalse(self.moves.validate(turn, piece, 0, x, y,
+                                             example_black, example_white))
 
 
 if __name__ == "__main__":
