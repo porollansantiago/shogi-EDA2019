@@ -8,6 +8,7 @@ Funcionalidades implementadas
   - Promoción
     - Cuando una pieza entra o sale de la zona de promoción se puede presionar "PRM" para promocionarla.
     - Las piezas, como el peón y el caballo, son promocionadas automáticamente al quedarse sin movimientos.
+    - No se puede promocionar una pieza recién reintroducida.
   - Captura
     - Los jugadores pueden capturar piezas rivales.
     - Las piezas capturadas se agregan al lado derecho del jugador.
